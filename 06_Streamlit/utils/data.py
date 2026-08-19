@@ -36,19 +36,15 @@ def safe_read_csv(*parts):
 
 
 def show_image_or_placeholder(path, caption=None, ai_generated=False):
-    """
-    Shows an image if it exists at `path`; otherwise shows a plain
-    "not added yet" note instead of erroring. Used for both the AI
-    diagram slot on Theoretical Foundations (left blank for now) and
-    every output chart, since some are generated ahead of others.
-    """
+    """Shows an image if it exists at `path`; otherwise shows a plain
+    "not added yet" note instead of erroring. Used for the theory
+    diagram slot on Theoretical Foundations and every output chart."""
     import streamlit as st
     if os.path.exists(path):
         st.image(path, use_container_width=True)
         if caption:
-            note = f"🤖 {caption}" if ai_generated else caption
             st.markdown(
-                f"<p style='text-align:center;' class='caption-text'>{note}</p>",
+                f"<p style='text-align:center;' class='caption-text'>{caption}</p>",
                 unsafe_allow_html=True,
             )
     else:

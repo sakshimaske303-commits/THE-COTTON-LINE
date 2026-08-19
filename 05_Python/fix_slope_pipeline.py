@@ -1,28 +1,11 @@
-"""
-fix_slope_pipeline.py  --  FIXED VERSION (Aug 2026)
+"""Fixes vidarbha_slope.tif's impossible ~88.57 deg mean slope -- it was
+computed on the DEM while still in EPSG:4326 (degree-sized pixels), so every
+pixel looked near-vertical. Reprojects to UTM 44N (EPSG:32644) first, then
+computes slope in real metres, chunked by row to keep memory bounded on the
+~15400x25100px DEM. Fixed: mean=3.65 deg, std=4.20, max=74.18 (isolated
+steep spots like quarry edges/escarpments, expected).
 
-Root-cause bug (confirmed by testing): vidarbha_slope.tif has mean=88.57
-degrees, stddev=11.16 -- physically impossible for Vidarbha's mostly flat
-to gently-rolling terrain. The cause: slope was computed directly on the
-DEM while it was still in EPSG:4326 (geographic CRS, pixel size in
-DEGREES). Slope algorithms need horizontal spacing in the SAME units as
-elevation (metres); feeding degree-sized pixels in makes every pixel look
-near-vertical, which is exactly what a ~88 degree mean means.
-
-Fix: reproject the DEM to a projected CRS (UTM 44N / EPSG:32644, correct
-zone for Vidarbha's ~76-81E longitude) BEFORE computing slope, so pixel
-spacing is in real metres.
-
-Tested fix (on the full merged Vidarbha DEM):
-  BUGGY (old):   mean=88.57 deg, std=11.16
-  FIXED (this):  min=0.00 max=74.18 mean=3.65 std=4.20  (valid=96.27%)
-This mean (~3.65 deg) is realistic for Vidarbha; the max (~74 deg) reflects
-isolated steep spots like quarry edges / river escarpments, which is normal.
-
-Requires: rasterio, numpy, scipy  (pip install rasterio numpy scipy --break-system-packages if missing)
-Note: processes the DEM in row-chunks to keep memory usage bounded --
-this DEM is large (~15400 x 25100 px), so a naive single-array approach
-can run out of RAM on machines with <16GB free.
+Requires rasterio, numpy, scipy. Replaces vidarbha_slope.tif.
 """
 import os
 import gc

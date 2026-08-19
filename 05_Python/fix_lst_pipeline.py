@@ -1,28 +1,11 @@
-"""
-fix_lst_pipeline.py  --  FIXED VERSION (Aug 2026)
+"""Fixes the DN=0-as-real-data bug in the LST pipeline: Landsat ST_B10 uses
+DN=0 for cloud-masked/off-swath pixels (~1/3 of every scene), but the original
+pipeline applied the Kelvin scale/offset before masking it out, producing a
+fake -124.15C reading. Reprocesses all 12 raw scenes, masking DN=0 first, then
+reprojects to EPSG:4326 and merges. Fixed: min=13.15C max=72.70C mean=51.45C
+(buggy old: mean=-5.69C).
 
-Root-cause bug (confirmed by testing on a real scene):
-Landsat Collection 2 Level-2 ST_B10 scenes use DN=0 as the fill/NoData
-value (cloud-masked / off-swath pixels -- about a third of every scene).
-The original pipeline applied the Kelvin scale/offset (x*0.00341802+149.0)
-directly to the raw DN without masking DN=0 first. For DN=0 that produces
-a fake reading of 149K = -124.15C, which is exactly the impossible
--123.15C minimum seen in both vidarbha_lst_merge.tif and
-vidarbha_mergedLST.tif.
-
-This script reprocesses ALL 12 raw ST_B10 scenes from scratch (not just
-the 9 that had been converted before), so it also fixes the missing-3-
-scenes gap in the same pass. It:
-  1. Masks DN==0 as NoData BEFORE applying the Kelvin scale/offset.
-  2. Converts to Celsius.
-  3. Reprojects each scene to EPSG:4326.
-  4. Merges all 12 into a single clean mosaic, respecting NoData.
-
-Tested fix (on LC08_L2SP_144045_20260620 scene):
-  BUGGY (old):   min=-124.15C  max=72.70C  mean=-5.69C
-  FIXED (this):  min=13.15C   max=72.70C  mean=51.45C  valid=67.46%
-
-Requires: rasterio, numpy  (pip install rasterio numpy --break-system-packages if missing)
+Requires rasterio, numpy. Replaces vidarbha_lst_merge.tif / vidarbha_mergedLST.tif.
 """
 import glob
 import os

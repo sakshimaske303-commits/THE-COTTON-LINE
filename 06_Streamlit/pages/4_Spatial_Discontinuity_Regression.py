@@ -26,7 +26,7 @@ st.latex(r"\text{outcome} = \beta_0 + \beta_1 \cdot side + \beta_2 \cdot signed\
 
 DIV_COLORS = {"Amravati (Berar)": PALETTE["berar"], "Nagpur (Central Provinces)": PALETTE["cp"]}
 
-with st.expander("🌡️ Climate controls, for context — LST and the rainfall gradient behind `annual_total_mm` and `elevation_m`"):
+with st.expander("Climate controls, for context — LST and the rainfall gradient behind `annual_total_mm` and `elevation_m`"):
     st.markdown("""
     Neither variable here is a finding about the historical boundary — both are the natural
     geography of Vidarbha (wetter/lower to the east, drier/higher to the west) that predates

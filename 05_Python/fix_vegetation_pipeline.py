@@ -1,23 +1,11 @@
-"""
-fix_vegetation_pipeline.py  --  FIXED VERSION (Aug 2026)
+"""Same DN=0-as-real-data bug as the LST fix, here in SR_B4/SR_B5: ~32.5% of
+every scene is DN=0 fill, but vegetation_mergedB4.tif reported 100%
+valid_percent -- those pixels were sitting in as fake reflectance=0.
+Reprocesses all 12 raw scenes for both bands, masking DN=0, applying the
+Collection 2 reflectance scale/offset, then reprojecting and merging --
+SR_B5 included so NDVI can be computed later.
 
-Same root-cause bug family as the LST fix: Landsat SR_B4/SR_B5 scenes use
-DN=0 as the fill/NoData value (~33% of every scene, confirmed on a real
-scene: LC08_L2SP_144045_20260620 SR_B4 has 32.5% DN=0 pixels), but
-vegetation_mergedB4.tif reports 100% valid_percent -- meaning those DN=0
-fill pixels were never flagged as NoData and are silently sitting in the
-merged raster as fake "reflectance = 0" pixels.
-
-This script reprocesses ALL 12 raw SR_B4 scenes (and SR_B5 too, so NDVI
-can be computed later without hitting the same bug) from scratch, fixing
-both the NoData-masking bug and the missing-3-scenes gap in one pass:
-  1. Masks DN==0 as NoData.
-  2. Applies the Collection 2 surface-reflectance scale/offset
-     (DN * 0.0000275 - 0.2) to get true reflectance (0-1 range).
-  3. Reprojects each scene to EPSG:4326.
-  4. Merges all 12 into a single clean mosaic per band, respecting NoData.
-
-Requires: rasterio, numpy  (pip install rasterio numpy --break-system-packages if missing)
+Requires rasterio, numpy. Replaces vegetation_mergedB4.tif.
 """
 import glob
 import os

@@ -39,7 +39,7 @@ st.markdown(
                 border: 1px solid rgba(48, 123, 142, 0.3); border-left: 4px solid {PALETTE['accent2']};
                 border-radius: 10px;">
         <p style="color:{PALETTE['accent2']}; text-transform:uppercase; letter-spacing:1.5px;
-                  font-weight:800; font-size:0.85rem; margin-bottom:8px;">⚡ Why This Matters</p>
+                  font-weight:800; font-size:0.85rem; margin-bottom:8px;">Why This Matters</p>
         <p style="color:{PALETTE['text_primary']}; font-size:1rem; line-height:1.6; margin:0;">
             Vidarbha's farmer-distress geography is usually explained by rainfall, market prices, or
             crop choice alone. This project tests a different, longer-running explanation: that the
@@ -111,23 +111,22 @@ st.markdown("---")
 st.markdown("### Explore the Evidence")
 
 nav_items = [
-    ("🗺️", "Study Design", "The boundary, the corridor, and the spatial-discontinuity model"),
-    ("📚", "Theoretical Foundations", "Institutional persistence theory and the remote-sensing physics behind the data"),
-    ("🌾", "Cotton Signature (NDVI)", "The kharif-to-rabi decline test, confirmed across 2 independent years"),
-    ("👥", "Agrarian & Land Structure", "Cotton share, ag-laborer ratio, land use, holding size"),
-    ("📊", "Spatial Discontinuity Regression", "The actual Phase 4 test, climate controls, robustness, and the honest findings"),
-    ("🏛️", "Historical & Institutional Context", "District-lineage boundary verification and the FRA compilation"),
-    ("🗺️", "Interactive Maps", "The boundary, corridor, and taluka data, explorable directly"),
-    ("🛰️", "Methodology & Data", "Sources, the DN=0 fix, and scene-footprint scope"),
-    ("📸", "Ground Truth", "Karanja Ghadge / Sawardoh field verification -- coming soon"),
+    ("Study Design", "The boundary, the corridor, and the spatial-discontinuity model"),
+    ("Theoretical Foundations", "Institutional persistence theory and the remote-sensing physics behind the data"),
+    ("Cotton Signature (NDVI)", "The kharif-to-rabi decline test, confirmed across 2 independent years"),
+    ("Agrarian & Land Structure", "Cotton share, ag-laborer ratio, land use, holding size"),
+    ("Spatial Discontinuity Regression", "The actual Phase 4 test, climate controls, robustness, and the honest findings"),
+    ("Historical & Institutional Context", "District-lineage boundary verification and the FRA compilation"),
+    ("Interactive Maps", "The boundary, corridor, and taluka data, explorable directly"),
+    ("Methodology & Data", "Sources, the DN=0 fix, and scene-footprint scope"),
+    ("Ground Truth", "Karanja Ghadge / Sawardoh field verification -- coming soon"),
 ]
 
 cols = st.columns(3)
-for i, (icon, title, desc) in enumerate(nav_items):
+for i, (title, desc) in enumerate(nav_items):
     with cols[i % 3]:
         st.markdown(f"""
         <div class="recon-card" style="margin-bottom: 14px; min-height: 120px;">
-            <p style="font-size: 1.6rem; margin: 0 0 6px 0;">{icon}</p>
             <p style="color: {PALETTE['text_primary']}; font-weight: 800; font-size: 0.95rem; margin: 0 0 4px 0;">{title}</p>
             <p style="color: {PALETTE['text_secondary']}; font-size: 0.8rem; margin: 0; font-weight: 600;">{desc}</p>
         </div>
@@ -138,20 +137,19 @@ st.markdown("---")
 # ============================================================
 # FULL PROJECT DOCUMENTATION
 # ============================================================
-st.markdown("### 📄 Full Project Documentation")
+st.markdown("### Full Project Documentation")
 st.markdown(
     f"<p style='color:{PALETTE['text_secondary']}; font-weight:600;'>"
-    "The Development Log is the running record, kept current throughout. The Project Report, "
-    "Research Paper, and Executive Summary get written once the project -- including the "
-    "ground-truth check -- is complete.</p>",
+    "The Development Log and Research Paper are both current. The Project Report and Executive "
+    "Summary get written once the ground-truth check is complete.</p>",
     unsafe_allow_html=True,
 )
 
 DOCS = [
-    ("⚡ Executive Summary (PDF)", "CL_Executive_Summary.pdf"),
-    ("📘 Research Paper (PDF)", "CL_Research_Paper.pdf"),
-    ("📗 Project Report (PDF)", "CL_Project_Report.pdf"),
-    ("📙 Development Log (PDF)", "CL_Development_Log.pdf"),
+    ("Research Paper (PDF)", "CL_Research_Paper.pdf"),
+    ("Development Log (PDF)", "CL_Development_Log.pdf"),
+    ("Executive Summary (PDF)", "CL_Executive_Summary.pdf"),
+    ("Project Report (PDF)", "CL_Project_Report.pdf"),
 ]
 
 doc_cols = st.columns(4)
@@ -175,7 +173,7 @@ st.markdown(
     <div style="text-align:center; margin: 22px 0 6px 0;">
         <a href="https://github.com/sakshimaske303-commits/THE-COTTON-LINE" target="_blank" style="text-decoration:none;">
             <span style="display:inline-block; background: linear-gradient(90deg, {PALETTE['accent']}, {PALETTE['accent2']}); color:{PALETTE['bg_main']}; font-weight:800; font-size:0.95rem; padding:12px 28px; border-radius:8px;">
-                🔗 View Full Project on GitHub
+                View Full Project on GitHub
             </span>
         </a>
     </div>

@@ -1,26 +1,13 @@
-"""
-download_seasonal_scenes_year2.py
+"""Second year of the same kharif-peak/rabi-peak Landsat pair from
+download_seasonal_scenes.py, one year earlier -- the check flagged back in
+Entry 7: the kharif-to-rabi NDVI decline (Berar 0.325 vs Central Provinces
+0.255) was only measured on one annual cycle (kharif 2025/rabi 2025-26). If
+the gap reproduces independently in kharif 2024/rabi 2024-25, it's a real
+seasonal signature, not a one-year fluke. Same footprint and source as
+download_seasonal_scenes.py (path 144, rows 045/046; Planetary Computer
+STAC catalog).
 
-Second year of the same kharif-peak / rabi-peak Landsat pair from
-download_seasonal_scenes.py, one year earlier -- this is the check I flagged
-back in Entry 7: the kharif-to-rabi NDVI decline (Berar 0.325 vs Central
-Provinces 0.255) was only measured on one annual cycle (kharif 2025 / rabi
-2025-26). If that gap shows up again independently in kharif 2024 / rabi
-2024-25, it's a real seasonal signature and not a one-year fluke.
-
-Same WRS-2 footprint as both prior passes -- path 144, rows 045 and 046.
-
-Source: Microsoft Planetary Computer's public Landsat Collection 2 Level-2
-STAC catalog. No login, no cost, no API key.
-
-Windows searched:
-  - Kharif peak / post-monsoon : 2024-09-15 to 2024-11-15
-  - Rabi peak / pre-harvest    : 2025-01-15 to 2025-03-15
-
-For each window x row, picks the lowest-cloud-cover scene and downloads
-the red (SR_B4) and nir08 (SR_B5) bands.
-
-Requires: requests  (pip install requests --break-system-packages if missing)
+Requires: requests
 """
 import os
 import requests
@@ -97,4 +84,4 @@ if __name__ == "__main__":
                 sign_and_download(asset["href"], out_path)
 
     print("\nDone. Files landed in:", OUT_DIR)
-    print("Tell me once this finishes (or paste any error) and I'll pull them in and rerun the NDVI pipeline against the year-1 result.")
+    print("Next: pull these into the NDVI pipeline and compare against the year-1 result.")

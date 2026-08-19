@@ -22,19 +22,10 @@ with col_b:
     show_image_or_placeholder(
         output_path("Figures", "imgg1.png"),
         caption="Two Land Tenures, One Satellite Signature",
-        ai_generated=True,
     )
     st.markdown(
-        f"""
-        <div class="recon-card" style="margin-top:6px;">
-            <p style="color:{PALETTE['text_secondary']}; font-size:0.85rem; font-style:italic; margin:0; text-align:center;">
-                Generated with an AI image tool from a fully-specified brief -- every process, label,
-                and relationship shown was authored from my own understanding of the institutional
-                theory and remote-sensing physics below; the AI was directed to illustrate it, not to
-                originate it.
-            </p>
-        </div>
-        """,
+        f"<p style='text-align:center; color:{PALETTE['text_secondary']}; font-size:0.85rem; margin-top:6px;'>"
+        "AI was used to help generate this image, but the concept and every detail in it are mine.</p>",
         unsafe_allow_html=True,
     )
 

@@ -1,27 +1,15 @@
-"""
-download_seasonal_scenes.py
-
-Pulls the two extra Landsat dates I need for the cotton-signature NDVI
+"""Pulls the two extra Landsat dates needed for the cotton-signature NDVI
 classification (Roadmap Phase 3): a post-monsoon/kharif-peak scene and a
-pre-harvest/rabi-peak scene, on top of the June 2026 pre-sowing scene I
-already have. Same WRS-2 footprint as before -- path 144, rows 045 and 046
--- since that's what covers the corridor.
+pre-harvest/rabi-peak scene, on top of the June 2026 pre-sowing scene
+already in hand. Same WRS-2 footprint as before (path 144, rows 045/046).
+Picks the lowest-cloud-cover scene per window x row and downloads the
+red (SR_B4) and nir08 (SR_B5) bands -- all NDVI needs. Source: Microsoft
+Planetary Computer's open Landsat Collection 2 Level-2 STAC catalog, no
+login/key required. A year apart from the June 2026 scene on the
+kharif-peak side -- best available low-cloud dates for this footprint,
+not a perfectly year-matched triplet; a known limitation.
 
-Source: Microsoft Planetary Computer's public Landsat Collection 2 Level-2
-STAC catalog. No login, no cost, no API key -- it's a fully open catalog,
-assets are just signed with a short-lived token at download time.
-
-Windows searched:
-  - Post-monsoon / kharif peak : 2025-09-15 to 2025-11-15
-  - Pre-harvest / rabi peak    : 2026-01-15 to 2026-03-15
-(a year apart from the June 2026 scene on the kharif-peak side -- best
-available low-cloud dates for this exact footprint, not a perfectly
-year-matched triplet. Documenting that as a known limitation, not hiding it.)
-
-For each window x row, picks the lowest-cloud-cover scene and downloads
-the red (SR_B4) and nir08 (SR_B5) bands -- that's all NDVI needs.
-
-Requires: requests  (pip install requests --break-system-packages if missing)
+Requires: requests
 """
 import os
 import requests
@@ -98,4 +86,4 @@ if __name__ == "__main__":
                 sign_and_download(asset["href"], out_path)
 
     print("\nDone. Files landed in:", OUT_DIR)
-    print("Tell me once this finishes (or paste any error) and I'll pull them in and rerun the NDVI pipeline.")
+    print("Next: pull these into the NDVI pipeline and rerun.")

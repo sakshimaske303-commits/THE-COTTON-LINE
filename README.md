@@ -1,4 +1,4 @@
-# 🧵 THE COTTON LINE — Does a 150-Year-Old Colonial Land-Tenure Boundary Still Register as a Measurable Spatial Signature in Present-Day Vidarbha?
+# THE COTTON LINE — Does a 150-Year-Old Colonial Land-Tenure Boundary Still Register as a Measurable Spatial Signature in Present-Day Vidarbha?
 
 **Testing whether the 1853 Berar/Central Provinces land-tenure split — abolished in 1956 — still shows up as a spatial-discontinuity signature in cotton-crop phenology, agrarian labor structure, and land-surface temperature today.**
 
@@ -16,13 +16,13 @@ Does the historical Berar (Ryotwari) / Central Provinces (Malguzari) boundary st
 
 Every other project in this portfolio tests a specific policy or event with a causal-inference design — difference-in-differences, event studies, synthetic control. This one is deliberately a different kind of question: not "did X intervention cause Y effect," but "does a 150-year-old administrative geography still leave a fingerprint on the land." That's a spatial-discontinuity / boundary-persistence problem, closer to landscape pattern analysis and historical GIS than to treatment-effect estimation.
 
-## 🔬 Core Finding, So Far
+## Core Finding, So Far
 
 No sharp jump in level shows up right at the historical line — but a real east-west gradient does, confirmed independently in two full annual NDVI cycles and echoed in the land-surface-temperature signal: both decline differently with distance from the boundary depending on which side you're on. That's a different, more honest shape of result than a clean discontinuity would have been, and it's reported as such in the dashboard's Spatial Discontinuity Regression page, including where the corridor and full-footprint models genuinely disagree by scale.
 
 The historical district-lineage boundary verification and the FRA compilation supporting the institutional side of this are on the Historical & Institutional Context page.
 
-## 🏗️ Study Design
+## Study Design
 
 - Modern boundary built by dissolving 120 talukas into the two divisions and extracting the shared edge — 384.7 km long, from the Akola/Amravati/Wardha corner to the Yavatmal/Chandrapur corner
 - 25 km buffer corridor split by division — a 32-taluka near-boundary sample (the actual discontinuity test) and a 68-taluka full-regional-footprint sample, checked as two independent models
@@ -32,7 +32,7 @@ The historical district-lineage boundary verification and the FRA compilation su
 
 Full methodology, every data source, the Landsat DN=0 fix, and the corridor-vs-full-footprint scope decision are documented in the dashboard's Methodology & Data page and in `CL_Development_Log.md`.
 
-## 🗂️ Repository Structure
+## Repository Structure
 
 ```text
 THE_COTTON_LINE/
@@ -53,17 +53,17 @@ THE_COTTON_LINE/
 │   │   ├── theme.py                # Shared dashboard styling
 │   │   └── data.py                 # Shared data-loading functions
 │   └── requirements.txt
-├── 07_Outputs/                     # Static figures, maps, and the AI-generated theory diagram
+├── 07_Outputs/                     # Static figures, maps, and the theory diagram
 ├── CL_Development_Log.md           # Running development log -- every decision, bug, and pivot
 ├── download_seasonal_scenes.py     # Landsat scene acquisition (year 1 and year 2)
 └── requirements.txt
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 Python · Pandas · GeoPandas · Statsmodels · Rasterio · SciPy · Plotly · Streamlit
 
-## 📚 Data Sources
+## Data Sources
 
 | Dataset | Provider |
 |---|---|
@@ -75,7 +75,7 @@ Python · Pandas · GeoPandas · Statsmodels · Rasterio · SciPy · Plotly · S
 | Terrain (elevation) | SRTM 1 arc-second DEM |
 | Economics (FRA) | Manually compiled from parliamentary answers, CAG audit reports, district-office notices |
 
-## ▶️ Running Locally
+## Running Locally
 
 ```bash
 git clone https://github.com/sakshimaske303-commits/THE-COTTON-LINE.git
@@ -84,17 +84,17 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## 📄 Project Documentation
+## Project Documentation
 
-The Development Log (`CL_Development_Log.md`) is the running record, kept current throughout the project. The Project Report, Research Paper, and Executive Summary get written once the project — including the Karanja Ghadge / Sawardoh ground-truth check — is complete.
+The Development Log (`CL_Development_Log.md`) and Research Paper (`CL_Research_Paper.md`) are both current. The Karanja Ghadge / Sawardoh ground-truth check is still outstanding, and the Project Report and Executive Summary get written once that's complete.
 
-## 👤 Author
+## Author
 
 **Sakshi D. Maske**
 
 Independent Geospatial Researcher
 
-## 📜 License
+## License
 
 This project is licensed under CC BY 4.0 — you are free to share and adapt this work for any purpose, including commercially, with attribution.
 
