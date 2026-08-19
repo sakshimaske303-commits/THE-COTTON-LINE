@@ -1,0 +1,26 @@
+# raw source data -- 20+ GB of Landsat scenes, DEM tiles, WorldClim grids,
+# not needed to reproduce the dashboard or any processed CSV
+02_Data_Raw/
+
+# large intermediate rasters -- every outcome the dashboard actually reads
+# comes from the CSVs derived from these, not the rasters themselves
+03_Data_Processed/**/*.tif
+03_Data_Processed/**/*.tif.aux.xml
+
+# large geometry layers not used by the dashboard (Infrastructure was
+# dropped from scope -- see 07_Methodology_Data.py)
+03_Data_Processed/Infrastructure/
+03_Data_Processed/Administrative/vidarbha_village_boundary.gpkg
+
+# empty pre-pivot skeleton folders, nothing tracked in them
+04_QGIS/
+08_Documentation/
+09_Refrences/
+
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+.streamlit/secrets.toml
+.ipynb_checkpoints/
