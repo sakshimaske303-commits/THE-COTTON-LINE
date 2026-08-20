@@ -1,11 +1,6 @@
-"""Same DN=0-as-real-data bug as the LST fix, here in SR_B4/SR_B5: ~32.5% of
-every scene is DN=0 fill, but vegetation_mergedB4.tif reported 100%
-valid_percent -- those pixels were sitting in as fake reflectance=0.
-Reprocesses all 12 raw scenes for both bands, masking DN=0, applying the
-Collection 2 reflectance scale/offset, then reprojecting and merging --
-SR_B5 included so NDVI can be computed later.
-
-Requires rasterio, numpy. Replaces vegetation_mergedB4.tif.
+"""Same DN=0-as-real-data bug as the LST fix, here in SR_B4/SR_B5
+reflectance. Reprocesses all 12 scenes with proper masking.
+Requires rasterio, numpy.
 """
 import glob
 import os

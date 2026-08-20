@@ -1,12 +1,5 @@
-"""
-Path resolution + data loaders for THE COTTON LINE dashboard.
-
-Lives in 06_Streamlit/utils/ -- data itself lives one project level up,
-in 03_Data_Processed/ and 07_Outputs/. BASE_DIR/ROOT_DIR resolution
-matches the pattern used across the rest of the portfolio (e.g.
-GREEN_POLICY_INTELLIGENCE_SYSTEM/dashboard/app.py) so it works both
-running locally from inside 06_Streamlit/ and however it ends up
-deployed later.
+"""Path resolution + data loaders for the dashboard; BASE_DIR/ROOT_DIR
+pattern matches the rest of the portfolio.
 """
 import os
 import pandas as pd

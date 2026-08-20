@@ -1,4 +1,6 @@
+import os
 import streamlit as st
+import streamlit.components.v1 as components
 from utils.theme import inject_theme, PALETTE
 from utils.data import data_path, show_image_or_placeholder
 
@@ -36,11 +38,22 @@ st.markdown("---")
 
 col_a, col_b, col_c = st.columns([0.2, 5.9, 0.2])
 with col_b:
-    show_image_or_placeholder(
-        data_path("Administrative", "boundary_verification_map.png"),
-        caption="Figure. The two dissolved divisions, the 384.7 km boundary line, and the 25 km "
-                "discontinuity corridor, checked against the full taluka grid for gaps or overlaps at the seam.",
-    )
+    interactive_map_path = data_path("Administrative", "boundary_verification_map.html")
+    if os.path.exists(interactive_map_path):
+        with open(interactive_map_path, "r", encoding="utf-8") as f:
+            components.html(f.read(), height=520)
+        st.markdown(
+            "<p style='text-align:center;' class='caption-text'>Figure. The two dissolved divisions, "
+            "the 384.7 km boundary line, and the 25 km discontinuity corridor, checked against the "
+            "full taluka grid for gaps or overlaps at the seam. Toggle layers top-right.</p>",
+            unsafe_allow_html=True,
+        )
+    else:
+        show_image_or_placeholder(
+            data_path("Administrative", "boundary_verification_map.png"),
+            caption="Figure. The two dissolved divisions, the 384.7 km boundary line, and the 25 km "
+                    "discontinuity corridor, checked against the full taluka grid for gaps or overlaps at the seam.",
+        )
 
 st.markdown("---")
 

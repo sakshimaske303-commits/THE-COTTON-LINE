@@ -1,15 +1,6 @@
-"""Pulls the two extra Landsat dates needed for the cotton-signature NDVI
-classification (Roadmap Phase 3): a post-monsoon/kharif-peak scene and a
-pre-harvest/rabi-peak scene, on top of the June 2026 pre-sowing scene
-already in hand. Same WRS-2 footprint as before (path 144, rows 045/046).
-Picks the lowest-cloud-cover scene per window x row and downloads the
-red (SR_B4) and nir08 (SR_B5) bands -- all NDVI needs. Source: Microsoft
-Planetary Computer's open Landsat Collection 2 Level-2 STAC catalog, no
-login/key required. A year apart from the June 2026 scene on the
-kharif-peak side -- best available low-cloud dates for this footprint,
-not a perfectly year-matched triplet; a known limitation.
-
-Requires: requests
+"""Pulls the two extra Landsat kharif/rabi scenes for the NDVI classification
+(path 144, rows 045/046) from Planetary Computer's Landsat C2 L2 STAC
+catalog, picks the lowest-cloud scene per window. Requires requests.
 """
 import os
 import requests

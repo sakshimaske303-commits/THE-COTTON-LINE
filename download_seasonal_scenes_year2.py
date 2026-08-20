@@ -1,13 +1,6 @@
-"""Second year of the same kharif-peak/rabi-peak Landsat pair from
-download_seasonal_scenes.py, one year earlier -- the check flagged back in
-Entry 7: the kharif-to-rabi NDVI decline (Berar 0.325 vs Central Provinces
-0.255) was only measured on one annual cycle (kharif 2025/rabi 2025-26). If
-the gap reproduces independently in kharif 2024/rabi 2024-25, it's a real
-seasonal signature, not a one-year fluke. Same footprint and source as
-download_seasonal_scenes.py (path 144, rows 045/046; Planetary Computer
-STAC catalog).
-
-Requires: requests
+"""Second year of the same kharif/rabi Landsat pair as
+download_seasonal_scenes.py, to check the NDVI decline reproduces
+independently (Entry 7). Requires requests.
 """
 import os
 import requests

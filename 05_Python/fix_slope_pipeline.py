@@ -1,11 +1,6 @@
-"""Fixes vidarbha_slope.tif's impossible ~88.57 deg mean slope -- it was
-computed on the DEM while still in EPSG:4326 (degree-sized pixels), so every
-pixel looked near-vertical. Reprojects to UTM 44N (EPSG:32644) first, then
-computes slope in real metres, chunked by row to keep memory bounded on the
-~15400x25100px DEM. Fixed: mean=3.65 deg, std=4.20, max=74.18 (isolated
-steep spots like quarry edges/escarpments, expected).
-
-Requires rasterio, numpy, scipy. Replaces vidarbha_slope.tif.
+"""Fixes the impossible ~88.57 deg mean slope (was computed in EPSG:4326
+degree-pixels); reprojects to UTM 44N first. Fixed mean=3.65 deg.
+Requires rasterio, numpy, scipy.
 """
 import os
 import gc

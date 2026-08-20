@@ -1,11 +1,6 @@
-"""Fixes the DN=0-as-real-data bug in the LST pipeline: Landsat ST_B10 uses
-DN=0 for cloud-masked/off-swath pixels (~1/3 of every scene), but the original
-pipeline applied the Kelvin scale/offset before masking it out, producing a
-fake -124.15C reading. Reprocesses all 12 raw scenes, masking DN=0 first, then
-reprojects to EPSG:4326 and merges. Fixed: min=13.15C max=72.70C mean=51.45C
-(buggy old: mean=-5.69C).
-
-Requires rasterio, numpy. Replaces vidarbha_lst_merge.tif / vidarbha_mergedLST.tif.
+"""Fixes the DN=0-as-real-data bug in the LST pipeline (Landsat ST_B10 uses
+DN=0 for masked pixels; the old code scaled it before masking, giving a
+fake -124.15C). Fixed mean=51.45C. Requires rasterio, numpy.
 """
 import glob
 import os
