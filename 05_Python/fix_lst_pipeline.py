@@ -9,7 +9,7 @@ import rasterio
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from rasterio.merge import merge
 
-RAW_DIR = r"D:\SAKSHI_RESEARCH\SAKSHI_RESEARCH\PROJECT_PRISM\02_Data_Raw\Land_Use"
+RAW_DIR = r"D:\SAKSHI_RESEARCH\SAKSHI_RESEARCH\SAKSHI QGIS\THE_COTTON_LINE\02_Data_Raw\Land_Use"
 OUT_DIR = RAW_DIR
 DST_CRS = "EPSG:4326"
 SCALE, OFFSET = 0.00341802, 149.0

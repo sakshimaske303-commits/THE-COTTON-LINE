@@ -10,7 +10,7 @@ from rasterio.windows import Window
 from rasterio.warp import calculate_default_transform, reproject, Resampling
 from scipy.ndimage import binary_dilation
 
-TERRAIN_DIR = r"D:\SAKSHI_RESEARCH\SAKSHI_RESEARCH\PROJECT_PRISM\02_Data_Raw\Terrain"
+TERRAIN_DIR = r"D:\SAKSHI_RESEARCH\SAKSHI_RESEARCH\SAKSHI QGIS\THE_COTTON_LINE\02_Data_Raw\Terrain"
 DEM_SRC = os.path.join(TERRAIN_DIR, "dem_merged.tif")
 DEM_UTM = os.path.join(TERRAIN_DIR, "_tmp_dem_utm44n.tif")
 SLOPE_OUT = os.path.join(TERRAIN_DIR, "vidarbha_slope_FIXED.tif")

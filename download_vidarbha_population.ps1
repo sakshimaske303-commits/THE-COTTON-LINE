@@ -1,7 +1,7 @@
 # Downloads village-level Census shapefiles (IIT Bombay POCRA portal) for all 11 Vidarbha districts
 # Run this from PowerShell. Saves into 02_Data_Raw\Population\
 
-$dest = "D:\SAKSHI_RESEARCH\SAKSHI_RESEARCH\SAKSHI QGIS\PROJECT_PRISM\02_Data_Raw\Population"
+$dest = "D:\SAKSHI_RESEARCH\SAKSHI_RESEARCH\SAKSHI QGIS\THE_COTTON_LINE\02_Data_Raw\Population"
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 
 $base = "https://www.cse.iitb.ac.in/~pocra/MahaCensus_shapefile_data1.1/Shape_File_3July"
