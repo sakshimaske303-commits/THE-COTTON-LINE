@@ -1,0 +1,15 @@
+role,village,taluka,zone,field_num,field_id,name,crops,area_ha,sown_date,lat,lon,date,ndvi,ndre
+primary,Karanja Ghadge,Karanja Ghadge,karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,2026-06-27,21.159092,78.401317,2026-06-21,,
+primary,Karanja Ghadge,Karanja Ghadge,karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,2026-06-27,21.159092,78.401317,2026-07-14,0.328810,0.181310
+primary,Karanja Ghadge,Karanja Ghadge,karanja,2,EFCD,Soyabean,soyabean,0.9758,2026-06-27,21.158296,78.401020,2026-06-21,,
+primary,Karanja Ghadge,Karanja Ghadge,karanja,2,EFCD,Soyabean,soyabean,0.9758,2026-06-27,21.158296,78.401020,2026-07-14,0.287388,0.159895
+supporting,Sawardoh,Karanja Ghadge,sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,2026-06-22,21.223105,78.350587,2026-06-21,0.126788,0.055174
+supporting,Sawardoh,Karanja Ghadge,sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,2026-06-22,21.223105,78.350587,2026-07-14,0.330322,0.183837
+supporting,Sawardoh,Karanja Ghadge,sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,2026-06-22,21.222639,78.350461,2026-06-21,0.151984,0.057925
+supporting,Sawardoh,Karanja Ghadge,sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,2026-06-22,21.222639,78.350461,2026-07-14,0.356324,0.192810
+supporting,Sawardoh,Karanja Ghadge,sawardoh,3,GHLJ,Cotton,cotton,0.7771,2026-06-22,21.221963,78.350186,2026-06-21,0.154772,0.056842
+supporting,Sawardoh,Karanja Ghadge,sawardoh,3,GHLJ,Cotton,cotton,0.7771,2026-06-22,21.221963,78.350186,2026-07-14,0.280802,0.155277
+supporting,Sawardoh,Karanja Ghadge,sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,2026-06-22,21.222553,78.351514,2026-06-21,0.187662,0.091846
+supporting,Sawardoh,Karanja Ghadge,sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,2026-06-22,21.222553,78.351514,2026-07-14,0.360403,0.210161
+supporting,Sawardoh,Karanja Ghadge,sawardoh,5,KMON,Cotton,cotton,0.6585,2026-06-22,21.221190,78.349815,2026-06-21,0.211826,0.091366
+supporting,Sawardoh,Karanja Ghadge,sawardoh,5,KMON,Cotton,cotton,0.6585,2026-06-22,21.221190,78.349815,2026-07-14,0.327712,0.195689

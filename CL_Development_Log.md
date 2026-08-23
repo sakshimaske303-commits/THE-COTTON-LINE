@@ -25,6 +25,8 @@ Running log of every decision, data source, and pivot in this project. Format: o
 18. [Entry 18](#entry-18)
 19. [Entry 19](#entry-19)
 20. [Entry 20](#entry-20)
+21. [Entry 21](#entry-21)
+22. [Entry 22](#entry-22)
 
 ---
 
@@ -475,3 +477,37 @@ Files sit at `outputs/interactive_maps/*.html` at the repo root (a new folder, s
 Also cut the project card's description down -- the first draft ran three sentences longer than every sibling card on the page. Kept the boundary, the null discontinuity result, the NDVI gradient finding, and the open ground-truth check; dropped the restated methodology detail that was already covered by the LIVE DASHBOARD button itself.
 
 **Still open:** GitHub Pages needs enabling on the `THE-COTTON-LINE` repo (Settings → Pages → deploy from the main branch, root) before the six map links actually resolve -- that's a one-time account action still to do, same as it was for every other project's Pages-hosted output. Project Report, Executive Summary, and ground truth remain exactly where Entry 19 left them.
+
+---
+
+## Entry 21
+
+Picked the ground truth check back up. Didn't schedule the separate Karanja Ghadge field visit the plan called for — I already had exactly the right data sitting in a different project. I run a GPS-mapped, weekly-photographed field-monitoring setup on family land in this same taluka (Roots & Reflectance, a separate repo, unrelated in purpose but same physical ground), with a Sentinel-2 NDVI/NDRE pipeline already built for it. Two of those fields are literally in Karanja Ghadge village; five more are in Sawardoh, a few kilometers off. That's GPS coordinates, dated ground photos, and a real field-level satellite time series for seven boundaries — more than the original 2–3-patch plan asked for, and I didn't have to leave a second dataset lying around unused to get it.
+
+**Built it as real processed data, not hardcoded page content.** `03_Data_Processed/Ground_Truth/karanja_sawardoh_field_ground_truth.csv` holds all 7 fields, long-format, matching how every other theme folder in `03_Data_Processed` is structured — role (primary/supporting), village, GPS centroid, crop mix, sowing date, and NDVI/NDRE by date. Eight ground photos (compressed from the originals, ~9 MB each down to under 700 KB, still clean at dashboard size) went into a new `06_Streamlit/assets/ground_truth/` folder. `8_Ground_Truth.py` got rewritten end to end off that CSV and those photos — `utils.data.safe_read_csv` and `show_image_or_placeholder` for both, no new loading pattern invented.
+
+**The honest part.** This isn't a pixel-identical check against the June 2026 taluka number (LST 55.97°C, NDVI 0.264, 45.8% coverage) — that's Landsat at 30 m, taluka-averaged; the field-level numbers are Sentinel-2 at 10 m, at the exact polygon, mostly a different date. Said that directly on the page and in the paper rather than implying a tighter match than what's actually there. What it does show: Karanja Ghadge's two fields came back at NDVI 0.329 and 0.287 on 14 July 2026 — a plausible range next to the coarser taluka read — and the ground photos from the same coordinates show closed, healthy canopy, consistent with those numbers rather than contradicting them. Sawardoh's five fields moved the same direction over the same stretch, supporting evidence, not the named check.
+
+**One genuinely interesting side-finding.** Karanja's 21 June Sentinel-2 pass came back with zero valid pixels for both fields — full cloud mask, not a bug. That's a second, independent sensor losing data over the exact same corner of the scene footprint where Landsat's own taluka read already sits at just 45.8% coverage. Two different platforms, same conclusion: this specific patch of Wardha is genuinely hard to see cleanly from orbit. Wrote that into the page rather than treating it as a nuisance to hide.
+
+**Research paper updated to match.** Section 6.6 goes from "Not Yet Complete" to reporting the actual check, with the scale caveat kept in instead of dropped. Section 7's "Completing the Karanja Ghadge/Sawardoh ground-truth check" bullet is gone — it's done. Both the Abstract's closing line and the Conclusion's closing line, which used to flag this as the one open thread, now close it out the same honest way: confirmed, with the caveat, not oversold.
+
+**Still open:** Project Report and Executive Summary — the standing rule said those come once ground truth actually closes, and it just did, so those are next. README, `app.py`'s nav description, and the portfolio card still say "still open" and need updating to match. GitHub Pages activation for the interactive maps, from Entry 20, is still sitting there too.
+
+---
+
+## Entry 22
+
+Closed out everything Entry 21 left open, then caught two real accuracy problems in the ground truth page itself once I actually looked at it running.
+
+**Project Report and Executive Summary, finally.** Wrote `CL_Project_Report.md` (seven sections — overview, objectives, methodology, key findings, the ground-truth validation from Entry 21, limitations, conclusion — plus a data-sources table) and `CL_Executive_Summary.md` (a tighter, five-section version for anyone who isn't going to read the full paper). Every number in both — the 0.070/0.074-point NDVI gaps, the corridor 0.310 vs 0.299 near-null, the p=0.0348/p=0.0105 full-footprint interactions, the ag-laborer 0.0374/p=0.0361 corridor result with its jackknife range, the Karanja Ghadge taluka reference — pulled straight from the Research Paper and Entries 9-21, nothing re-derived or rounded differently. Built both as PDFs the same way as the Research Paper and Dev Log (pandoc to HTML, then wkhtmltopdf) — hit one new snag doing it, an em-dash in a PDF metadata title field coming out garbled in Document Properties, harmless and cosmetic, fixed by switching that one string to a plain hyphen. README, `app.py`'s document-download section, and the portfolio's own docs menu all got pointed at the finished files, replacing the "still open" language they'd been carrying since before Entry 21.
+
+**Then I actually looked at the page instead of just the data.** The two Karanja fields are correctly soyabean and tur — that's what's growing there, the CSV and the photos both say so — but sitting on a page called THE COTTON LINE, a full photo block of soyabean and pigeon pea read as thematically off, even though it was factually right. Sawardoh has cotton-only ground right there in the same dataset, so I swapped the photo lineup to lead with that instead: cotton close-up and soil texture pulled to the front, generic overview and tur close-up dropped. Went a step further after that — Sawardoh has five fields, but only two (Field 3 and Field 5) are actually cotton with nothing intercropped in; the other three mix in tur, orange, or turmeric. If Sawardoh is standing in as cotton evidence, it should be specifically those two, not the village in general — so I narrowed both the photo selection and the NDVI/NDRE data table down to just Fields 3 and 5, sourced their own field-specific overview photos, and left the other three Sawardoh fields out of the featured view entirely (they're still in the underlying CSV, just not pulled into this page).
+
+**Final pass: reordered and made it interactive.** Flipped the page order so Sawardoh's cotton-only fields lead and Karanja follows — the cotton evidence up front on a project named for cotton, with Karanja still fully present as the taluka the original plan actually named. Both zones now carry their own soil photo side by side with their crop close-up, nine ground photos total across the two sections. Added a real interactive chart at the bottom — Plotly, not a static image, matching the exact pattern already used on the Cotton Signature NDVI page (`go.Figure`, `plotly_layout` for the dark-theme styling, `st.tabs` to flip between NDVI and NDRE) — plotting all four featured fields (Sawardoh 3 & 5, Karanja 1 & 2) on the same axis, one line per field, hoverable and zoomable. Karanja's missing 21 June date shows up honestly as a line that only starts at 14 July rather than getting padded or interpolated.
+
+**Checked every number against the CSV directly before shipping this.** Field 3: NDVI 0.2808 → 0.281, NDRE 0.1553 → 0.155. Field 5: NDVI 0.3277 → 0.328, NDRE 0.1957 → 0.196. Karanja Field 1: NDVI 0.3288 → 0.329, NDRE 0.1813 → 0.181. Field 2: NDVI 0.2874 → 0.287, NDRE 0.1599 → 0.160. Every metric card on the page matches the source CSV to three decimal places, no rounding drift, nothing eyeballed.
+
+Ran a syntax check and a full sweep for stale or placeholder language across every page and every document in the project — nothing left over, nothing pointing at data that doesn't exist yet.
+
+**Still open:** GitHub Pages activation for the interactive maps, from Entry 20 — a one-time account setting, not a code change. Everything else this project set out to do — the boundary construction, both regression scales, the ground-truth check, the full document set, and now a fully current, accurate Ground Truth page — is done.

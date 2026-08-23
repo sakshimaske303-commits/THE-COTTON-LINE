@@ -119,7 +119,7 @@ nav_items = [
     ("Historical & Institutional Context", "District-lineage boundary verification and the FRA compilation"),
     ("Interactive Maps", "The boundary, corridor, and taluka data, explorable directly"),
     ("Methodology & Data", "Sources, the DN=0 fix, and scene-footprint scope"),
-    ("Ground Truth", "Karanja Ghadge / Sawardoh field verification -- coming soon"),
+    ("Ground Truth", "Karanja Ghadge / Sawardoh field verification -- complete, 7 fields"),
 ]
 
 cols = st.columns(3)
@@ -140,8 +140,8 @@ st.markdown("---")
 st.markdown("### Full Project Documentation")
 st.markdown(
     f"<p style='color:{PALETTE['text_secondary']}; font-weight:600;'>"
-    "The Development Log and Research Paper are both current. The Project Report and Executive "
-    "Summary get written once the ground-truth check is complete.</p>",
+    "All four documents are current. The ground-truth check closed out first -- see the Ground "
+    "Truth page -- which is what let the Project Report and Executive Summary get written.</p>",
     unsafe_allow_html=True,
 )
 

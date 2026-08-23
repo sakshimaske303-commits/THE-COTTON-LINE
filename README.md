@@ -86,7 +86,7 @@ streamlit run app.py
 
 ## Project Documentation
 
-The Development Log (`CL_Development_Log.md`) and Research Paper (`CL_Research_Paper.md`) are both current. The Karanja Ghadge / Sawardoh ground-truth check is still outstanding, and the Project Report and Executive Summary get written once that's complete.
+The Development Log (`CL_Development_Log.md`) and Research Paper (`CL_Research_Paper.md`) are both current. The Karanja Ghadge / Sawardoh ground-truth check is complete — see the dashboard's Ground Truth page or Section 6.6 of the Research Paper. The Project Report and Executive Summary are next now that it's closed.
 
 ## Author
 
