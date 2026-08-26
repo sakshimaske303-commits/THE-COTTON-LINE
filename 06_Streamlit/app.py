@@ -41,13 +41,13 @@ st.markdown(
         <p style="color:{PALETTE['accent2']}; text-transform:uppercase; letter-spacing:1.5px;
                   font-weight:800; font-size:0.85rem; margin-bottom:8px;">Why This Matters</p>
         <p style="color:{PALETTE['text_primary']}; font-size:1rem; line-height:1.6; margin:0;">
-            Vidarbha's farmer-distress geography is usually explained by rainfall, market prices, or
-            crop choice alone. This project tests a different, longer-running explanation: that the
-            1853 British annexation of Berar -- and the Ryotwari land-tenure system pushed onto it to
-            feed cotton into Lancashire's mills -- left an institutional mark on this land that a
-            century of shared statehood since Independence hasn't erased. That boundary was formally
-            abolished in 1956. This project checks, directly against satellite and census data rather
-            than assuming it from the history alone, whether it still shows up.
+            People always blame Vidarbha's farming trouble on bad rain, prices, or crop choices. But I
+            wanted to test a much older historical reason (dating back to 1853 when the British took
+            over Berar and forced farmers into the Ryotwari cotton system just to feed their own
+            Lancashire mills). Did this colonial setup leave a permanent footprint on the land? The old
+            line was officially wiped out in 1956. I chose to use actual satellite maps and village
+            census numbers to check if this border still shows up today, rather than just guessing from
+            old history textbooks.
         </p>
     </div>
     """,
@@ -60,19 +60,20 @@ with col_left:
     st.markdown("""
     ### What Is The Cotton Line?
 
-    In 1853 the British annexed the province of **Berar** -- the five districts that are today
-    Amravati, Akola, Buldhana, Washim, and Yavatmal -- directly into colonial administration,
-    settled it under a **Ryotwari** land-tenure system, and pushed it hard into cotton monoculture
-    once the American Civil War cut off Lancashire's usual supply. The six districts to its east
-    -- Nagpur, Wardha, Chandrapur, Bhandara, Gondia, Gadchiroli -- were instead the core of the
-    **Central Provinces**, settled under the very different **Malguzari** system.
+    In 1853, the British took over **Berar** -- which means today's Amravati, Akola, Buldhana,
+    Washim, and Yavatmal districts. They forced this specific region into a **Ryotwari** land
+    system, pushing a strict cotton monoculture setup because the American Civil War suddenly
+    stopped their regular supply to Lancashire cloth factories. On the other side, the six eastern
+    districts (Nagpur, Wardha, Chandrapur, Bhandara, Gondia, and Gadchiroli) became the
+    **Central Provinces**. Landlords there used a completely different setup called the
+    **Malguzari** system.
 
-    That administrative line was erased at Independence, but it runs almost exactly along the
-    modern Amravati Division / Nagpur Division boundary. This project builds that modern boundary
-    from present-day taluka shapefiles, verifies it against the actual historical district lineage,
-    and tests -- via a spatial-discontinuity design, not a before/after or synthetic-control one --
-    whether cotton-signature NDVI, agrarian labor structure, land use, and land-surface temperature
-    still jump at that line today.
+    The old colonial line officially disappeared at Independence. But the crazy thing is that it
+    runs right along our modern Amravati Division and Nagpur Division boundary line. I built this
+    modern border line myself using present-day taluka shapefiles, cross-checked it by tracking
+    old district lineage records, and ran a spatial-discontinuity regression test to see if things
+    like cotton-signature NDVI, farm labor ratios, land use, and ground heat actually make a sharp
+    jump at the border today.
     """)
 
 with col_right:
@@ -81,13 +82,14 @@ with col_right:
         <p style="color:{PALETTE['accent']}; text-transform:uppercase; font-size:0.78rem;
                   letter-spacing:1.5px; font-weight:800; margin-bottom:12px;">Core Finding, So Far</p>
         <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.7; margin:0; font-weight:500;">
-            No sharp jump in level shows up right at the historical line -- but a real east-west
-            gradient does, confirmed independently in two full annual NDVI cycles and echoed in the
-            land-surface-temperature signal: both decline differently with distance from the
-            boundary depending on which side you're on. That's a different, more honest shape of
-            result than a clean discontinuity would have been, and it's reported as such. See
-            Spatial Discontinuity Regression for the full breakdown, including where the results
-            genuinely disagree by scale.
+            My data shows absolutely no sharp jump right at the old border line. But a real
+            west-to-east trend is definitely there. I verified this gradient across two independent
+            annual NDVI cycles, and my land-surface temperature data shows the exact same pattern:
+            both satellite metrics shift at different speeds as you move away from the boundary
+            depending on which side you stand on. This is a much more honest and precise result
+            than a clean step-jump (plus I reported everything exactly as it came out, even where
+            the results flip or change based on the map scale). See Spatial Discontinuity
+            Regression for the full breakdown.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -140,8 +142,8 @@ st.markdown("---")
 st.markdown("### Full Project Documentation")
 st.markdown(
     f"<p style='color:{PALETTE['text_secondary']}; font-weight:600;'>"
-    "All four documents are current. The ground-truth check closed out first -- see the Ground "
-    "Truth page -- which is what let the Project Report and Executive Summary get written.</p>",
+    "All three documents are current. The ground-truth check closed out first -- see the Ground "
+    "Truth page -- which is what let the Executive Summary get written.</p>",
     unsafe_allow_html=True,
 )
 
@@ -149,10 +151,9 @@ DOCS = [
     ("Research Paper (PDF)", "CL_Research_Paper.pdf"),
     ("Development Log (PDF)", "CL_Development_Log.pdf"),
     ("Executive Summary (PDF)", "CL_Executive_Summary.pdf"),
-    ("Project Report (PDF)", "CL_Project_Report.pdf"),
 ]
 
-doc_cols = st.columns(4)
+doc_cols = st.columns(3)
 for col, (label, fname) in zip(doc_cols, DOCS):
     with col:
         fpath = os.path.join(PROJECT_ROOT, fname)

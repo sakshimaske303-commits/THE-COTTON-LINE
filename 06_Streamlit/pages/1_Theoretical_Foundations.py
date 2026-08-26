@@ -32,14 +32,13 @@ st.markdown("---")
 st.markdown("### Why an Erased Administrative Line Might Still Matter")
 
 st.markdown("""
-**Institutional persistence** is the idea, well established in economic history, that the rules a
-region was governed under can keep shaping its economy long after the institution itself is gone
--- because land-tenure arrangements set who owned what, how it could be sold or subdivided, and
-what incentive a cultivator had to specialize in one cash crop versus diversify. Those incentives
-compound across generations even after the formal rule is repealed. This project tests one
-specific, geographically bounded version of that idea: whether the Ryotwari/Malguzari divide,
-abolished in 1956, still shows up as a measurable difference in land on either side of where it
-used to run.
+**Institutional persistence** is just a fancy way of saying that old rules can keep changing a
+region's economy long after the laws themselves are gone. It happens because old land systems
+decided who owned what, how property could be broken up or sold, and if a farmer had any real
+reason to grow just one cash crop instead of mixing things up. These choices pile up across
+generations, even after the official rule gets repealed. My project tests a very specific,
+mapped-out version of this theory: I want to find out if the old Ryotwari and Malguzari split --
+thrown out back in 1956 -- still shows up as a real, measurable difference on the ground today.
 """)
 
 st.markdown("---")
@@ -55,12 +54,13 @@ with t1:
     <div class="recon-card" style="min-height: 260px;">
         <p style="color: {PALETTE['berar']}; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; margin-bottom: 10px;">Berar — Ryotwari</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
-            Annexed directly by the British in 1853. Land revenue was settled directly with the
-            individual cultivator (the <em>ryot</em>), who held formal, individually-titled rights
-            to their plot. With the American Civil War cutting off Lancashire's usual raw-cotton
-            supply in the early 1860s, Berar was pushed hard into cotton as a single, tradeable
-            cash crop -- individually-owned land made that specialization administratively easy to
-            enforce, plot by plot.
+            The British directly took over this region in 1853. They collected land revenue
+            straight from the individual farmer (the <em>ryot</em>), who held official,
+            individually-titled rights to their specific plot. When the American Civil War
+            suddenly cut off the normal raw-cotton supply to Lancashire mills in the early 1860s,
+            the administration pushed Berar hard into single cash-crop cotton farming. Having
+            individually-owned plots made this specialization easy for the government to enforce
+            on the ground, plot by plot.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -69,24 +69,25 @@ with t2:
     <div class="recon-card" style="min-height: 260px;">
         <p style="color: {PALETTE['cp']}; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; margin-bottom: 10px;">Central Provinces — Malguzari</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
-            The Central Provinces to Berar's east were instead settled under a Malguzari
-            (zamindari-style) system: revenue was collected through an intermediary landholder
-            (the <em>malguzar</em>) responsible for a whole estate, not directly from each
-            cultivator. More land stayed under estate/forest control rather than being converted
-            plot-by-plot to individually-managed cropland -- a structural difference this project's
-            land-use variable picks up directly.
+            The Central Provinces sat right to the east of Berar and ran on a Malguzari
+            (zamindari-style) setup. Instead of dealing with individual farmers, the government
+            collected revenue through a middleman landlord (the <em>malguzar</em>) who was
+            responsible for a whole estate. Because of this, more land stayed under estate or
+            forest control instead of getting split up plot-by-plot into individually-managed
+            cropland -- a structural difference this project's land-use variable picks up
+            directly.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
 st.markdown("""
-The hypothesis this project tests is not that one system was better or worse -- it's narrower and
-more falsifiable than that: that Ryotwari's individual-plot cotton specialization should leave a
-different **vegetation phenology signature** (a sharper kharif-to-rabi decline, since a
+My project isn't testing whether one system was better or worse than the other. My test is much
+narrower and simpler: I want to see if Ryotwari's individual-plot cotton farming left behind a
+different **vegetation phenology signature** (meaning a sharper kharif-to-rabi decline, since a
 single-cropped field goes fallow once cotton is picked) and a different **agrarian labor
-structure** (more landless agricultural labor relative to cultivators, the standard indicator
-associated with a cash-crop-dependent smallholding economy) than Malguzari's more mixed,
-estate-managed land did -- and that both of those, if real, should still be visible today.
+structure** (more landless laborers relative to cultivators, the standard indicator for a
+cash-crop-dependent smallholding economy) than Malguzari's mixed, estate-managed land. If these
+differences are real, my data should still show them today.
 """)
 
 st.markdown("---")
@@ -99,16 +100,16 @@ st.markdown("### The Remote-Sensing Logic: Why NDVI Can Pick Up a Cropping Patte
 st.latex(r"NDVI = \frac{NIR - RED}{NIR + RED}")
 
 st.markdown("""
-NDVI is built from real leaf optics: chlorophyll strongly absorbs red light to drive
-photosynthesis, while a leaf's internal cell structure scatters near-infrared light heavily.
-Healthy, chlorophyll-rich canopy therefore shows low red reflectance and high NIR reflectance --
-a large positive NDVI. Because NDVI tracks canopy structure and greenness directly, it responds
-to a very specific agronomic fact this project leans on: **a single-cropped field goes back to
-bare or fallow soil once its one crop is harvested, while a double-cropped field gets re-sown and
-stays green.** Measuring NDVI at the kharif peak (post-monsoon, cotton canopy fullest) and again
-at the rabi/pre-harvest point captures exactly that difference -- a **large kharif-to-rabi
-decline is this project's cotton-monoculture signature; a small one is its mixed-cropping
-signature.** This is the outcome variable behind the Cotton Signature (NDVI) page.
+NDVI is built from real physics and leaf optics. Chlorophyll absorbs red light to drive
+photosynthesis, while the inside cell structure of a leaf bounces back near-infrared light
+heavily. Because of this, healthy green plants show low red reflection and high near-infrared
+reflection -- a big positive NDVI number. I rely on a very simple fact here: **single-cropped
+fields go back to bare, dry dirt after one harvest, but mixed-crop fields get planted again and
+stay green.** I measured NDVI at the kharif peak, just after the monsoons when leaves are
+fullest, and then checked it again just before the rabi harvest to capture this exact gap. A
+**huge drop in greenness is my project's signature for single-crop cotton farming, while a small
+drop means farmers are mixing up their crops.** This is the outcome variable behind the Cotton
+Signature (NDVI) page.
 """)
 
 st.markdown("---")
@@ -119,14 +120,15 @@ st.markdown("---")
 st.markdown("### Land Surface Temperature: A Second, Independent Physical Channel")
 
 st.markdown("""
-Land Surface Temperature (LST), derived from Landsat's thermal band, measures the actual radiant
-temperature of the ground surface rather than air temperature. Bare or sparsely-vegetated soil
-heats up faster and holds less moisture than a denser, actively-transpiring canopy, so LST and
-NDVI are physically linked but not redundant: NDVI describes what's growing, LST describes how
-that translates into surface heat and, indirectly, moisture stress. Testing both independently --
-rather than leaning on NDVI alone -- is what let this project confirm, in the full-footprint Phase
-4 regression, that the same side-of-boundary distance gradient shows up in two physically distinct
-measurements, not just one (see Spatial Discontinuity Regression).
+Land Surface Temperature (LST) comes from Landsat's thermal band and tracks the actual heat of
+the ground instead of just the air temperature. Bare dirt or sparsely-vegetated fields heat up
+faster and hold less moisture than a denser, actively-transpiring canopy. This is why LST and
+NDVI are physically linked but not redundant: NDVI shows me what is actually growing, while LST
+tells me how that translates into surface heat and, indirectly, moisture stress. I chose to test
+both channels independently -- rather than leaning on NDVI alone -- and that's what let this
+project confirm, in the full-footprint Phase 4 regression, that the same side-of-boundary
+distance gradient shows up across two physically distinct measurements, not just one (see Spatial
+Discontinuity Regression).
 """)
 
 st.markdown("---")

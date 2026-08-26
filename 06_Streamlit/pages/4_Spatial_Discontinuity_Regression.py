@@ -26,46 +26,46 @@ st.latex(r"\text{outcome} = \beta_0 + \beta_1 \cdot side + \beta_2 \cdot signed\
 
 DIV_COLORS = {"Amravati (Berar)": PALETTE["berar"], "Nagpur (Central Provinces)": PALETTE["cp"]}
 
-with st.expander("Climate controls, for context — LST and the rainfall gradient behind `annual_total_mm` and `elevation_m`"):
-    st.markdown("""
-    Neither variable here is a finding about the historical boundary — both are the natural
-    geography of Vidarbha (wetter/lower to the east, drier/higher to the west) that predates
-    Ryotwari and Malguzari by geological time. Flagged because if Berar is both historically
-    cotton-monoculture *and* drier, a "Berar looks more drought-stressed" result could just be
-    reflecting less rainfall rather than the land-tenure legacy — both are netted out as controls
-    in the model above.
-    """)
-    lst = safe_read_csv("Vegetation", "corridor_taluka_lst_ndvi_stats.csv")
-    rain_corridor = safe_read_csv("Hydrology", "corridor_taluka_precipitation_stats.csv")
-    rain_full = safe_read_csv("Hydrology", "taluka_precipitation_stats.csv")
+st.markdown("### Climate controls, for context — LST and the rainfall gradient behind `annual_total_mm` and `elevation_m`")
+st.markdown("""
+Neither variable here is a finding about the historical boundary — both are the natural
+geography of Vidarbha (wetter/lower to the east, drier/higher to the west) that predates
+Ryotwari and Malguzari by geological time. Flagged because if Berar is both historically
+cotton-monoculture *and* drier, a "Berar looks more drought-stressed" result could just be
+reflecting less rainfall rather than the land-tenure legacy — both are netted out as controls
+in the model above.
+""")
+lst = safe_read_csv("Vegetation", "corridor_taluka_lst_ndvi_stats.csv")
+rain_corridor = safe_read_csv("Hydrology", "corridor_taluka_precipitation_stats.csv")
+rain_full = safe_read_csv("Hydrology", "taluka_precipitation_stats.csv")
 
-    cc1, cc2 = st.columns(2)
-    with cc1:
-        if lst is not None:
-            means = lst.groupby("division")["lst_mean_c"].mean()
-            st.metric("LST — Berar", f"{means.get('Amravati (Berar)', float('nan')):.1f}°C")
-            st.metric("LST — Central Provinces", f"{means.get('Nagpur (Central Provinces)', float('nan')):.1f}°C")
-            st.caption("June (pre-sowing) snapshot — see Methodology & Data for the DN=0 fix.")
-        else:
-            st.warning("corridor_taluka_lst_ndvi_stats.csv not found yet.")
-    with cc2:
-        if rain_corridor is not None and rain_full is not None:
-            c_means = rain_corridor.groupby("division")["annual_total_mm"].mean()
-            f_means = rain_full.groupby("division")["annual_total_mm"].mean()
-            st.metric("Rainfall — Berar", f"{c_means.get('Amravati (Berar)', float('nan')):.0f}mm",
-                       f"District-wide: {f_means.get('Amravati (Berar)', float('nan')):.0f}mm")
-            st.metric("Rainfall — Central Provinces", f"{c_means.get('Nagpur (Central Provinces)', float('nan')):.0f}mm",
-                       f"District-wide: {f_means.get('Nagpur (Central Provinces)', float('nan')):.0f}mm")
-            st.caption("WorldClim 10 arc-min grid (~18.5km/pixel) — good for the regional gradient, "
-                       "not taluka-by-taluka precision. Monsoon share (~88% Jun-Sep) is nearly "
-                       "identical both sides; the difference is total volume.")
-        else:
-            st.warning("Precipitation CSVs not found yet.")
+cc1, cc2 = st.columns(2)
+with cc1:
+    if lst is not None:
+        means = lst.groupby("division")["lst_mean_c"].mean()
+        st.metric("LST — Berar", f"{means.get('Amravati (Berar)', float('nan')):.1f}°C")
+        st.metric("LST — Central Provinces", f"{means.get('Nagpur (Central Provinces)', float('nan')):.1f}°C")
+        st.caption("June (pre-sowing) snapshot — see Methodology & Data for the DN=0 fix.")
+    else:
+        st.warning("corridor_taluka_lst_ndvi_stats.csv not found yet.")
+with cc2:
+    if rain_corridor is not None and rain_full is not None:
+        c_means = rain_corridor.groupby("division")["annual_total_mm"].mean()
+        f_means = rain_full.groupby("division")["annual_total_mm"].mean()
+        st.metric("Rainfall — Berar", f"{c_means.get('Amravati (Berar)', float('nan')):.0f}mm",
+                   f"District-wide: {f_means.get('Amravati (Berar)', float('nan')):.0f}mm")
+        st.metric("Rainfall — Central Provinces", f"{c_means.get('Nagpur (Central Provinces)', float('nan')):.0f}mm",
+                   f"District-wide: {f_means.get('Nagpur (Central Provinces)', float('nan')):.0f}mm")
+        st.caption("WorldClim 10 arc-min grid (~18.5km/pixel) — good for the regional gradient, "
+                   "not taluka-by-taluka precision. Monsoon share (~88% Jun-Sep) is nearly "
+                   "identical both sides; the difference is total volume.")
+    else:
+        st.warning("Precipitation CSVs not found yet.")
 
-    col_a, col_b, col_c = st.columns([0.1, 5.9, 0.1])
-    with col_b:
-        show_image_or_placeholder(output_path("lst_ndvi_corridor_comparison.png"))
-        show_image_or_placeholder(output_path("precipitation_corridor_comparison.png"))
+col_a, col_b, col_c = st.columns([0.1, 5.9, 0.1])
+with col_b:
+    show_image_or_placeholder(output_path("lst_ndvi_corridor_comparison.png"))
+    show_image_or_placeholder(output_path("precipitation_corridor_comparison.png"))
 
 st.markdown("---")
 

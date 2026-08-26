@@ -103,12 +103,14 @@ with col_b:
 st.markdown("---")
 
 st.info("""
-**Worth being upfront about:** this gap nearly disappears at the immediate 32-taluka corridor
-(0.310 vs 0.299) -- the Central Provinces talukas closest to the boundary (Wardha, Nagpur,
-Chandrapur) are themselves substantial cotton growers, so right at the line the two sides look
-more alike than the region-wide averages suggest. The effect is real at the regional scale but
-strengthens with distance from the boundary rather than jumping sharply at it -- see Spatial
-Discontinuity Regression for the actual statistical test of that shape.
+**Worth being upfront about:** I want to be completely honest here -- this gap basically
+vanishes at the immediate 32-taluka corridor (0.310 vs 0.299). The reason is that Central
+Provinces talukas closest to the boundary (Wardha, Nagpur, Chandrapur) grow a huge amount of
+cotton themselves, so right at the line the two sides actually look very similar compared to
+what the region-wide averages suggest. The effect is definitely real across the whole regional
+map, but it gets stronger as you move further away from the boundary instead of making a sharp
+step-jump right over it. See Spatial Discontinuity Regression for the actual statistical test of
+that shape.
 """)
 
 st.markdown("---")

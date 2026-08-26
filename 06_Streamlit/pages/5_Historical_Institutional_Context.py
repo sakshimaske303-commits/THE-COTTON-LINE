@@ -19,11 +19,12 @@ st.markdown("---")
 st.markdown("### Is the Modern Boundary Actually the Historical One?")
 
 st.markdown("""
-The plan was to find a digitized 1901-1931 Imperial Gazetteer map and overlay it against the
-modern division line. No accessible digitized version of one exists. What answers the same
-question a different way: tracing the actual district-membership lists for Berar Division and the
-Central Provinces' Nagpur Division across the 1903-1956 period, checking whether the same
-territory sits on each side of the modern boundary, district by district.
+My original plan was to find an old, scanned 1901-1931 Imperial Gazetteer map and stack it
+directly against my modern division layer. I failed because no accessible digitized version of
+that map exists anywhere. So, I tackled the exact same problem from a different angle by
+manually tracking down old district-membership archives for both Berar Division and Central
+Provinces' Nagpur Division from 1903 to 1956. I sat down and cross-checked whether the exact same
+piece of land sits on each side of the modern boundary, district by district.
 """)
 
 h1, h2 = st.columns(2)
@@ -35,10 +36,12 @@ with h1:
             Amraoti, Akola, Ellichpur, Buldhana, Basim, Wun
         </p>
         <p style="color:{PALETTE['text_secondary']}; font-size:0.85rem; margin:0;">
-            Ellichpur absorbed into Amravati district. Wun renamed Yavatmal. Basim renamed Washim,
-            folded into Akola for a stretch, recreated as its own district 1 July 1998. Net effect:
-            maps district-for-district onto today's <strong>Amravati Division</strong> — same
-            5-district territory, renamed and re-split internally, no actual boundary redraw.
+            Later, Ellichpur got merged into Amravati district, Wun changed its name to Yavatmal,
+            and Basim turned into Washim (which got folded into Akola for a stretch before coming
+            back out as its own separate district on 1 July 1998). This district history lines up
+            district-for-district with today's <strong>Amravati Division</strong> — the same
+            5-district territory, just renamed and re-split internally, with no actual boundary
+            redraw.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -50,25 +53,27 @@ with h2:
             Nagpur, Bhandara, Chanda, Wardha, and <strong>Balaghat</strong>
         </p>
         <p style="color:{PALETTE['text_secondary']}; font-size:0.85rem; margin:0;">
-            Chanda renamed Chandrapur. Gondiya (split from Bhandara, 1999) and Gadchiroli (split
-            from Chandrapur, 26 Aug 1982) are later internal subdivisions, not new land. The one
-            real wrinkle: <strong>Balaghat</strong> went to Madhya Pradesh's Jabalpur Division on
-            1 Nov 1956 (linguistic States Reorganisation) — never a Maharashtra district, so never
-            part of this project's 11-district dataset to begin with.
+            Later on, Chanda changed its name to Chandrapur, while Gondiya split off from
+            Bhandara in 1999 and Gadchiroli split from Chandrapur on 26 August 1982 (meaning these
+            two are just internal boundary cuts, not new land). The one real wrinkle:
+            <strong>Balaghat</strong> went to Madhya Pradesh's Jabalpur Division on 1 Nov 1956
+            during the linguistic States Reorganisation — it was never a Maharashtra district, so
+            it was never part of this project's 11-district dataset to begin with.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
 st.success("""
-**Bottom line:** as far as documented district lineage can show, the modern Amravati/Nagpur
-Division boundary is the same line as the historical Berar/Central Provinces boundary — confirmed
-by tracing every district's administrative history, not by a literal old-map overlay. The one
-caveat worth stating precisely: this project's "Central Provinces" side is specifically the
-Maharashtra-Vidarbha portion of the old CP Nagpur Division, very slightly smaller than the
-historical division's full extent — the missing piece (Balaghat) fell away because of a 1956
-language-based state boundary redraw, unrelated to the Ryotwari/Malguzari distinction this project
-actually tests. A genuine period map for visual use is still not sourced — this doesn't block the
-substantive question, which now has a well-sourced yes.
+**Bottom line:** as far as documented district lineage can show, the modern Amravati-Nagpur
+Division boundary is the same line as the historical Berar-Central Provinces boundary. I
+confirmed this by tracking down every single district's actual office paperwork history instead
+of just laying down a random old-map overlay. I want to state one tiny catch very clearly: my
+"Central Provinces" data side only looks at the Maharashtra-Vidarbha section of the old CP Nagpur
+Division, which makes it slightly smaller than the historical footprint. The missing piece --
+Balaghat -- dropped away during the 1956 language-based state reshuffle, which has nothing to do
+with the Ryotwari or Malguzari farming rules I am actually testing. I still have not found a
+genuine historical period map to use as a visual aid, but that does not block my main research
+question, since it now has a well-sourced yes.
 """)
 
 st.markdown("---")

@@ -4,31 +4,33 @@
 
 ## What This Project Is
 
-In 1853 the British annexed the province of Berar — the five districts that are today Amravati, Akola, Buldhana, Washim, and Yavatmal — directly into colonial administration, settled it under a **Ryotwari** land-tenure system, and pushed it hard into cotton monoculture once the American Civil War cut off Lancashire's usual supply. The six districts to its east — Nagpur, Wardha, Chandrapur, Bhandara, Gondia, Gadchiroli — were instead the core of the **Central Provinces**, settled under the very different **Malguzari** system.
+Every other project inside my portfolio tests a specific change or policy using standard causal setups like difference-in-differences, event studies, or synthetic control maps. But I chose to build this specific project around a completely different question: I do not want to see if some recent intervention caused a metric shift, but rather if an old 150-year-old administrative border still leaves a physical mark on the landscape today. This is fundamentally a boundary-persistence and spatial-discontinuity issue that sits closer to historical GIS tracking and pattern analysis than to standard treatment checks.
 
-That administrative line was erased at Independence, but it runs almost exactly along the modern Amravati Division / Nagpur Division boundary. This project builds that modern boundary from present-day taluka shapefiles, verifies it against the actual historical district lineage, and tests — via a spatial-discontinuity design, not a before/after or synthetic-control one — whether cotton-signature NDVI, agrarian labor structure, land use, and land-surface temperature still jump at that line today.
+Back in 1853, the British took over Berar—today's Amravati, Akola, Buldhana, Washim, and Yavatmal districts—and forced it into a direct Ryotwari land tax setup to grab cotton for Lancashire mills. On the east side, the Nagpur, Wardha, Chandrapur, Bhandara, Gondia, and Gadchiroli districts ran on a landlord-based Malguzari system. Even though the official line vanished in 1956, it sits right where our modern Amravati Division and Nagpur Division boundary lines sit today.
 
 ## Core Question
 
-Does the historical Berar (Ryotwari) / Central Provinces (Malguzari) boundary still register as a spatial discontinuity in present-day cotton-signature NDVI, agrarian labor structure, and land-surface temperature — once distance-to-boundary, rainfall, and elevation are controlled for?
+Does that old historical Berar (Ryotwari) versus Central Provinces (Malguzari) boundary still show up as a clear spatial discontinuity on maps of modern cotton-signature NDVI, farm labor ratios, and ground heat once I control for distance-to-boundary, rainfall, and elevation?
 
 ## Why This Approach
 
-Every other project in this portfolio tests a specific policy or event with a causal-inference design — difference-in-differences, event studies, synthetic control. This one is deliberately a different kind of question: not "did X intervention cause Y effect," but "does a 150-year-old administrative geography still leave a fingerprint on the land." That's a spatial-discontinuity / boundary-persistence problem, closer to landscape pattern analysis and historical GIS than to treatment-effect estimation.
+I built this project to approach spatial analysis differently than the rest of my portfolio. I skipped standard event-tracking models entirely because I am looking at long-term landscape features. I wanted to verify how deep the colonial footprint goes over generations. This is a study of map survival (not a basic short-term policy check).
 
 ## Core Finding, So Far
 
-No sharp jump in level shows up right at the historical line — but a real east-west gradient does, confirmed independently in two full annual NDVI cycles and echoed in the land-surface-temperature signal: both decline differently with distance from the boundary depending on which side you're on. That's a different, more honest shape of result than a clean discontinuity would have been, and it's reported as such in the dashboard's Spatial Discontinuity Regression page, including where the corridor and full-footprint models genuinely disagree by scale.
+My statistical models show absolutely no sharp level jump right at the old historical line. Instead, I found a very clear east-to-west gradient that shows up across both independent annual satellite greenness cycles and matches my ground temperature metrics. The metrics drop at completely different rates with distance from the border depending on which side you are looking at.
+
+This is a much more honest and accurate picture of the geography than a fake, perfectly clean discontinuity step-jump would be. I chose to report these results exactly as they came out on the dashboard's Spatial Discontinuity Regression page, including the exact places where the small corridor model and the big full-scene map models actually disagree with each other based on scale.
 
 The historical district-lineage boundary verification and the FRA compilation supporting the institutional side of this are on the Historical & Institutional Context page.
 
 ## Study Design
 
-- Modern boundary built by dissolving 120 talukas into the two divisions and extracting the shared edge — 384.7 km long, from the Akola/Amravati/Wardha corner to the Yavatmal/Chandrapur corner
-- 25 km buffer corridor split by division — a 32-taluka near-boundary sample (the actual discontinuity test) and a 68-taluka full-regional-footprint sample, checked as two independent models
-- `outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m` — an OLS spatial-discontinuity model, run on both samples, with climate and terrain as controls
-- Kharif-to-rabi NDVI decline (the cotton-monoculture-vs-mixed-cropping signature) confirmed across two independent NDVI years, not a single-season read
-- Jackknife robustness check — each district dropped and the model re-run, to confirm no single district is driving the result
+- I built the modern border layer by merging 120 taluka shapefiles together to grab the exact 384.7 km shared boundary edge running from the Akola-Amravati-Wardha corner all the way down to Yavatmal and Chandrapur.
+- I split my data into two distinct test groups: a tight 32-taluka near-boundary corridor dataset (which acts as my primary discontinuity test within a ±25 km buffer zone) and a much wider 68-taluka regional footprint dataset that I ran as a separate robustness check, not a replacement for the corridor result.
+- `outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m` — I ran this OLS spatial-discontinuity regression model across both of my data samples while using terrain maps and rain logs as environmental control variables.
+- I tracked the regular drop from the green kharif monsoon peak down to the dry winter rabi point across two full, separate annual Landsat satellite cycles to make sure I am catching actual farming habits rather than just single-year weather fluctuations.
+- I set up a complete jackknife test routine that drops out one corridor taluka at a time and reruns my regressions to confirm that no single taluka is swinging the final output numbers.
 
 Full methodology, every data source, the Landsat DN=0 fix, and the corridor-vs-full-footprint scope decision are documented in the dashboard's Methodology & Data page and in `CL_Development_Log.md`.
 
@@ -86,7 +88,7 @@ streamlit run app.py
 
 ## Project Documentation
 
-The Development Log (`CL_Development_Log.md`) and Research Paper (`CL_Research_Paper.md`) are both current. The Karanja Ghadge / Sawardoh ground-truth check is complete — see the dashboard's Ground Truth page or Section 6.6 of the Research Paper. The Project Report and Executive Summary are next now that it's closed.
+I have fully cleaned up and finalized my running log file (`CL_Development_Log.md`), my main paper draft (`CL_Research_Paper.md`), and my Executive Summary (`CL_Executive_Summary.md`). I also finished my physical ground-truth check comparing Karanja Ghadge and Sawardoh (you can read all those field details on the dashboard's Ground Truth page or check Section 6.6 of my final research paper). The project no longer has a separate Project Report — its overview paragraph is folded into the start of the Executive Summary instead.
 
 ## Author
 

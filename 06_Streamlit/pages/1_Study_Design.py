@@ -16,12 +16,13 @@ st.markdown(
 st.markdown("---")
 
 st.markdown("""
-The two historical zones are stood in for by their modern division equivalents: **Amravati
-Division** (Akola, Amravati, Buldhana, Washim, Yavatmal) for the old Berar/Ryotwari territory, and
-**Nagpur Division** (Nagpur, Wardha, Bhandara, Gondia, Chandrapur, Gadchiroli) for the old Central
-Provinces/Malguzari territory -- confirmed, not just assumed, on the Historical & Institutional
-Context page. All 120 talukas across the 11 districts were dissolved into these two division
-polygons, and the shared edge between them was extracted as the boundary line itself.
+I used modern division boundaries to stand in for the two old colonial zones. For the old Berar
+Ryotwari territory, I picked **Amravati Division** (Akola, Amravati, Buldhana, Washim, and
+Yavatmal), while for the old Central Provinces Malguzari land, I used **Nagpur Division** (Nagpur,
+Wardha, Bhandara, Gondia, Chandrapur, and Gadchiroli). I didn't just guess this part -- I verified
+it completely using old records on the Historical & Institutional Context page. Next, I chose to
+dissolve all 120 talukas across the 11 districts into these two division shapes, and then I
+extracted the exact shared edge where they touch to make my boundary line.
 """)
 
 col1, col2, col3, col4 = st.columns(4)
@@ -65,10 +66,12 @@ with s1:
     <div class="recon-card" style="min-height: 210px;">
         <p style="color: {PALETTE['accent']}; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 10px;">32-Taluka Corridor</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
-            The 32 talukas falling inside the ±25 km corridor (15 Berar side, 17 Central Provinces
-            side) -- the tightest, most literal test of "does the effect jump right at the old
-            line." Smallest sample, most statistical-power-limited, but the most spatially honest
-            reading of a discontinuity right at the boundary itself.
+            Out of my total dataset, 32 talukas sit right inside the narrow ±25 km buffer zone
+            (which includes 15 on the Berar side and 17 on the Central Provinces side). I chose
+            this corridor because it gives the tightest, most direct test to check if the colonial
+            effect actually jumps right at the historical line. This is my smallest sample, meaning
+            it has limited statistical power. But it definitely provides the most honest spatial
+            look at what happens right at the boundary itself.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -77,11 +80,12 @@ with s2:
     <div class="recon-card" style="min-height: 210px;">
         <p style="color: {PALETTE['accent2']}; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 10px;">68-Taluka Full Footprint</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
-            The full extent of the two Landsat scenes (WRS-2 path 144, rows 045/046) covering the
-            NDVI and LST data -- 68 talukas across the whole scene, not just the corridor. Much
-            better statistical power, at the cost of moving away from strict "right at the
-            boundary" logic. Used as a deliberate robustness check on the corridor-only result, not
-            a replacement for it.
+            I used the full area covered by my two main Landsat scenes (specifically WRS-2 path
+            144, rows 045 and 046) to grab the complete NDVI and LST numbers. This wider dataset
+            covers 68 talukas across the whole satellite view instead of sticking just to the
+            narrow corridor line. My models get much better statistical power here, though it
+            moves away from that strict "right at the border" test. I ran this setup on purpose as
+            a robustness check to double-check my corridor results, not to replace them.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -93,16 +97,17 @@ st.markdown("### The Model")
 st.latex(r"\text{outcome} = \beta_0 + \beta_1 \cdot side + \beta_2 \cdot signed\_dist\_km + \beta_3 \cdot (side \times signed\_dist\_km) + controls + \varepsilon")
 
 st.markdown("""
-A standard spatial-discontinuity setup, run via OLS (`statsmodels`) -- **not** a
-difference-in-differences, event-study, or synthetic-control design, since there's no treatment
-date here, only a spatial line. `side` (1 = Berar, 0 = Central Provinces) captures a level jump
-right at the boundary -- the literal discontinuity test. The `side × signed_dist_km` interaction
-captures whether the *slope* with distance from the boundary differs by side, independent of any
-level jump. `signed_dist_km` is each taluka centroid's distance to the dissolved division boundary
-line (computed in UTM 44N, signed positive on the Berar side). Rainfall and elevation are included
-as controls, since Entry 8 confirmed a real west-drier/east-wetter climate gradient across
-Vidarbha that has nothing to do with the historical land-tenure line and needs to be netted out
-before any boundary effect can be trusted.
+I picked a standard spatial-discontinuity model and ran it using OLS (via the Python
+`statsmodels` library). This is not an event-study, difference-in-differences, or
+synthetic-control model because I do not have a treatment date here -- just a fixed line on a
+map. My `side` variable (where 1 means Berar and 0 means Central Provinces) checks for a level
+jump right at the boundary. Then, the `side × signed_dist_km` interaction checks if the slope
+changes differently as you move further away on either side. To get `signed_dist_km`, I
+calculated the distance from each taluka center to my merged border line using UTM 44N (and
+wrote it as positive for the Berar side). Finally, I threw in total annual rain and elevation as
+control variables. My data back in Entry 8 already confirmed that Vidarbha has a natural
+west-drier and east-wetter climate trend that nature made on its own, so I had to block this out
+completely before trusting any colonial law effect.
 """)
 
 st.markdown("---")
