@@ -1,0 +1,55 @@
+cff-version: 1.2.0
+message: "If you use this software or its findings, please cite it using the metadata below."
+title: "THE COTTON LINE: Testing the Persistence of an 1853 Colonial Land-Tenure Boundary in Present-Day Vidarbha"
+type: software
+authors:
+  - family-names: "Maske"
+    given-names: "Sakshi D."
+repository-code: "https://github.com/sakshimaske303-commits/THE-COTTON-LINE"
+url: "https://github.com/sakshimaske303-commits/THE-COTTON-LINE"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22111298"
+    description: "Zenodo archive of THE COTTON LINE v1.0.1"
+doi: "10.5281/zenodo.22111298"
+abstract: >-
+  A historical-institutional and spatial-discontinuity study testing whether an 1853 colonial
+  land-tenure boundary in Vidarbha, Maharashtra -- Ryotwari cotton country (Berar) to the west,
+  Malguzari mixed-tenure country (Central Provinces) to the east, administratively abolished in
+  1956 -- still registers as a measurable present-day signature in cotton-crop phenology, agrarian
+  labor structure, land use, and land-surface temperature. The modern boundary was built by
+  dissolving 120 talukas across Vidarbha's 11 districts into their two historical-division
+  successors and extracting the shared 384.7 km edge, then verified against documented district
+  administrative lineage from 1903-1956 rather than a period map, since no accessible digitized
+  one exists. Four outcomes were tested with an OLS spatial-discontinuity model (outcome ~ side +
+  signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m) at both a 32-taluka
+  immediate-boundary corridor (+/-25 km) and a 66-68-taluka full-scene footprint. No outcome
+  showed a statistically significant level jump right at the historical line at either scale once
+  rainfall and elevation were controlled for. A real regional gradient in kharif-to-rabi NDVI
+  decline was found instead -- a 0.070-point Berar-side excess at the full-footprint scale,
+  independently reproduced at a 0.074-point gap a year later on a second Landsat cycle -- with the
+  same side x distance interaction independently significant for land-surface temperature
+  (p=0.0105) alongside NDVI (p=0.0348). Agrarian labor structure showed a scale-sensitive result: a
+  significant slope-difference interaction at the corridor scale (p=0.0361, stable in direction
+  across a 32-run leave-one-out jackknife) that flips to a significant level jump at the
+  full-footprint scale (p=0.014), traced to the satellite scene's asymmetric district coverage
+  rather than treated as a contradiction. A field ground-truth check at seven boundaries in Karanja
+  Ghadge and Sawardoh villages cross-validated the satellite NDVI signal against Sentinel-2 and
+  dated ground photography. The evidence supports a gradient-based, rather than discontinuous,
+  form of institutional persistence in this landscape.
+keywords:
+  - institutional persistence
+  - spatial discontinuity
+  - historical GIS
+  - land tenure
+  - NDVI
+  - land surface temperature
+  - agrarian labor structure
+  - remote sensing
+  - Vidarbha
+  - regression discontinuity
+  - colonial land revenue systems
+  - India
+license: CC-BY-4.0
+version: 1.0.1
+date-released: "2026-08-26"
