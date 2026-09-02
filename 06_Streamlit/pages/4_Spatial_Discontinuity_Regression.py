@@ -261,10 +261,10 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-st.warning("""
-**Still open:** the Karanja Ghadge / Sawardoh ground-truth field check (see Ground Truth) —
-comparing an actual photographed field patch against its NDVI/LST pixel value, as a direct
-sanity-check on the remote-sensing signal this whole project rests on.
+st.success("""
+**Ground-truthed:** the Karanja Ghadge / Sawardoh field check — comparing actual photographed
+field patches against their NDVI/LST pixel values as a direct sanity-check on the remote-sensing
+signal this whole project rests on — is now complete. See the Ground Truth page for details.
 """)
 
 st.markdown("---")

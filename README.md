@@ -2,45 +2,44 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22111298.svg)](https://doi.org/10.5281/zenodo.22111298)
 
-**Testing whether the 1853 Berar/Central Provinces land-tenure split — abolished in 1956 — still shows up as a spatial-discontinuity signature in cotton-crop phenology, agrarian labor structure, and land-surface temperature today.**
+The effect of the Berar/Central Provinces land tenure split from 1853 — abolished in 1956 — remains as a spatial discontinuity signature of cotton-crop phenology, in agrarian labor structure, and land surface temperature today.
 
 ## What This Project Is
 
-Every other project inside my portfolio tests a specific change or policy using standard causal setups like difference-in-differences, event studies, or synthetic control maps. But I chose to build this specific project around a completely different question: I do not want to see if some recent intervention caused a metric shift, but rather if an old 150-year-old administrative border still leaves a physical mark on the landscape today. This is fundamentally a boundary-persistence and spatial-discontinuity issue that sits closer to historical GIS tracking and pattern analysis than to standard treatment checks.
+All other projects within my portfolio run an experimental test of a particular change/implementation or policy in a traditional causal fashion: difference-in-differences, event studies, etc. However, the question I chose to pursue in this project was different, I wasn't going to find out if there is a metric shift from any recent action, but whether if a 150-year-old administrative border is still felt as a physical imprint in the landscape. This is a basic problem of boundary persistence and spatial discontinuity, rather than a basic treatment check problem, and is therefore more related to historical GIS tracking and pattern analysis than traditional treatment checks.
 
-Back in 1853, the British took over Berar—today's Amravati, Akola, Buldhana, Washim, and Yavatmal districts—and forced it into a direct Ryotwari land tax setup to grab cotton for Lancashire mills. On the east side, the Nagpur, Wardha, Chandrapur, Bhandara, Gondia, and Gadchiroli districts ran on a landlord-based Malguzari system. Even though the official line vanished in 1956, it sits right where our modern Amravati Division and Nagpur Division boundary lines sit today.
+In 1853 the British annexed the Berar District (which is now Amravati, Akola, Buldhana, Washim and Yavatmal) and imposed a direct land tax known as 'Ryotwari' and forced the peasants to give their cotton to the Lancashire mills. These districts on the east side of the country--Nagpur, Wardha, Chandrapur, Bhandara, Gondia, and Gadchiroli--operated under a landlord system of Malguzari. Though the official line was removed from the map in 1956, it is there where our present Amravati Division and Nagpur Division boundary lines lie.
 
 ## Core Question
 
-Does that old historical Berar (Ryotwari) versus Central Provinces (Malguzari) boundary still show up as a clear spatial discontinuity on maps of modern cotton-signature NDVI, farm labor ratios, and ground heat once I control for distance-to-boundary, rainfall, and elevation?
+Is that historical Berar (Ryotwari) and the Central Provinces (Malguzari) boundary still visible as a distinct spatial discontinuity in maps of modern cotton-signature NDVI, ratio of farm workers to total laborers, and temperature of ground after adjusting for distance to boundary, rainfall and elevation?
 
 ## Why This Approach
 
-I built this project to approach spatial analysis differently than the rest of my portfolio. I skipped standard event-tracking models entirely because I am looking at long-term landscape features. I wanted to verify how deep the colonial footprint goes over generations. This is a study of map survival (not a basic short-term policy check).
+The idea behind this project was to take a different approach to spatial analysis, while not radically departing from the rest of my portfolio. I did not do any event-tracking models because I'm dealing with the longer persisting landscape features. I wished to test the extent of the colonization over the course of generations. This is a study (not a simple policy short-term check) on map survival.
 
 ## Core Finding, So Far
 
-My statistical models show absolutely no sharp level jump right at the old historical line. Instead, I found a very clear east-to-west gradient that shows up across both independent annual satellite greenness cycles and matches my ground temperature metrics. The metrics drop at completely different rates with distance from the border depending on which side you are looking at.
+There is no abrupt change in my models at the old historical level. In contrast, a very clear east to west gradient was identified that can be discerned from both independent annual satellite greenness cycles and align with my ground temperature metrics. Depending on the side of the border looked at, the rates of decline in the metrics differ widely as a function of distance from the border.
 
-This is a much more honest and accurate picture of the geography than a fake, perfectly clean discontinuity step-jump would be. I chose to report these results exactly as they came out on the dashboard's Spatial Discontinuity Regression page, including the exact places where the small corridor model and the big full-scene map models actually disagree with each other based on scale.
+The representation is much more accurate and honest than a fake perfect clean discontinuity step-jump would be of the geography. I will report here the same results as returned by the dashboard's Spatial Discontinuity Regression page and the points where the small corridor model and the big full-scene map model actually differ from each other, on a scale basis.
 
-The historical district-lineage boundary verification and the FRA compilation supporting the institutional side of this are on the Historical & Institutional Context page.
+The boundary for the Historic District (Historical & Institutional Context) is verified via the historical district-lineage boundary verification that is listed on the Historic District page and the district compilation for the FRA (Historical & Institutional Context) is listed on the FRA page.
 
 ## Study Design
 
-- I built the modern border layer by merging 120 taluka shapefiles together to grab the exact 384.7 km shared boundary edge running from the Akola-Amravati-Wardha corner all the way down to Yavatmal and Chandrapur.
-- I split my data into two distinct test groups: a tight 32-taluka near-boundary corridor dataset (which acts as my primary discontinuity test within a ±25 km buffer zone) and a much wider 68-taluka regional footprint dataset that I ran as a separate robustness check, not a replacement for the corridor result.
-- `outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m` — I ran this OLS spatial-discontinuity regression model across both of my data samples while using terrain maps and rain logs as environmental control variables.
-- I tracked the regular drop from the green kharif monsoon peak down to the dry winter rabi point across two full, separate annual Landsat satellite cycles to make sure I am catching actual farming habits rather than just single-year weather fluctuations.
-- I set up a complete jackknife test routine that drops out one corridor taluka at a time and reruns my regressions to confirm that no single taluka is swinging the final output numbers.
+The modern border layer is created by combining 120 taluka shape files, so that it would capture the actual border edge in between the Akola, Amravati and Wardha corner and the entire boundaries till Yavatmal and Chandrapur.
+My primary discontinuity test is a closer dataset on the 32 talukas around the boundary (still not considered a base check, just a different set of data to check robustness from the 25 km buffer) and my regional discontinuity set is on a route with a wider 68 talukas predominantly in the region (which serves only as an extra robustness check, not a substitute for my 25 km buffer).
+I've used both of my data samples with this OLS spatial-discontinuity regression model using the terrain maps and the rain logs as env control variables: -outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m
+To ensure that I'm not just observing one year's weather, but actual farming practices, I took snaps over the regular cycle between the peak of the green kharif monsoon and the dry winter rabi season over two full Landsat satellite cycles.
+I created a full jack-knife test, which was taking each corridor taluka out and running my regressions again and comparing the final output numbers to see that there's no one particular taluka swinging the numbers.
 
-Full methodology, every data source, the Landsat DN=0 fix, and the corridor-vs-full-footprint scope decision are documented in the dashboard's Methodology & Data page and in `CL_Development_Log.md`.
+Documents for the methodology, all the data sources, the Landsat DN=0 fix, and the scope decision of corridor vs full-footprint are documented on the Methodology & Data page of the dashboard and in `CL_Development_Log.md`.
 
 ## Repository Structure
 
 ```text
 THE_COTTON_LINE/
-├── 01_Project _Journal/            # Project roadmap
 ├── 03_Data_Processed/              # Cleaned, per-taluka CSVs by theme (Vegetation, Population,
 │                                    #   Land_Use, Agriculture, Economics, Climate, Hydrology,
 │                                    #   Terrain, Administrative boundary/corridor geometry, Phase4
