@@ -38,19 +38,19 @@ it's from (mostly 2011 Census for demographics, 2023-24 for most economic/social
 2021-22 for factory data, 2015-16 for landholding size, 2013 for establishments/employment from
 the 6th Economic Census).
 
-## Relevance to THE UNKEPT PACT chapters
+## Relevance to THE COTTON LINE
 
-- **Per Capita Income, Credit-Deposit Ratio, Banking Offices/ATMs per lakh, Priority Sector
-  Credit %** → Debt Line chapter
 - **Net Sown Area %, Foodgrain Area %, Foodgrain Production per capita, Cropping Intensity,
-  Avg Operational Holding size, MGNREGA employment days** → Cotton Trap / agrarian distress
-  framing
-- **Annual Rainfall, Forest Area %** → Irrigation Gap / Forest Frontier chapters (district-level
-  cross-check against your raster-derived numbers)
-- **GST filing %, Factories in Operation, Workers, Gross/Net Output per Worker, Establishments per
-  lakh** → Buried Wealth (industrial/mineral economy) chapter
+  Avg Operational Holding size, MGNREGA employment days** → Section 4.2 (Agrarian Labor Structure,
+  Land Use, and Cotton Dependency) — district-level cross-check against this project's own
+  taluka-level Census aggregates.
+- **Annual Rainfall, Forest Area %** → Section 3.5 (rainfall control variable) and Section 4.2
+  (forest-cover comparison) — district-level cross-check against this project's raster/Census-
+  derived numbers.
+- **Per Capita Income, Credit-Deposit Ratio, Banking Offices/ATMs per lakh, Priority Sector
+  Credit %** → background context for the Discussion's agrarian-distress-governance framing.
 - **SC/ST %, Literacy, Underweight Children %, Schools per lakh** → general socio-economic profile
-  for the synthesis chapter
+  referenced in the Introduction.
 
 ## What this does NOT cover
 

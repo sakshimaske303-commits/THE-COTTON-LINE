@@ -112,17 +112,18 @@ functions under Article 371(2) and for the effective implementation of this Orde
 
 ---
 
-## Why this matters for THE UNKEPT PACT
+## Why this matters for THE COTTON LINE
 
-This is the operative legal instrument that gives Vidarbha's "backlog removal" claim constitutional
-teeth — it is the direct implementation of Article 371(2)'s special responsibility clause. Key
-points to build the Polity chapter around:
+This is the operative legal instrument behind the Article 371(2) special-responsibility clause
+cited in this paper's Introduction — the modern institutional counterpart to the 1853 Ryotwari/
+Malguzari administrative split this study tests. Key points relevant to this project:
 
-- The **non-divertibility clause (Clause 8)** is the actual legal mechanism meant to stop funds
-  earmarked for Vidarbha being spent elsewhere — this is the clause most often cited (and disputed)
-  in debates about whether the backlog-removal promise was honoured.
-- The Board only *recommends* — actual allocation power stays with the Governor (Clause 7), so the
-  Board's teeth depend entirely on how much weight the Governor's office gives its recommendations.
-  This is a good angle for a "paper safeguard vs. practice" argument in your synthesis chapter.
-- The Vidarbha Development Board's jurisdiction (Nagpur + Amravati Revenue Divisions, Clause 3) is
-  the exact geographic scope your project should confirm matches the 11 districts you're studying.
+- The **non-divertibility clause (Clause 8)** is the legal mechanism meant to stop funds earmarked
+  for Vidarbha being spent elsewhere — relevant background for the paper's framing of Vidarbha's
+  modern-day agrarian-distress governance (Section 1, Introduction).
+- The Board only *recommends* — actual allocation power stays with the Governor (Clause 7), a useful
+  "paper safeguard vs. practice" contrast alongside this project's own institutional-persistence
+  argument.
+- The Vidarbha Development Board's jurisdiction (Nagpur + Amravati Revenue Divisions, Clause 3)
+  matches the same 11-district Vidarbha study area used throughout this project, confirming the
+  modern administrative geography that this paper's boundary construction (Section 3.3) relies on.

@@ -34,8 +34,8 @@ abstract: >-
   across a 32-run leave-one-out jackknife) that flips to a significant level jump at the
   full-footprint scale (p=0.014), traced to the satellite scene's asymmetric district coverage
   rather than treated as a contradiction. A field ground-truth check at seven boundaries in Karanja
-  Ghadge and Sawardoh villages cross-validated the satellite NDVI signal against Sentinel-2 and
-  dated ground photography. The evidence supports a gradient-based, rather than discontinuous,
+  Ghadge and Sawardoh villages provided a field-level corroboration of the satellite NDVI signal
+  against Sentinel-2 and dated ground photography. The evidence supports a gradient-based, rather than discontinuous,
   form of institutional persistence in this landscape.
 keywords:
   - institutional persistence

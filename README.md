@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22111298.svg)](https://doi.org/10.5281/zenodo.22111298)
 
-The effect of the Berar/Central Provinces land tenure split from 1853 — abolished in 1956 — remains as a spatial discontinuity signature of cotton-crop phenology, in agrarian labor structure, and land surface temperature today.
+This project tests whether the Berar/Central Provinces land-tenure split from 1853 — abolished in 1956 — still registers today in cotton-crop phenology, agrarian labor structure, and land surface temperature. It doesn't show up as a sharp break right at the old boundary; instead, the evidence points to a genuine regional gradient that strengthens with distance from the line in both directions — a subtler, but still real, form of institutional persistence.
 
 ## What This Project Is
 
