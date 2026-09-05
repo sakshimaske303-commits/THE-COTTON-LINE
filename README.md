@@ -1,6 +1,6 @@
 # THE COTTON LINE — Does a 150-Year-Old Colonial Land-Tenure Boundary Still Register as a Measurable Spatial Signature in Present-Day Vidarbha?
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22111298.svg)](https://doi.org/10.5281/zenodo.22111298)
+[![EarthArXiv](https://img.shields.io/badge/EarthArXiv-Preprint-B7410E.svg)](https://eartharxiv.org/repository/view/14802/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22111298.svg)](https://doi.org/10.5281/zenodo.22111298)
 
 This project tests whether the Berar/Central Provinces land-tenure split from 1853 — abolished in 1956 — still registers today in cotton-crop phenology, agrarian labor structure, and land surface temperature. It doesn't show up as a sharp break right at the old boundary; instead, the evidence points to a genuine regional gradient that strengthens with distance from the line in both directions — a subtler, but still real, form of institutional persistence.
 
