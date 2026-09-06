@@ -34,8 +34,9 @@ st.markdown(f"""
         Karanja Ghadge village and Sawardoh village, both Wardha district, both inside this
         project's 25 km corridor on the Central Provinces/Malguzari side. That gave me GPS
         coordinates, dated ground photos, and an actual field-level Sentinel-2 NDVI/NDRE time
-        series for 7 real field boundaries, which is more evidence than the original 2–3-patch
-        plan below called for.
+        series for 7 real field boundaries (4 featured below in detail, the rest in the
+        underlying dataset), which is more evidence than the original 2–3-patch plan below
+        called for.
     </p>
 </div>
 """, unsafe_allow_html=True)

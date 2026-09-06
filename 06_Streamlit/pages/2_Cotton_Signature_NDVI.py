@@ -104,7 +104,7 @@ st.markdown("---")
 
 st.info("""
 **Worth being upfront about:** I want to be completely honest here -- this gap basically
-vanishes at the immediate 32-taluka corridor (0.310 vs 0.299). The reason is that Central
+vanishes at the immediate corridor (0.310 vs 0.299, across the 29 corridor talukas with usable NDVI). The reason is that Central
 Provinces talukas closest to the boundary (Wardha, Nagpur, Chandrapur) grow a huge amount of
 cotton themselves, so right at the line the two sides actually look very similar compared to
 what the region-wide averages suggest. The effect is definitely real across the whole regional

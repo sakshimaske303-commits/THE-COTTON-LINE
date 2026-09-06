@@ -233,8 +233,10 @@ st.markdown("---")
 st.markdown("### Findings: What Held Up, What Didn't")
 
 st.markdown("""
-- **No sharp level jump at the boundary**, in any of the four headline outcomes, at either scale —
+- **No sharp level jump at the boundary in the corridor's four headline outcomes** —
   this project set out looking for a discontinuity and didn't find one at the line itself.
+  (The one exception is the full-footprint ag-laborer `side` jump, p≈0.01 — explained below
+  as a footprint-asymmetry artifact rather than a boundary effect.)
 - **Land fragmentation** (Agrarian & Land Structure page) came back flat — Central Provinces
   corridor talukas run slightly *larger* holdings, the opposite of a naive "Ryotwari →
   fragmentation" story.
