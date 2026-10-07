@@ -9,17 +9,20 @@ inject_theme()
 st.markdown("<h1>🌾 THE COTTON SIGNATURE: KHARIF-TO-RABI NDVI DECLINE</h1>", unsafe_allow_html=True)
 st.markdown(
     "<h3 style='text-align: center; font-weight: 700;'>The Core Phase 3 Outcome Variable, "
-    "Confirmed Across Two Independent Growing Years</h3>",
+    "Replicated in a Second Growing Year (Same Footprint and Method)</h3>",
     unsafe_allow_html=True,
 )
 st.markdown("---")
 
 st.markdown("""
-A big NDVI drop between the kharif peak (post-monsoon, cotton canopy fullest) and the rabi
-pre-harvest period means the land goes back to bare/fallow once the kharif crop comes off -- a
-single-crop (cotton) signature. A smaller drop means a rabi crop follows the kharif one and keeps
-the land green through winter -- a mixed-cropping signature. See Theoretical Foundations for the
-physical basis.
+This is the fall in NDVI between a post-monsoon scene (early to mid November) and a
+pre-harvest scene (early March). A large drop means the land loses most of its green cover
+between the two dates, which is consistent with a single-season system; a smaller drop is
+consistent with a second crop or with irrigated or perennial cover. It is best read as a
+cropping-intensity index, not a direct cotton detector: cotton is still being picked in
+November, soybean is already harvested, and rice in the east is still standing, so different
+crop calendars can produce the same decline. The November scene is not a true kharif canopy
+peak. See Theoretical Foundations for the physical basis.
 """)
 
 df = safe_read_csv("Vegetation", "taluka_seasonal_ndvi_signature_both_years.csv")
@@ -92,7 +95,7 @@ col_a, col_b, col_c = st.columns([0.1, 5.9, 0.1])
 with col_b:
     show_image_or_placeholder(
         output_path("seasonal_ndvi_signature.png"),
-        caption="Figure. NDVI trajectory across June (pre-sowing), kharif peak, and rabi/pre-harvest, "
+        caption="Figure. NDVI trajectory across June (pre-sowing), post-monsoon (November), and rabi/pre-harvest (March), "
                 "both divisions -- and the decline boxplot, Year 1.",
     )
     show_image_or_placeholder(

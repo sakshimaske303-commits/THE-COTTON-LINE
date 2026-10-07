@@ -17,8 +17,8 @@ def gt_image(filename, caption=None):
 
 st.markdown("<h1>📸 GROUND TRUTH: KARANJA GHADGE / SAWARDOH</h1>", unsafe_allow_html=True)
 st.markdown(
-    "<h3 style='text-align: center; font-weight: 700;'>A Real Methodological Check on the "
-    "Remote-Sensing Signal</h3>",
+    "<h3 style='text-align: center; font-weight: 700;'>An Illustrative Field Check "
+    "(Central Provinces Side Only)</h3>",
     unsafe_allow_html=True,
 )
 st.markdown("---")
@@ -26,7 +26,7 @@ st.markdown("---")
 st.markdown(f"""
 <div class="recon-card">
     <p style="color:{PALETTE['accent2']}; font-weight:800; font-size:0.9rem; text-transform:uppercase; margin-bottom:12px;">
-        This check is complete
+        Scope of this check
     </p>
     <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.7; margin:0;">
         I didn't end up doing a separate field trip for this. I already had a GPS-mapped, weekly-
@@ -35,8 +35,11 @@ st.markdown(f"""
         project's 25 km corridor on the Central Provinces/Malguzari side. That gave me GPS
         coordinates, dated ground photos, and an actual field-level Sentinel-2 NDVI/NDRE time
         series for 7 real field boundaries (4 featured below in detail, the rest in the
-        underlying dataset), which is more evidence than the original 2–3-patch plan below
-        called for.
+        underlying dataset), which is more field detail than the original 2–3-patch plan below
+        called for. It is illustrative only: it uses different sensors, dates and a different quantity
+        from the main Landsat NDVI-decline analysis, and it covers the Central Provinces side only,
+        so it cannot validate the Berar versus Central Provinces difference. The data come from a
+        separate family field-monitoring project (Roots &amp; Reflectance).
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -95,7 +98,7 @@ gt_df = safe_read_csv("Ground_Truth", "karanja_sawardoh_field_ground_truth.csv")
 st.markdown("### Sawardoh — Cotton-Only Fields")
 
 st.markdown("""
-Sawardoh is a village inside the same Karanja Ghadge taluka, about 7 km from the two Karanja
+Sawardoh is a village inside the same Karanja Ghadge taluka, about 9 km from the two Karanja
 fields below. It has five field boundaries in total, but Fields 3 and 5 are the ones featured
 here — both sit alone across the road from the other three, and both are cotton-only, with no
 pigeon pea, orange, or turmeric mixed in. For a project called The Cotton Line, that's the
@@ -177,9 +180,12 @@ with p5:
 st.markdown(f"""
 <div class="recon-card">
     <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.75; margin:0;">
-        Both photos show closed-canopy, healthy-looking soyabean at roughly eight weeks after
-        sowing, with pigeon pea running taller between the rows — consistent with an NDVI reading
-        in the 0.29–0.33 range rather than a stressed or sparse one. The soil photo is dark,
+        Both photos (23 August) show closed-canopy, healthy-looking soyabean at roughly eight weeks
+        after sowing, with pigeon pea running taller between the rows. The NDVI values in this check
+        (0.29–0.33) are from 14 July, about seven weeks earlier and roughly two to three weeks after
+        sowing, when the canopy was still young, so the photos and the NDVI values describe different
+        growth stages and should not be read as matching each other. A closed canopy would be expected
+        to give a much higher NDVI than 0.29–0.33. The soil photo is dark,
         clumpy, and cracked on the surface — the same regur (black cotton soil) texture this whole
         project is built around, on the Central Provinces side of the line.
     </p>
@@ -197,18 +203,16 @@ st.markdown("---")
 # ============================================================
 # CROSS-SENSOR OBSERVATION
 # ============================================================
-st.markdown("### A Small Cross-Sensor Observation")
+st.markdown("### Data Coverage Note")
 
 st.markdown(f"""
 <div class="recon-card">
     <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.75; margin:0;">
-        Two independent pipelines, two independent sensors, and both lost data over this exact
-        corner of Wardha district. Landsat's taluka-level pass came back at only 45.8% valid pixel
-        coverage; Sentinel-2's 21 June pass over these same two Karanja fields came back with no
-        usable pixels at all. That's not proof of anything on its own, but it's a small piece of
-        corroborating evidence that Karanja Ghadge genuinely sits at the edge of reliable
-        satellite coverage, regardless of which platform is looking — worth remembering the next
-        time either pipeline reports a number for this taluka.
+        Both products have gaps here, for different reasons. Landsat's taluka-level pass has only
+        45.8% valid pixel coverage because Karanja Ghadge sits at the edge of the scene footprint.
+        Sentinel-2's 21 June pass over the two Karanja fields returned no usable pixels, which
+        points to cloud on that date. These are separate causes, not corroboration of each other.
+        The Landsat taluka-level number for this area should be treated with caution.
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -303,3 +307,12 @@ st.markdown(
     f"(Roots &amp; Reflectance) · Ground photos dated 23 Aug 2026 · Compiled for THE COTTON LINE</p>",
     unsafe_allow_html=True,
 )
+
+st.markdown("---")
+st.markdown("### All Seven Fields")
+if gt_df is not None:
+    all_df = gt_df[["village", "field_num", "name", "sown_date", "date", "ndvi", "ndre"]].copy()
+    all_df.columns = ["Village", "Field", "Crop", "Sown", "Date", "NDVI", "NDRE"]
+    st.dataframe(all_df, use_container_width=True, hide_index=True)
+    st.caption("Sentinel-2 NDVI/NDRE at field polygons. Empty values are dates with no usable pixels. "
+               "Fields are 15.6-24.3 km from the boundary, on the Central Provinces side.")

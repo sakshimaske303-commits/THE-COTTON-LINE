@@ -19,8 +19,9 @@ st.markdown("""
 I used modern division boundaries to stand in for the two old colonial zones. For the old Berar
 Ryotwari territory, I picked **Amravati Division** (Akola, Amravati, Buldhana, Washim, and
 Yavatmal), while for the old Central Provinces Malguzari land, I used **Nagpur Division** (Nagpur,
-Wardha, Bhandara, Gondia, Chandrapur, and Gadchiroli). I didn't just guess this part -- I verified
-it completely using old records on the Historical & Institutional Context page. Next, I chose to
+Wardha, Bhandara, Gondia, Chandrapur, and Gadchiroli). I did not just assume this part -- I checked
+it against district lineage records on the Historical & Institutional Context page (district-level
+evidence, not a geometric overlay of a period map). Next, I chose to
 dissolve all 120 talukas across the 11 districts into these two division shapes, and then I
 extracted the exact shared edge where they touch to make my boundary line.
 """)
@@ -29,7 +30,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric("Boundary Line Length", "384.7 km", "Akola/Amravati/Wardha → Yavatmal/Chandrapur")
 with col2:
-    st.metric("Corridor Width", "±25 km", "Either side of the line")
+    st.metric("Corridor Definition", "25 km buffer", "12 of 32 centroids lie beyond 25 km")
 with col3:
     st.metric("Berar-Side Corridor Area", "7,387 km²", "Amravati Division")
 with col4:
@@ -66,12 +67,13 @@ with s1:
     <div class="recon-card" style="min-height: 210px;">
         <p style="color: {PALETTE['accent']}; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 10px;">32-Taluka Corridor</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
-            Out of my total dataset, 32 talukas sit right inside the narrow ±25 km buffer zone
-            (which includes 15 on the Berar side and 17 on the Central Provinces side). I chose
+            Out of my total dataset, 32 talukas intersect the 25 km buffer zone around the line
+            (15 on the Berar side and 17 on the Central Provinces side; 12 of them have centroids
+            more than 25 km from the line). I chose
             this corridor because it gives the tightest, most direct test to check if the colonial
             effect actually jumps right at the historical line. This is my smallest sample, meaning
-            it has limited statistical power. But it definitely provides the most honest spatial
-            look at what happens right at the boundary itself.
+            it has limited statistical power. But it provides the closest look at
+            what happens near the boundary itself.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -105,9 +107,10 @@ jump right at the boundary. Then, the `side × signed_dist_km` interaction check
 changes differently as you move further away on either side. To get `signed_dist_km`, I
 calculated the distance from each taluka center to my merged border line using UTM 44N (and
 wrote it as positive for the Berar side). Finally, I threw in total annual rain and elevation as
-control variables. My data back in Entry 8 already confirmed that Vidarbha has a natural
-west-drier and east-wetter climate trend that nature made on its own, so I had to block this out
-completely before trusting any colonial law effect.
+control variables. Development Log Entry 8 showed that Vidarbha has a natural
+west-drier and east-wetter climate trend, so I control for it. Rainfall here is a coarse
+long-term climatology and is strongly correlated with distance (r = -0.74), so the control is
+imperfect.
 """)
 
 st.markdown("---")
@@ -124,6 +127,19 @@ with h2:
 with h3:
     st.info("**H3**\n\nThe modern Amravati/Nagpur Division boundary is, in fact, the same line "
             "as the historical Berar/Central Provinces one -- not just a convenient stand-in.")
+
+st.markdown("### Where the Hypotheses Stand")
+st.markdown("""
+- **H1 (NDVI decline jumps at the boundary): not supported.** The `side` term is not significant at
+  either scale (corridor p = 0.458, full footprint p = 0.821). The side-by-distance interaction is
+  significant on the full footprint (p = 0.035) but is not robust to HC3 errors (p = 0.080).
+- **H2 (labour ratio shows the same level jump at both scales): not supported.** The level term is
+  significant on the full footprint (p = 0.014) but not in the corridor (p = 0.960); the corridor
+  shows a slope difference instead (p = 0.036) that depends on one urban taluka.
+- **H3 (the modern line is the historical line): supported at district level only.** The evidence
+  is district lineage from 1903 to 1956, not a taluka-level or geometric verification; some
+  Central Provinces-side talukas (for example Rajura) came from other jurisdictions.
+""")
 
 st.markdown("---")
 st.markdown(

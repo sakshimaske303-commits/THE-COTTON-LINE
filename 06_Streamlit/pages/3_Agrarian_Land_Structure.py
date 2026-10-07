@@ -35,7 +35,7 @@ else:
         st.caption(
             "Noisier than a clean west/east story: Yavatmal (51%) and Wardha (49%) -- one Berar, "
             "one Central Provinces -- are nearly tied for highest. Cotton was never confined to "
-            "old Berar; the British pushed it hardest there, but it spread into neighboring "
+            "old Berar; it is grown at similar shares in neighboring "
             "Central Provinces districts too."
         )
     with tab2:

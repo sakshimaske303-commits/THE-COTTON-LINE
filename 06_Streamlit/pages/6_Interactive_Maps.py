@@ -96,7 +96,12 @@ if merged is not None:
     except AttributeError:
         centroid = merged.geometry.unary_union.centroid
     fig.update_layout(
-        mapbox=dict(style="carto-darkmatter", center=dict(lat=centroid.y, lon=centroid.x), zoom=6.4),
+        mapbox=dict(
+            style="white-bg",  # Esri dark basemap; CARTO tiles now ask for an API key
+            layers=[dict(below="traces", sourcetype="raster",
+                         sourceattribution="Tiles © Esri — Esri, HERE, Garmin, © OpenStreetMap contributors",
+                         source=["https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"])],
+            center=dict(lat=centroid.y, lon=centroid.x), zoom=6.4),
         height=650, showlegend=False,
     )
     st.plotly_chart(plotly_layout(fig), use_container_width=True)
@@ -104,9 +109,11 @@ if merged is not None:
     if n_missing:
         st.caption(
             f"{len(merged)} of {len(merged) + n_missing} full-footprint talukas shown — "
-            f"{n_missing} aren't drawn here yet due to taluka-name spelling mismatches between "
-            "the boundary shapefile and the processed dataset (e.g. 'Nagpur (Rural)' vs "
-            "'Nagpur'), not missing data."
+            f"{n_missing} are not drawn because they do not match the boundary shapefile "
+            "(Nagpur (Rural), Nagpur (Urban), Hingna, Kalameshwar, Mauda, Hinganghat, Arjuni "
+            "Morgaon and Zari-Jamani). The boundary file used here is an older 116-taluka layer with "
+            "some duplicate keys; the corrected 120-taluka layer should replace it. The data for these "
+            "talukas are present in the analysis, only the polygons are missing from this map."
         )
 
 st.markdown("---")
@@ -116,7 +123,7 @@ st.markdown(f"""
     <p style="color:{PALETTE['text_primary']}; font-size:0.9rem; margin:0;">
         Built directly from the same taluka boundary shapefile and Phase 4 full-footprint dataset
         used throughout this dashboard — not a separate pre-rendered export. The historical
-        boundary line runs 384.7 km, dissolved from all 120 Vidarbha talukas in Study Design.
+        boundary line runs 384.7 km, dissolved from the division polygons built from the 120 Vidarbha talukas described in Study Design. (The polygon layer used for this map is an older, incomplete 116-taluka file.)
     </p>
 </div>
 """, unsafe_allow_html=True)

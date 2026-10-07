@@ -11,4 +11,4 @@
 # raw-to-processed pipeline (population/land-use aggregation, rainfall
 # extraction, seasonal NDVI aggregation, Phase 4 dataset assembly, jackknife
 # generation) into a single reproducible entry point is tracked as future
-# work -- see Section 8 of CL_Research_Paper.md.
+# work -- see Section 7 (Future Work) of CL_Research_Paper.md.

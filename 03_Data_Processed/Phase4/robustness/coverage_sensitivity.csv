@@ -1,0 +1,10 @@
+min_valid_pct,outcome,n,n_berar,p_side,p_int
+0,kharif_to_rabi_decline,68,19,0.82098,0.03475
+0,lst_mean_c,66,19,0.51228,0.01047
+0,ag_laborer_to_cultivator,67,19,0.01435,0.57859
+25,kharif_to_rabi_decline,55,13,0.49181,0.03099
+25,lst_mean_c,55,13,0.20709,0.02205
+25,ag_laborer_to_cultivator,54,13,0.02731,0.69244
+50,kharif_to_rabi_decline,23,6,0.90678,0.51785
+50,lst_mean_c,23,6,0.89043,0.40452
+50,ag_laborer_to_cultivator,22,6,0.80898,0.47524

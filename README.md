@@ -1,66 +1,67 @@
-# THE COTTON LINE — Does a 150-Year-Old Colonial Land-Tenure Boundary Still Register as a Measurable Spatial Signature in Present-Day Vidarbha?
+# THE COTTON LINE — Does a Nineteenth-Century Colonial Land-Tenure Boundary Still Register in Present-Day Vidarbha?
 
 [![EarthArXiv](https://img.shields.io/badge/EarthArXiv-Preprint-B7410E.svg)](https://eartharxiv.org/repository/view/14802/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22111298.svg)](https://doi.org/10.5281/zenodo.22111298)
 
-This project tests whether the Berar/Central Provinces land-tenure split from 1853 — abolished in 1956 — still registers today in cotton-crop phenology, agrarian labor structure, and land surface temperature. It doesn't show up as a sharp break right at the old boundary; instead, the evidence points to a genuine regional gradient that strengthens with distance from the line in both directions — a subtler, but still real, form of institutional persistence.
+This project tests whether the boundary between Berar (Ryotwari land-revenue settlement) and the Central Provinces (Malguzari settlement), abolished as a provincial border in 1956, is still detectable in cotton-related crop phenology, agrarian labour structure, and land surface temperature. It finds no boundary-specific step in most outcomes. It finds a regional gradient that partly coincides with the old line, but the evidence is exploratory and does not identify a tenure effect.
 
 ## What This Project Is
 
-All other projects within my portfolio run an experimental test of a particular change/implementation or policy in a traditional causal fashion: difference-in-differences, event studies, etc. However, the question I chose to pursue in this project was different, I wasn't going to find out if there is a metric shift from any recent action, but whether if a 150-year-old administrative border is still felt as a physical imprint in the landscape. This is a basic problem of boundary persistence and spatial discontinuity, rather than a basic treatment check problem, and is therefore more related to historical GIS tracking and pattern analysis than traditional treatment checks.
+Most of my other projects estimate the effect of a specific policy or event using difference-in-differences or event-study designs. This one is different. It asks whether an old administrative border is still visible in the landscape, which makes it a boundary-persistence and spatial-discontinuity problem, closer to historical GIS and spatial pattern analysis than to treatment-effect estimation.
 
-In 1853 the British annexed the Berar District (which is now Amravati, Akola, Buldhana, Washim and Yavatmal) and imposed a direct land tax known as 'Ryotwari' and forced the peasants to give their cotton to the Lancashire mills. These districts on the east side of the country--Nagpur, Wardha, Chandrapur, Bhandara, Gondia, and Gadchiroli--operated under a landlord system of Malguzari. Though the official line was removed from the map in 1956, it is there where our present Amravati Division and Nagpur Division boundary lines lie.
+Historical background: Berar (today's Amravati, Akola, Buldhana, Washim and Yavatmal districts) was assigned to the East India Company by a treaty with the Nizam of Hyderabad in 1853, was administered under the Ryotwari system, and was merged with the Central Provinces in 1903. The districts to the east (Nagpur, Wardha, Chandrapur, Bhandara, Gondia, Gadchiroli) were settled under Malguzari. Nagpur itself was annexed by the Company in 1853 under the doctrine of lapse, so 1853 is not a Berar-only date. The provincial boundary was abolished in 1956; at district level it corresponds to the present Amravati Division / Nagpur Division line.
 
 ## Core Question
 
-Is that historical Berar (Ryotwari) and the Central Provinces (Malguzari) boundary still visible as a distinct spatial discontinuity in maps of modern cotton-signature NDVI, ratio of farm workers to total laborers, and temperature of ground after adjusting for distance to boundary, rainfall and elevation?
+After controlling for distance to the boundary, rainfall and elevation, is the Berar/Central Provinces boundary still detectable as a spatial discontinuity in kharif-to-rabi NDVI decline (a cropping-intensity index), agrarian labour structure (agricultural labourers relative to cultivators), land use, and land surface temperature?
 
-## Why This Approach
+## Findings So Far
 
-The idea behind this project was to take a different approach to spatial analysis, while not radically departing from the rest of my portfolio. I did not do any event-tracking models because I'm dealing with the longer persisting landscape features. I wished to test the extent of the colonization over the course of generations. This is a study (not a simple policy short-term check) on map survival.
+- No boundary-specific level jump is found for NDVI decline, land surface temperature or net cultivated area, at either scale.
+- The raw NDVI decline is larger on the Berar side (0.325 vs 0.255 in year one; 0.316 vs 0.241 in year two), but the gap is close to zero near the line and the boundary term is about zero once distance is controlled. This is a regional gradient.
+- On the full footprint the side-by-distance interaction is significant for NDVI decline (p = 0.035) and land surface temperature (p = 0.011). Only the temperature result is robust to alternative standard errors and symmetric distance windows.
+- The labour ratio shows a corridor slope difference (p = 0.036) that depends on one urban taluka, and a full-footprint level difference (p = 0.014) that is absent in the corridor.
+- Sixteen coefficients were tested, four are significant at 5%, and none survives a Holm correction. Treat all results as exploratory.
 
-## Core Finding, So Far
-
-There is no abrupt change in my models at the old historical level. In contrast, a very clear east to west gradient was identified that can be discerned from both independent annual satellite greenness cycles and align with my ground temperature metrics. Depending on the side of the border looked at, the rates of decline in the metrics differ widely as a function of distance from the border.
-
-The representation is much more accurate and honest than a fake perfect clean discontinuity step-jump would be of the geography. I will report here the same results as returned by the dashboard's Spatial Discontinuity Regression page and the points where the small corridor model and the big full-scene map model actually differ from each other, on a scale basis.
-
-The boundary for the Historic District (Historical & Institutional Context) is verified via the historical district-lineage boundary verification that is listed on the Historic District page and the district compilation for the FRA (Historical & Institutional Context) is listed on the FRA page.
+The full account, including robustness checks and limitations, is in `CL_Research_Paper.md` (Sections 4.4 and 6).
 
 ## Study Design
 
-The modern border layer is created by combining 120 taluka shape files, so that it would capture the actual border edge in between the Akola, Amravati and Wardha corner and the entire boundaries till Yavatmal and Chandrapur.
-My primary discontinuity test is a closer dataset on the 32 talukas around the boundary (still not considered a base check, just a different set of data to check robustness from the 25 km buffer) and my regional discontinuity set is on a route with a wider 68 talukas predominantly in the region (which serves only as an extra robustness check, not a substitute for my 25 km buffer).
-I've used both of my data samples with this OLS spatial-discontinuity regression model using the terrain maps and the rain logs as env control variables: -outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m
-To ensure that I'm not just observing one year's weather, but actual farming practices, I took snaps over the regular cycle between the peak of the green kharif monsoon and the dry winter rabi season over two full Landsat satellite cycles.
-I created a full jack-knife test, which was taking each corridor taluka out and running my regressions again and comparing the final output numbers to see that there's no one particular taluka swinging the numbers.
+The modern boundary is built by dissolving 120 taluka polygons into their two historical divisions and extracting the shared edge (384.7 km). I checked it against district administrative lineage from 1903 to 1956; this is district-level evidence, not a geometric overlay of a period map.
 
-Documents for the methodology, all the data sources, the Landsat DN=0 fix, and the scope decision of corridor vs full-footprint are documented on the Methodology & Data page of the dashboard and in `CL_Development_Log.md`.
+Two samples are used. The 32-taluka corridor contains the talukas intersecting a 25 km buffer of the line (12 of them have centroids more than 25 km away). The 68-taluka footprint is the set covered by Landsat WRS-2 path 144, rows 045/046. Both use the same OLS model:
+
+`outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m`
+
+NDVI decline is measured from a November scene to a March scene, in two separate years using the same footprint and method. A leave-one-out jackknife over the 32 corridor talukas and the additional checks in `05_Python/robustness_checks.py` (HC3 and clustered errors, multiple-testing correction, symmetric windows, placebo cutoffs, influence, coverage) test stability. Census labour and land-use data cover 8 of 11 districts; Akola, Buldhana and Washim are not in those analyses.
+
+Methodology, data sources, the Landsat DN = 0 fix and the scope decisions are documented on the Methodology & Data page of the dashboard and in `CL_Development_Log.md`.
 
 ## Repository Structure
 
 ```text
 THE_COTTON_LINE/
-├── 03_Data_Processed/              # Cleaned, per-taluka CSVs by theme (Vegetation, Population,
-│                                    #   Land_Use, Agriculture, Economics, Climate, Hydrology,
-│                                    #   Terrain, Administrative boundary/corridor geometry, Phase4
-│                                    #   regression datasets) -- raw satellite/DEM sources excluded,
-│                                    #   see .gitignore
-├── 05_Python/                      # LST/slope/vegetation processing pipelines (the DN=0 fix)
-├── 06_Streamlit/                   # Dashboard -- app.py (Home) + 8 pages
+├── 03_Data_Processed/              # Cleaned per-taluka CSVs by theme, boundary/corridor geometry,
+│                                   #   Phase 4 regression datasets, robustness outputs
+│                                   #   (raw satellite/DEM sources excluded, see .gitignore)
+├── 05_Python/                      # LST/slope/vegetation processing (the DN=0 fix) and
+│   └── robustness_checks.py        #   robustness_checks.py, which reproduces the regressions
+├── 06_Streamlit/                   # Dashboard: app.py (Home) + 9 pages
 │   ├── app.py
 │   ├── pages/                      # Study Design, Theoretical Foundations, Cotton Signature (NDVI),
-│   │                                #   Agrarian & Land Structure, Spatial Discontinuity Regression,
-│   │                                #   Historical & Institutional Context, Interactive Maps,
-│   │                                #   Methodology & Data, Ground Truth
+│   │                               #   Agrarian & Land Structure, Spatial Discontinuity Regression,
+│   │                               #   Historical & Institutional Context, Interactive Maps,
+│   │                               #   Methodology & Data, Ground Truth
 │   ├── utils/
-│   │   ├── theme.py                # Shared dashboard styling
-│   │   └── data.py                 # Shared data-loading functions
 │   └── requirements.txt
-├── 07_Outputs/                     # Static figures, maps, and the theory diagram
-├── CL_Development_Log.md           # Running development log -- every decision, bug, and pivot
+├── 07_Outputs/                     # Static figures and maps
+├── CL_Research_Paper.md            # Main paper
+├── CL_Executive_Summary.md         # Two-page summary
+├── CL_Development_Log.md           # Running development log: decisions, bugs, pivots
 ├── download_seasonal_scenes.py     # Landsat scene acquisition (year 1 and year 2)
 └── requirements.txt
 ```
+
+The scripts that assemble the Phase 4 datasets (NDVI aggregation, distance calculation, dataset merge) are not yet in the repository; `05_Python/main.py` and `config.py` are placeholders that say so. The regression results can be reproduced from the shipped Phase 4 CSVs with `05_Python/robustness_checks.py`.
 
 ## Tech Stack
 
@@ -71,25 +72,27 @@ Python · Pandas · GeoPandas · Statsmodels · Rasterio · SciPy · Plotly · S
 | Dataset | Provider |
 |---|---|
 | Administrative boundaries (taluka-level) | IIT Bombay POCRA Maharashtra Census shapefile portal |
-| Vegetation (NDVI) / Climate (LST) | Landsat 8/9 Collection 2 Level-2 (Google Earth Engine) |
-| Population, Agriculture | Census / POCRA village-level shapefiles; Maharashtra Economic Survey 2025-26 |
-| Land Use | Landsat-derived land-cover classification |
-| Hydrology (rainfall) | WorldClim 2.1 monthly precipitation climatology |
+| Vegetation (NDVI) / Climate (LST) | Landsat 8/9 Collection 2 Level-2 (Microsoft Planetary Computer STAC) |
+| Population, Agriculture | Census (2011) village-level shapefiles; Maharashtra Economic Survey 2025-26 |
+| Land Use | Census village land-use attributes |
+| Hydrology (rainfall) | WorldClim 2.1 precipitation climatology (~18.5 km grid) |
 | Terrain (elevation) | SRTM 1 arc-second DEM |
-| Economics (FRA) | Manually compiled from parliamentary answers, CAG audit reports, district-office notices |
+| Economics (FRA) | Compiled from state reports and secondary reporting (context only) |
 
 ## Running Locally
 
 ```bash
 git clone https://github.com/sakshimaske303-commits/THE-COTTON-LINE.git
-cd THE-COTTON-LINE/06_Streamlit
+cd THE-COTTON-LINE
 pip install -r requirements.txt
-streamlit run app.py
+python 05_Python/robustness_checks.py     # reproduces the regressions and robustness tables
+cd 06_Streamlit
+streamlit run app.py                      # dashboard
 ```
 
-## Project Documentation
+## Limitations to Keep in Mind
 
-I have fully cleaned up and finalized my running log file (`CL_Development_Log.md`), my main paper draft (`CL_Research_Paper.md`), and my Executive Summary (`CL_Executive_Summary.md`). I also finished my physical ground-truth check comparing Karanja Ghadge and Sawardoh (you can read all those field details on the dashboard's Ground Truth page or check Section 6.6 of my final research paper). The project no longer has a separate Project Report — its overview paragraph is folded into the start of the Executive Summary instead.
+The line is also an older political frontier and river line, so any gradient cannot be attributed to tenure alone. Spatial autocorrelation is not fully modelled, scenes are single-date and lack a QA_PIXEL cloud mask, census data (2011) are compared with 2024–26 imagery, and the Berar-side census sample is two districts. The Karanja Ghadge / Sawardoh field check covers the Central Provinces side only and is illustrative. See Section 6 of the paper.
 
 ## Author
 
@@ -99,8 +102,8 @@ Independent Geospatial Researcher
 
 ## License
 
-This project is licensed under [CC BY 4.0](./LICENSE) — you are free to share and adapt this work for any purpose, including commercially, with attribution. See `CITATION.cff` for citation metadata.
+This project is licensed under [CC BY 4.0](./LICENSE). You are free to share and adapt this work for any purpose, including commercially, with attribution. See `CITATION.cff` for citation metadata.
 
 ---
 
-*This project's full development process — including every decision, data-pipeline bug, and design pivot — is documented in `CL_Development_Log.md` for full transparency and reproducibility.*
+*The full development process, including decisions, data-pipeline bugs and design pivots, is documented in `CL_Development_Log.md`.*

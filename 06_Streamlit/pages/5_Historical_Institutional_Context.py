@@ -66,14 +66,16 @@ with h2:
 st.success("""
 **Bottom line:** as far as documented district lineage can show, the modern Amravati-Nagpur
 Division boundary is the same line as the historical Berar-Central Provinces boundary. I
-confirmed this by tracking down every single district's actual office paperwork history instead
-of just laying down a random old-map overlay. I want to state one tiny catch very clearly: my
+checked this against the administrative lineage of each district rather than a period map, so
+it is district-level evidence and not a taluka-by-taluka verification. Some talukas on the
+Central Provinces side (for example Rajura, from Hyderabad State) came from other jurisdictions,
+so that side is not uniformly Malguzari. One further catch: my
 "Central Provinces" data side only looks at the Maharashtra-Vidarbha section of the old CP Nagpur
 Division, which makes it slightly smaller than the historical footprint. The missing piece --
 Balaghat -- dropped away during the 1956 language-based state reshuffle, which has nothing to do
 with the Ryotwari or Malguzari farming rules I am actually testing. I still have not found a
 genuine historical period map to use as a visual aid, but that does not block my main research
-question, since it now has a well-sourced yes.
+question, since district lineage is consistent with the line being the same, though it is not a geometric confirmation.
 """)
 
 st.markdown("---")

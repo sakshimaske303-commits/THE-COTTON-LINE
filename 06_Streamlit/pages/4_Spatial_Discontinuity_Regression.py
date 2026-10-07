@@ -152,11 +152,13 @@ else:
                "19 Berar talukas, since the Landsat scene simply covers more CP-side territory.")
 
 st.markdown("""
-With more power, the `side × signed_dist_km` interaction becomes significant for **both**
-Earth-observation outcomes -- NDVI decline and LST -- not just the one variable that showed it at
-the corridor scale. `signed_dist_km` on its own is also strongly significant in both. Two
-independent outcome variables showing the same shape of result, with real statistical power behind
-it, is the strongest evidence in the project for **"gradient, not discontinuity."**
+On the full footprint the `side × signed_dist_km` interaction is significant for **both**
+Earth-observation outcomes -- NDVI decline (p = 0.035) and LST (p = 0.011). `signed_dist_km` on its
+own is also strongly significant in both. The two do not share a shape: NDVI decline falls from
+west to east with a flatter Berar side, while LST is highest near the line and falls with
+distance on both sides. Only the LST interaction is robust to HC3 errors, symmetric windows and
+removal of its most influential taluka; the NDVI interaction is not (see the robustness section
+below).
 """)
 
 st.markdown(f"""
@@ -165,17 +167,15 @@ st.markdown(f"""
         The ag-laborer complication, explained rather than picked around
     </p>
     <p style="color:{PALETTE['text_primary']}; font-size:0.9rem; line-height:1.65; margin:0;">
-        At full-footprint scale, the ag-laborer ratio flips: the `side` level jump becomes
-        significant (coef≈0.62, p≈0.01) and the slope interaction stops being significant --
-        the opposite pattern from the corridor result. This traces to an asymmetric sample: in
-        this particular Landsat scene, the Berar side barely extends past ~20km from the boundary
-        (only Amravati district falls inside the footprint), while the Central Provinces side
-        reaches out past 160km (Bhandara, Gondiya). A "level jump near the boundary" read is more
-        defensible under those conditions than a "different slope across the whole range" read,
-        since only one side actually has much range to have a slope over. The corridor-only
-        interaction result is trusted more for what's happening right at the line; the
-        full-footprint level jump is read as suggestive of a broader regional gap, not a
-        competing measurement of the same thing.
+        At full-footprint scale, the ag-laborer ratio flips: the `side` level term becomes
+        significant (coef≈0.62, p≈0.014) and the slope interaction stops being significant --
+        the opposite pattern from the corridor result. The full footprint is asymmetric: the
+        Berar side reaches about 104 km from the boundary and the Central Provinces side about
+        180 km, and only Amravati and Yavatmal contribute Berar-side census data. A symmetric-window
+        test restricted to comparable distances keeps the level term significant (p = 0.004 within
+        105 km, 0.008 within 80 km, 0.041 within 60 km), so asymmetry alone does not explain it.
+        It is not significant under district-clustered errors (p = 0.11, only 7 clusters) and is
+        absent in the corridor. It is reported as a scale-dependent result, not resolved either way.
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -205,11 +205,10 @@ else:
                        xaxis_tickangle=-60)
     st.plotly_chart(plotly_layout(fig, height=450), use_container_width=True)
     st.caption(
-        "The coefficient stays positive and in a tight band across every single run -- no one "
-        "taluka is secretly driving the whole thing. The p-value moves around more, crossing back "
-        "over 0.05 when Amravati, Seloo, Samudrapur, Narkhed, Korpana, or Yavatmal taluka is "
-        "dropped. Direction and rough size of the effect is stable; statistical significance is "
-        "right on the edge. Called 'suggestive but not bulletproof' rather than dismissed or oversold."
+        "The coefficient stays positive and in a fairly tight band across every run. The p-value "
+        "moves around more, crossing back over 0.05 when Amravati, Seloo, Samudrapur, Narkhed, "
+        "Korpana, or Yavatmal taluka is dropped (Amravati alone raises it to 0.138). Direction is "
+        "stable, but the significance depends on a handful of talukas."
     )
 
 st.markdown("---")
@@ -226,7 +225,7 @@ with col_b:
     show_image_or_placeholder(output_path("phase4_fullfootprint_plots.png"),
                                caption="Full footprint — NDVI decline and LST.")
     show_image_or_placeholder(output_path("phase4_fullfootprint_all4_plots.png"),
-                               caption="Full footprint — all four outcomes, once population/land-use data covered all 11 districts.")
+                               caption="Full footprint — all four outcomes (population/land-use data cover 8 of 11 districts; Akola, Buldhana and Washim are missing).")
 
 st.markdown("---")
 
@@ -235,14 +234,16 @@ st.markdown("### Findings: What Held Up, What Didn't")
 st.markdown("""
 - **No sharp level jump at the boundary in the corridor's four headline outcomes** —
   this project set out looking for a discontinuity and didn't find one at the line itself.
-  (The one exception is the full-footprint ag-laborer `side` jump, p≈0.01 — explained below
-  as a footprint-asymmetry artifact rather than a boundary effect.)
+  (The one exception is the full-footprint ag-laborer `side` jump, p≈0.014. It survives
+  symmetric distance windows (p = 0.004 to 0.041) but not district-clustered errors, is absent in
+  the corridor, and rests on two Berar districts; see the robustness section below.)
 - **Land fragmentation** (Agrarian & Land Structure page) came back flat — Central Provinces
   corridor talukas run slightly *larger* holdings, the opposite of a naive "Ryotwari →
   fragmentation" story.
-- **The ag-laborer ratio depends on which scale it's read at** — explained above, not picked around.
-- **The one significant corridor-scale interaction is "suggestive, not bulletproof"** — stable in
-  direction and size across the full jackknife, edge-of-significance on the p-value.
+- **The ag-laborer ratio depends on which scale it's read at** — the level difference appears on the full footprint and the slope difference in the corridor; neither is confirmed at the other scale.
+- **The one significant corridor-scale interaction is suggestive at best** — stable in direction
+  across the jackknife, but the p-value crosses 0.05 in 6 of 32 runs, HC3 gives p = 0.063, and
+  dropping the urban Amravati taluka gives p = 0.138.
 """)
 
 st.markdown(f"""
@@ -251,22 +252,47 @@ st.markdown(f"""
         The Honest Shape of This Result
     </p>
     <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.7; margin:0;">
-        A 150-year-old colonial land-tenure boundary, erased in 1956, does not show up in
-        present-day Vidarbha as a hard edge in cotton dependency, land use, or agrarian labor
-        structure. What it shows up as instead is a genuine, statistically real east-west gradient
-        that strengthens with distance from where that line used to run — present in two
-        independently-measured Earth-observation variables, confirmed across two separate growing
-        years (Cotton Signature NDVI). That's a different, more interesting result than a clean
-        discontinuity would have been: institutional persistence here looks less like a fence and
-        more like a slope.
+        The old Berar/Central Provinces boundary does not show up in present-day Vidarbha as a hard
+        edge in NDVI decline, land surface temperature, or net cultivated area. What the data show
+        instead is a regional west-to-east gradient that partly coincides with the old line. The
+        temperature interaction is the most robust piece; the NDVI interaction is fragile; the
+        labour ratio differs by scale; and none of the 16 tests survives a Holm correction. The
+        line is also an older political frontier and a river line, so these patterns cannot be
+        attributed to tenure. Read the results as exploratory.
     </p>
 </div>
 """, unsafe_allow_html=True)
 
+st.markdown("### Robustness and Multiple Testing")
+st.markdown("""
+Sixteen coefficients were tested (the `side` and interaction terms for four outcomes at two
+scales). Four have raw p < 0.05, where chance alone would give about 0.8. None survives a Holm
+correction, and the smallest Benjamini-Hochberg q-value is 0.115. Treat the results as exploratory.
+The table comes from `05_Python/robustness_checks.py`.
+""")
+rb = safe_read_csv("Phase4", "robustness", "main_models_with_corrections.csv")
+if rb is None:
+    st.info("Run 05_Python/robustness_checks.py to generate the robustness tables.")
+else:
+    show = rb[["scale", "outcome", "n", "p_side", "p_side_HC3", "p_side_holm", "p_int", "p_int_HC3", "p_int_holm"]].round(4)
+    st.dataframe(show, use_container_width=True, hide_index=True)
+    st.caption("HC3 = heteroskedasticity-robust errors; Holm = corrected across all 16 tests. "
+               "District-clustered p-values are in the CSV but are unreliable with 5-7 clusters.")
+win = safe_read_csv("Phase4", "robustness", "symmetric_windows_full_footprint.csv")
+if win is not None:
+    st.markdown("**Symmetric distance windows (full footprint)**")
+    st.dataframe(win.round(4), use_container_width=True, hide_index=True)
+plc = safe_read_csv("Phase4", "robustness", "placebo_cutoffs_cp_side.csv")
+if plc is not None:
+    st.markdown("**Placebo cutoffs on the Central Provinces side only (no historical boundary there)**")
+    st.dataframe(plc.round(4), use_container_width=True, hide_index=True)
+    st.caption("Fake cutoffs produce significant NDVI-decline jumps, which indicates a non-linear "
+               "regional gradient that the linear-in-distance model does not capture.")
+
 st.success("""
-**Ground-truthed:** the Karanja Ghadge / Sawardoh field check — comparing actual photographed
-field patches against their NDVI/LST pixel values as a direct sanity-check on the remote-sensing
-signal this whole project rests on — is now complete. See the Ground Truth page for details.
+**Field check:** the Karanja Ghadge / Sawardoh check compares field-level Sentinel-2 values with the
+satellite signal on the Central Provinces side only. It is illustrative and does not validate the
+Berar versus Central Provinces difference. See the Ground Truth page for details.
 """)
 
 st.markdown("---")

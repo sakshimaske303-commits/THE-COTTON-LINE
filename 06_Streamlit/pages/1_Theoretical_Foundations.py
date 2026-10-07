@@ -21,8 +21,9 @@ col_a, col_b, col_c = st.columns([0.2, 5.9, 0.2])
 with col_b:
     show_image_or_placeholder(
         output_path("Figures", "imgg1.png"),
-        caption="Two Land Tenures, One Satellite Signature",
+        caption="Two Land Tenures, One Satellite Signature (schematic of the hypothesised mechanism)",
     )
+    st.caption("This illustration is a schematic, not real data. It shows the hypothesis, including a sharp break at the boundary. The measured results on the other pages show no sharp break, and the NDVI curves drawn here are not the observed values.")
 
 st.markdown("---")
 
@@ -54,13 +55,13 @@ with t1:
     <div class="recon-card" style="min-height: 260px;">
         <p style="color: {PALETTE['berar']}; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; margin-bottom: 10px;">Berar — Ryotwari</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
-            The British directly took over this region in 1853. They collected land revenue
-            straight from the individual farmer (the <em>ryot</em>), who held official,
-            individually-titled rights to their specific plot. When the American Civil War
-            suddenly cut off the normal raw-cotton supply to Lancashire mills in the early 1860s,
-            the administration pushed Berar hard into single cash-crop cotton farming. Having
-            individually-owned plots made this specialization easy for the government to enforce
-            on the ground, plot by plot.
+            Berar was assigned to the East India Company by a treaty with the Nizam in 1853 and
+            was administered under the Ryotwari system, in which land revenue is collected
+            straight from the individual farmer (the <em>ryot</em>), who held individually-titled
+            rights to a specific plot. When the American Civil War cut off the normal raw-cotton
+            supply to Lancashire mills in the early 1860s, cotton became increasingly important in
+            Berar. The mechanism proposed here, that individual plot rights made cotton
+            specialisation easier, is a hypothesis this project tests, not an established fact.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -70,12 +71,12 @@ with t2:
         <p style="color: {PALETTE['cp']}; font-weight: 800; font-size: 0.95rem; text-transform: uppercase; margin-bottom: 10px;">Central Provinces — Malguzari</p>
         <p style="color: {PALETTE['text_primary']}; font-size: 0.9rem; margin: 0;">
             The Central Provinces sat right to the east of Berar and ran on a Malguzari
-            (zamindari-style) setup. Instead of dealing with individual farmers, the government
-            collected revenue through a middleman landlord (the <em>malguzar</em>) who was
-            responsible for a whole estate. Because of this, more land stayed under estate or
-            forest control instead of getting split up plot-by-plot into individually-managed
-            cropland -- a structural difference this project's land-use variable picks up
-            directly.
+            setup, which is related to zamindari but distinct from it. Instead of dealing with
+            individual farmers, the government collected revenue through an intermediary landholder
+            (the <em>malguzar</em>) responsible for a whole estate. Malguzari also brought cadastral
+            surveys and statutory tenant protections, so it was not a simple landlord system
+            (Iversen et al., 2013). Whether more land stayed under estate or forest control as a
+            result is not established here; the land-use variables only describe current patterns.
         </p>
     </div>
     """, unsafe_allow_html=True)

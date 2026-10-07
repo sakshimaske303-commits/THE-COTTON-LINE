@@ -76,11 +76,11 @@ st.markdown("---")
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.metric("Districts Covered", "11", "Full Vidarbha")
+    st.metric("Districts Covered", "11", "8 with census data")
 with col2:
     st.metric("Boundary Line", "384.7 km", "Amravati / Nagpur Division")
 with col3:
-    st.metric("Corridor Talukas", "32", "±25 km of the line")
+    st.metric("Corridor Talukas", "32", "intersect the 25 km buffer")
 with col4:
     st.metric("Full-Footprint Talukas", "68", "2 independent NDVI years")
 
@@ -95,9 +95,9 @@ st.markdown(
                   font-weight:800; font-size:0.85rem; margin-bottom:8px;">Why This Matters</p>
         <p style="color:{PALETTE['text_primary']}; font-size:1rem; line-height:1.6; margin:0;">
             People always blame Vidarbha's farming trouble on bad rain, prices, or crop choices. But I
-            wanted to test a much older historical reason (dating back to 1853 when the British took
-            over Berar and forced farmers into the Ryotwari cotton system just to feed their own
-            Lancashire mills). Did this colonial setup leave a permanent footprint on the land? The old
+            wanted to test a much older historical possibility (dating back to 1853, when Berar came under
+            British administration and later became a major cotton region for Lancashire mills). Did
+            this colonial setup leave a lasting footprint on the land? The old
             line was officially wiped out in 1956. I chose to use actual satellite maps and village
             census numbers to check if this border still shows up today, rather than just guessing from
             old history textbooks.
@@ -113,16 +113,17 @@ with col_left:
     st.markdown("""
     ### What Is The Cotton Line?
 
-    In 1853, the British took over **Berar** -- which means today's Amravati, Akola, Buldhana,
-    Washim, and Yavatmal districts. They forced this specific region into a **Ryotwari** land
-    system, pushing a strict cotton monoculture setup because the American Civil War suddenly
-    stopped their regular supply to Lancashire cloth factories. On the other side, the six eastern
-    districts (Nagpur, Wardha, Chandrapur, Bhandara, Gondia, and Gadchiroli) became the
-    **Central Provinces**. Landlords there used a completely different setup called the
-    **Malguzari** system.
+    In 1853, **Berar** -- today's Amravati, Akola, Buldhana, Washim, and Yavatmal districts -- was
+    assigned to the East India Company by a treaty with the Nizam of Hyderabad, and it was
+    administered under the **Ryotwari** land system. Cotton grew in importance there in the
+    1860s, when the American Civil War disrupted Lancashire's supply. Berar merged with the
+    Central Provinces in 1903. The six eastern districts (Nagpur, Wardha, Chandrapur, Bhandara,
+    Gondia, and Gadchiroli) belonged to the **Central Provinces** and were settled under the
+    **Malguzari** system, in which an intermediary landholder answered for the estate. Nagpur
+    was also annexed in 1853, so 1853 is not a Berar-only date.
 
-    The old colonial line officially disappeared at Independence. But the crazy thing is that it
-    runs right along our modern Amravati Division and Nagpur Division boundary line. I built this
+    The old provincial line was abolished in 1956. At district level it corresponds to the modern
+    Amravati Division and Nagpur Division boundary line. I built this
     modern border line myself using present-day taluka shapefiles, cross-checked it by tracking
     old district lineage records, and ran a spatial-discontinuity regression test to see if things
     like cotton-signature NDVI, farm labor ratios, land use, and ground heat actually make a sharp
@@ -135,14 +136,14 @@ with col_right:
         <p style="color:{PALETTE['accent']}; text-transform:uppercase; font-size:0.78rem;
                   letter-spacing:1.5px; font-weight:800; margin-bottom:12px;">Core Finding, So Far</p>
         <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.7; margin:0; font-weight:500;">
-            My data shows absolutely no sharp jump right at the old border line. But a real
-            west-to-east trend is definitely there. I verified this gradient across two independent
-            annual NDVI cycles, and my land-surface temperature data shows the exact same pattern:
-            both satellite metrics shift at different speeds as you move away from the boundary
-            depending on which side you stand on. This is a much more honest and precise result
-            than a clean step-jump (plus I reported everything exactly as it came out, even where
-            the results flip or change based on the map scale). See Spatial Discontinuity
-            Regression for the full breakdown.
+            There is no boundary-specific jump in NDVI decline, land surface temperature or net
+            cultivated area. There is a regional west-to-east gradient that partly coincides with the
+            old line (NDVI decline 0.325 vs 0.255 across sides; year two 0.316 vs 0.241), and the
+            side-by-distance interaction is significant for NDVI decline and temperature on the full
+            footprint. Only the temperature result is robust to alternative standard errors, none of
+            the 16 tests survives multiple-testing correction, and the labour ratio behaves
+            differently at different scales. These are exploratory results and do not identify a
+            tenure effect. See Spatial Discontinuity Regression for the full breakdown.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -155,7 +156,7 @@ st.markdown("""
    monoculture-vs-mixed-cropping signature -- **jump at the historical Berar/Central Provinces
    line**, once distance-to-boundary, rainfall, and elevation are controlled for?
 2. **Does agrarian labor structure** -- the ratio of agricultural laborers to cultivators, a
-   standard landlessness indicator -- **show the same pattern**, and does it hold at both the
+   standard landlessness indicator -- **show a similar pattern**, and does it hold at both the
    immediate boundary corridor and the full regional footprint?
 3. **Is the modern administrative boundary actually the same line** as the historical
    Berar/Central Provinces one, verified by documented district lineage rather than assumed?
@@ -168,13 +169,13 @@ st.markdown("### Explore the Evidence")
 nav_items = [
     ("Study Design", "The boundary, the corridor, and the spatial-discontinuity model"),
     ("Theoretical Foundations", "Institutional persistence theory and the remote-sensing physics behind the data"),
-    ("Cotton Signature (NDVI)", "The kharif-to-rabi decline test, confirmed across 2 independent years"),
+    ("Cotton Signature (NDVI)", "The kharif-to-rabi decline test, replicated in a second year with the same footprint"),
     ("Agrarian & Land Structure", "Cotton share, ag-laborer ratio, land use, holding size"),
     ("Spatial Discontinuity Regression", "The actual Phase 4 test, climate controls, robustness, and the honest findings"),
     ("Historical & Institutional Context", "District-lineage boundary verification and the FRA compilation"),
     ("Interactive Maps", "The boundary, corridor, and taluka data, explorable directly"),
     ("Methodology & Data", "Sources, the DN=0 fix, and scene-footprint scope"),
-    ("Ground Truth", "Karanja Ghadge / Sawardoh field verification -- complete, 7 fields"),
+    ("Ground Truth", "Karanja Ghadge / Sawardoh illustrative field check -- 7 fields, Central Provinces side"),
 ]
 
 cols = st.columns(3)

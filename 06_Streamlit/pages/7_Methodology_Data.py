@@ -22,9 +22,9 @@ sources = pd.DataFrame({
                "Landsat 8/9 Collection 2 Level-2, thermal Band 10", "WorldClim 2.1 monthly precipitation climatology",
                "SRTM 1 arc-second (~30m) digital elevation tiles", "IIT Bombay POCRA village-level Census shapefiles",
                "APY 2024-25 workbook, Maharashtra Economic Survey 2025-26", "State Tribal Development Dept + fact-finding reports (contextual only)"],
-    "Coverage": ["All 11 Vidarbha districts, 120 talukas", "WRS-2 path 144, rows 045/046 (68-taluka footprint)",
+    "Coverage": ["120 talukas, 11 districts (17 talukas patched from a second source)", "WRS-2 path 144, rows 045/046 (68-taluka footprint)",
                  "Same 2-scene footprint as NDVI", "All 120 talukas", "9-11 SRTM tiles, corridor + full footprint",
-                 "All 11 districts (8 processed by Entry 11)", "All 11 districts", "State/regional + 1 district anchor (Gadchiroli)"],
+                 "8 of 11 districts (Akola, Buldhana, Washim missing); 2011 Census attributes", "11 districts, district-level values only", "State/regional + 1 district anchor (Gadchiroli)"],
 })
 st.dataframe(sources, use_container_width=True, hide_index=True)
 
@@ -39,7 +39,9 @@ st.markdown(f"""
     </p>
     <p style="color:{PALETTE['text_primary']}; font-size:0.92rem; line-height:1.65; margin:0;">
         Landsat Collection 2 Level-2 scenes use <strong>DN=0</strong> as the fill/no-data value for
-        cloud-masked and off-swath pixels -- roughly a third of every scene. An early version of
+        off-swath pixels -- roughly a third of every scene. It does not mark clouds: no QA_PIXEL
+        cloud or shadow mask has been applied yet, and scenes were chosen by low scene-level cloud
+        cover only. An early version of
         this project's LST and NDVI pipeline applied the Kelvin/reflectance scale-and-offset
         directly to the raw digital number without masking DN=0 out first, which produces exactly
         149K = &minus;124.15&deg;C for those fill pixels -- an impossible land-surface temperature
@@ -57,9 +59,10 @@ st.markdown("### Scope Decisions, Stated Plainly")
 st.markdown("""
 - **Corridor vs. full footprint.** LST/NDVI processing initially covered only the 2-scene,
   68-taluka footprint that overlaps the corridor most efficiently -- not a full 11-district, 12-scene
-  mosaic. That footprint happens to be lopsided (49 Central Provinces talukas to 19 Berar talukas),
-  since the scene simply covers more CP-side territory. This matters directly for how one Phase 4
-  result (the ag-laborer ratio) should be read -- see Spatial Discontinuity Regression.
+  mosaic. That footprint happens to be lopsided (49 Central Provinces talukas to 19 Berar talukas, with the
+  Berar side reaching about 104 km from the line and the CP side about 180 km). This matters for how
+  the ag-laborer ratio should be read -- see Spatial Discontinuity Regression, which adds symmetric
+  distance windows.
 - **Population/land-use census coverage.** Started at 5 of 11 districts (the corridor-relevant
   ones), extended to 8 of 11 by Entry 11 once the Bhandara/Gondiya/Gadchiroli shapefiles -- already
   downloaded, never processed -- were run through the same pipeline. Gadchiroli's processed data has

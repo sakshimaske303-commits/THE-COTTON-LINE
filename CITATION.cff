@@ -13,30 +13,25 @@ identifiers:
     description: "Zenodo archive of THE COTTON LINE v1.0.1"
 doi: "10.5281/zenodo.22111298"
 abstract: >-
-  A historical-institutional and spatial-discontinuity study testing whether an 1853 colonial
-  land-tenure boundary in Vidarbha, Maharashtra -- Ryotwari cotton country (Berar) to the west,
-  Malguzari mixed-tenure country (Central Provinces) to the east, administratively abolished in
-  1956 -- still registers as a measurable present-day signature in cotton-crop phenology, agrarian
-  labor structure, land use, and land-surface temperature. The modern boundary was built by
-  dissolving 120 talukas across Vidarbha's 11 districts into their two historical-division
-  successors and extracting the shared 384.7 km edge, then verified against documented district
-  administrative lineage from 1903-1956 rather than a period map, since no accessible digitized
-  one exists. Four outcomes were tested with an OLS spatial-discontinuity model (outcome ~ side +
-  signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m) at both a 32-taluka
-  immediate-boundary corridor (+/-25 km) and a 66-68-taluka full-scene footprint. No outcome
-  showed a statistically significant level jump right at the historical line at either scale once
-  rainfall and elevation were controlled for. A real regional gradient in kharif-to-rabi NDVI
-  decline was found instead -- a 0.070-point Berar-side excess at the full-footprint scale,
-  independently reproduced at a 0.075-point gap a year later on a second Landsat cycle -- with the
-  same side x distance interaction independently significant for land-surface temperature
-  (p=0.0105) alongside NDVI (p=0.0348). Agrarian labor structure showed a scale-sensitive result: a
-  significant slope-difference interaction at the corridor scale (p=0.0361, stable in direction
-  across a 32-run leave-one-out jackknife) that flips to a significant level jump at the
-  full-footprint scale (p=0.014), traced to the satellite scene's asymmetric district coverage
-  rather than treated as a contradiction. A field ground-truth check at seven boundaries in Karanja
-  Ghadge and Sawardoh villages provided a field-level corroboration of the satellite NDVI signal
-  against Sentinel-2 and dated ground photography. The evidence supports a gradient-based, rather than discontinuous,
-  form of institutional persistence in this landscape.
+  A spatial-discontinuity study testing whether the historical boundary between Berar (Ryotwari
+  settlement, assigned to the East India Company in 1853) and the Central Provinces (Malguzari
+  settlement), abolished as a provincial border in 1956, is still detectable in present-day
+  Vidarbha, Maharashtra, in kharif-to-rabi NDVI change, land-surface temperature, agrarian labor
+  structure, and land use. The modern boundary was built by dissolving 120 talukas into their two
+  divisions and extracting the shared 384.7 km edge, then checked against district administrative
+  lineage from 1903-1956 (no digitized period map was available). Four outcomes were tested with an
+  OLS spatial-discontinuity model (outcome ~ side + signed_dist_km + side:signed_dist_km +
+  annual_total_mm + elevation_m) on a 32-taluka corridor and a 66-68-taluka Landsat footprint.
+  No outcome shows a boundary-specific level jump for NDVI change, land-surface temperature or net
+  cultivated area. A regional gradient is found instead: the NDVI decline is larger on the Berar
+  side (0.325 vs 0.255; 0.316 vs 0.241 in a second year), and the side x distance interaction is
+  significant on the full footprint for NDVI decline (p=0.0348) and land-surface temperature
+  (p=0.0105), though only the temperature result is robust to alternative standard errors and
+  distance windows, and none of 16 tests survives a Holm correction. The labor ratio shows a
+  scale-dependent pattern (corridor slope difference p=0.0361; full-footprint level difference
+  p=0.014). The results are exploratory and are consistent with a regional gradient that partly
+  coincides with the old boundary; they do not identify a tenure effect. A field check at seven
+  boundaries in Karanja Ghadge and Sawardoh (Central Provinces side only) is illustrative.
 keywords:
   - institutional persistence
   - spatial discontinuity

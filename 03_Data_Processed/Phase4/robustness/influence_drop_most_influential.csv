@@ -1,0 +1,9 @@
+scale,outcome,most_influential,cooks_d,threshold_4_over_n,p_int_full,p_int_drop_top,p_side_full,p_side_drop_top
+corridor,kharif_to_rabi_decline,Ashti,0.29756,0.13793,0.6727,0.79393,0.45847,0.97283
+corridor,ag_laborer_to_cultivator,Amravati,0.24814,0.125,0.03608,0.13842,0.96007,0.68296
+corridor,net_area_pct,Jiwati,0.46018,0.125,0.6492,0.54757,0.57669,0.53116
+corridor,lst_mean_c,Jiwati,0.40832,0.14286,0.90213,0.81573,0.7923,0.66307
+full,kharif_to_rabi_decline,Mahagaon,0.20686,0.05882,0.03475,0.27179,0.82098,0.53808
+full,ag_laborer_to_cultivator,Wani,0.12118,0.0597,0.57859,0.32382,0.01435,0.00273
+full,net_area_pct,Jiwati,0.29666,0.0597,0.56654,0.28855,0.12053,0.1651
+full,lst_mean_c,Jiwati,0.14166,0.06061,0.01047,0.00463,0.51228,0.61341

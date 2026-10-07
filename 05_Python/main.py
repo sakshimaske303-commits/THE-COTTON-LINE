@@ -11,5 +11,5 @@
 #
 # Assembling a single reproducible entry point that runs the complete
 # pipeline from raw data to the Phase 4 regression dataset is tracked as
-# future work (see Section 8, Future Work, of CL_Research_Paper.md) rather
+# future work (see Section 7, Future Work, of CL_Research_Paper.md) rather
 # than claimed here.
