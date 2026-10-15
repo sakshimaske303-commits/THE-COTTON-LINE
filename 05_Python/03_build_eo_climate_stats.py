@@ -59,6 +59,9 @@ print(f"EO stats: {len(inscene)} talukas with any year-1 pixel; "
       f"{(inscene.cov_y1_pct >= 50).sum()} with >= 50 % common-pixel coverage")
 
 # ---------------------------------------------------------------- WorldClim at centroids
+if not (RAW / "Hydrology" / "wc2.1_10m_prec_01.tif").exists():
+    print("Rainfall: WorldClim rasters not in 02_Data_Raw, keeping Hydrology/taluka_rainfall_worldclim.csv")
+    raise SystemExit
 geo = pd.read_csv(PROC / "Administrative" / "taluka_geometry.csv")
 months = []
 for m in range(1, 13):

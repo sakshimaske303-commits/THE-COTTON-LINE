@@ -49,7 +49,7 @@ cd 06_Streamlit && streamlit run app.py
 
 The pipeline needs only numpy, pandas, scipy, matplotlib and tifffile; no GDAL is required.
 
-The 30 m taluka NDVI table is in the repository, so this default run reproduces every number.
+The default run starts from the processed tables in `03_Data_Processed/` (the 30 m taluka NDVI table, Census 2011 taluka statistics, WorldClim rainfall and SRTM elevation) and reproduces every number, figure and interactive page. Steps that read raw data run only when that data is present in `02_Data_Raw/`.
 
 **Rebuild NDVI from raw scenes (optional, about 9 GB):**
 1. `python 05_Python/00_download_inputs.py` downloads the 36 Landsat scenes (B4, B5, QA) and ESA WorldCover.
@@ -65,6 +65,10 @@ The 30 m taluka NDVI table is in the repository, so this default run reproduces 
 | 4 | `04_build_analysis_dataset.py` | `Phase4/analysis_taluka_dataset.csv` |
 | 5 | `robustness_checks.py` | `Phase4/results/*.csv`, `key_numbers.json` |
 | 6 | `05_make_figures.py` | `07_Outputs/v2_fig*.png` |
+| 7 | `06_make_interactive.py` | `outputs/` interactive maps and plots |
+| 8 | `08_field_bridge.py` | field check, `Ground_Truth/field_decline_*.csv`, Figure 8 |
+
+Steps 2, 3 (rainfall part) and 3c need raw files that are not in git and not fetched by `00_download_inputs.py`: the POCRA village shapefile zips for the 11 districts (`02_Data_Raw/Population/`), WorldClim 2.1 10-minute monthly precipitation (`02_Data_Raw/Hydrology/`) and SRTM 1 arc-second tiles (`02_Data_Raw/Terrain/`). Without them the pipeline uses the processed tables. `07_export_pdfs.py` rebuilds the three PDFs from the Markdown and is not part of the run.
 
 `fix_lst_pipeline.py`, `fix_vegetation_pipeline.py` and `fix_slope_pipeline.py` are the original DN = 0 / slope fixes that produced the 300 m rasters, kept for the record.
 
