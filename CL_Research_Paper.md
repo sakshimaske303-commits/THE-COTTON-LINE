@@ -1,351 +1,370 @@
-# The Cotton Line: Testing the Institutional Persistence of an Erased Colonial Land-Tenure Boundary Across Vidarbha's Agrarian and Vegetation Geography
+# The Cotton Line: Is an Erased Colonial Land-Revenue Boundary Still Visible in Vidarbha's Satellite and Census Record?
 
 **Sakshi D. Maske**
 Independent Geospatial Researcher
 
-<!-- REVISION NOTE (Sept 2026): This version rewrites the prose of the earlier draft for clarity, corrects the historical
-chronology, reports the multiple-testing and robustness checks that were previously missing (Section 4.4), and rescopes
-the ground-truth check (Section 6.6). Items marked TODO(verify) are claims or citations that still need a page-level
-check against the original source before submission. -->
+*Version 2.1, October 2026. This version replaces the September 2026 draft. Every number below is produced by `05_Python/run_all.py --full` (30 m masked NDVI over Landsat paths 144–146).*
 
 ## Abstract
 
-Can an administrative boundary drawn in the nineteenth century still be detected in the twenty-first-century landscape? This paper tests whether the historical boundary between Berar (Ryotwari land-revenue settlement) and the Central Provinces (Malguzari settlement) leaves a measurable signature in kharif-to-rabi NDVI change, land surface temperature (LST), the ratio of agricultural labourers to cultivators, and land use across Vidarbha, Maharashtra. The design is a spatial-discontinuity test, not a before-and-after comparison: outcomes are regressed on side of the boundary, signed distance to the boundary, their interaction, and rainfall and elevation controls.
+Can a provincial boundary abolished in 1956 still be detected in today's farmland? In the nineteenth century Berar, in western Vidarbha, was settled under the Ryotwari land-revenue system. The Central Provinces districts to the east were settled under Malguzari. On district lineage the old line matches the present boundary between Amravati and Nagpur Divisions, which I rebuild as a 384.7 km line from 120 talukas.
 
-Berar was assigned to the East India Company by a treaty with the Nizam of Hyderabad in 1853 and administered as the Hyderabad Assigned Districts; it was merged with the Central Provinces in 1903. Its five districts (Amravati, Akola, Buldhana, Washim, Yavatmal) were settled under the Ryotwari system, while the districts of the Nagpur region to the east (Nagpur, Wardha, Chandrapur, Bhandara, Gondia, Gadchiroli) were settled under Malguzari. The old provincial boundary was abolished in the 1956 reorganisation of states, but on district lineage it corresponds to the present division line between Amravati Division and Nagpur Division. I build that line as a 384.7 km dissolved boundary from 120 talukas and test outcomes on a 32-taluka corridor and on a 68-taluka Landsat footprint.
+I test two hypotheses at that line: a level step (H1) and a change of slope (H2). The tests use four present-day outcomes:
+- a satellite cropping-intensity index (the fall in Landsat NDVI from November to March, measured in two years);
+- land surface temperature (LST) on one June date;
+- the 2011 ratio of agricultural labourers to cultivators;
+- the 2011 share of net sown area.
 
-The main findings are modest and should be read as exploratory. First, no outcome shows a boundary-specific level jump in the primary specification for NDVI change, LST or net cultivated area, at either scale. Second, the labour-ratio outcome is the exception: it shows a level difference across the boundary on the full footprint (Berar higher by 0.62, p = 0.014) but not in the corridor (p = 0.960), so it is scale-dependent. Third, on the full footprint the side-by-distance interaction is significant for NDVI change (p = 0.035) and LST (p = 0.011). The LST interaction survives heteroskedasticity-robust standard errors and symmetric distance windows; the NDVI interaction does not. Fourth, none of the 16 coefficients tested survives a Holm correction, and a raw Berar–Central Provinces NDVI gap of 0.070 (0.325 vs 0.255) largely disappears once distance is controlled, which indicates a regional gradient rather than a boundary effect. The evidence is therefore consistent with a regional gradient that partly coincides with the old boundary, and is not clean evidence of a tenure effect.
+The model is a spatial-discontinuity regression with rainfall and elevation controls. It is run on a 32-taluka corridor, on the talukas the Landsat scenes observe (98 for NDVI, 56 for LST), and on all 119 census talukas. NDVI is computed at 30 m with cloud, shadow and cropland masks. Inference uses the most conservative of heteroskedasticity-robust and Conley spatial standard errors, with Holm correction over 20 tests.
 
-**Keywords:** institutional persistence, colonial land tenure, Ryotwari, Malguzari, spatial discontinuity, boundary persistence, NDVI phenology, Vidarbha, remote sensing
+**Findings.**
+- **No level step (H1).** No outcome shows a step at the line in the corridor, in the Landsat sample, or in local-linear estimates at the line.
+- **One exception, which is not local.** In the 119-taluka census model, labour structure differs across the line (+0.96 labourers per cultivator on the Berar side; Holm p = 0.029). The difference is absent within 60 km of the line and in local-linear estimates, so it is regional rather than a step at the boundary.
+- **The NDVI pattern is a ridge, not a step.** The cropping-intensity index is highest within 50 km of the line on both sides (0.29) and falls away towards Buldhana in the west (0.21) and the paddy districts in the east (0.13). The raw gap between the sides is small and unstable: 0.009 in year 1, 0.057 in year 2.
+- **Slopes do differ (H2).** The gradient changes across the line for NDVI decline in both years (Holm p < 0.001) and, before correction, for LST and labour. For NDVI this is the crest of the ridge.
+- **Fake boundaries do the same.** Placebo cutoffs inside each side reproduce the NDVI and labour slope changes. Only the LST pattern passes that test, and it is a single pre-monsoon date.
+
+**Validation and conclusion.** At district level the NDVI index tracks the official cotton share (r = 0.86 for 10 districts; 0.77 without the two paddy districts), so it measures a real agricultural pattern. The cotton core of Vidarbha straddles the old line rather than stopping at it. The evidence shows no discontinuity at the line, and it cannot attribute anything to land tenure.
+
+**Keywords:** spatial discontinuity, boundary persistence, historical GIS, Landsat, NDVI, land surface temperature, Conley standard errors, Vidarbha, Ryotwari, Malguzari
 
 ---
 
 ## 1. Introduction
 
-Under the Ryotwari system, applied in Berar, the individual cultivator (ryot) held formal rights to a specific plot and paid revenue directly to the state. Under Malguzari, applied in the Central Provinces districts to the east, the land was settled with an intermediary revenue-payer (the malguzar) who was responsible for the whole estate (Baden-Powell, 1892; Iversen, Palmer-Jones, & Sen, 2013). Vidarbha's farm-distress geography is usually explained by rainfall, prices, and crop choice. I ask whether something else is still visible in the landscape: whether the nineteenth-century assignment of Berar to British administration, and the revenue system and cotton economy that followed it, left an imprint that survived Independence.
+Vidarbha's farm distress is usually explained by rainfall, prices and crop choice. A longer explanation points to history. Berar was assigned to the East India Company by the Nizam of Hyderabad in 1853, leased to Britain in perpetuity in 1902 and merged with the Central Provinces in 1903. It was settled under the Ryotwari system, in which each cultivator held a plot and paid revenue directly to the state. The Nagpur territories to the east, annexed in 1853–54, were settled under Malguzari, in which a village revenue-holder (the malguzar) answered for the whole village (Baden-Powell, 1892). Cotton expanded rapidly in Berar from the 1860s (Satya, 1997; Beckert, 2014).
 
-Two chronological points matter for the framing. First, Berar was not conquered in 1853. It was assigned to the East India Company under a treaty with the Nizam of Hyderabad, and the Nizam's nominal sovereignty continued until a perpetual lease in 1902; Berar was merged with the Central Provinces in 1903 (TODO(verify): cite the Imperial Gazetteer of India or a modern history for these dates). Second, 1853 is not a Berar-only date: the Nagpur kingdom of the Bhonsle dynasty was annexed by the Company in the same year under the doctrine of lapse, so both sides of the line came under direct British administration at about the same time. What differs is the boundary's older history. The Wardha River had marked the eastern frontier between the Nizam's Berar and the Bhonsle territory since an 1822 treaty (TODO(verify): add a page-level reference). The line is therefore also a pre-colonial political boundary and a physiographic one, and Section 6 treats this as a central confound.
+The two provinces became one administration in 1903, and the provincial line disappeared in the 1956 reorganisation of states. On district lineage, the present boundary between Amravati Division and Nagpur Division follows it.
 
-The boundary was abolished as a provincial border in 1956, but the modern division line between Amravati and Nagpur closely follows it on district lineage. Vidarbha's present-day distress geography is heavily studied (Mohanty, 2005; Mishra, 2006), and the region has a statutory development board under Article 371(2) of the Constitution (Government of Maharashtra, 1994). Cotton's role in Berar's late-nineteenth-century economy and its vulnerability in famine years is documented in the economic history literature (Beckert, 2014; Roy, 2011). TODO(verify): the earlier draft quoted a mortality share for the 1899–1900 famine in Berar; this figure could not be traced to a page in Beckert (2014) and has been removed. Replace with a page-cited figure from a Berar-specific source such as Satya (1997) or Dyson (1989), or omit it.
+That boundary is also older than British rule. The Wardha river formed much of the frontier between the Nizam's Berar and the Bhonsle kingdom of Nagpur, and the line runs along a transition in rainfall, soils and cropping. Any difference found at the line could therefore come from tenure, from earlier political history, or from physical geography. This paper does not try to separate them. It asks the narrower question that comes first.
 
-A full assessment of colonialism's role in Vidarbha's agrarian problems is beyond this paper. The narrower question is: after controlling for distance to the boundary, rainfall and elevation, is the Berar/Central Provinces boundary detectable today as a spatial discontinuity in cotton-related crop phenology, agrarian labour structure, land use, and land surface temperature? The paper is not a policy evaluation. It is closer to landscape pattern analysis and historical GIS than to treatment-effect estimation, and it combines earth-observation data with census data rather than relying on history alone.
+**Research question.** After controlling for rainfall, elevation and distance to the line, is the former Berar/Central Provinces boundary detectable as a spatial discontinuity in present-day satellite and census indicators of agriculture?
 
-Three questions follow.
+- **H1 (level step).** The outcome jumps at the line: the `side` coefficient is non-zero.
+- **H2 (slope change).** The outcome changes with distance differently on the two sides: the `side × distance` coefficient is non-zero.
 
-1. Does the kharif-to-rabi NDVI decline (the size of the fall in greenness from the post-monsoon scene to the pre-harvest scene) jump at the historical line after controlling for geography?
-2. Do the same patterns appear in the agrarian labour structure (agricultural labourers relative to cultivators), both in the immediate corridor and across the wider region?
-3. Is the present administrative boundary the same as the historical Berar/Central Provinces boundary, judged from district records rather than assumed?
+A finding for H1 would show that the line still marks a sharp difference. A finding for H2 alone, especially one that also appears at placebo lines, describes a regional gradient and not a boundary.
 
-## 2. Literature Review
+**Contribution.** The paper offers three things:
+- a reproducible construction of a historical boundary proxy and of taluka-level satellite and census indicators;
+- a test of that boundary with spatially robust inference, placebo lines, local estimates and an explicit statement of statistical power;
+- a demonstration that a regional cropping pattern visible from space can look like a boundary effect until the whole region is observed and the line is tested properly.
 
-### 2.1 Institutional Persistence and Colonial Land Tenure in India
+## 2. Background and related work
 
-The closest empirical precedent is Banerjee and Iyer (2005). Using colonial records on tenure type for districts across India, they found a persistent gap in agricultural investment and productivity between districts settled under landlord-based revenue systems and those settled under non-landlord (ryotwari or mahalwari) systems, even after landlord tenure was abolished at Independence. Iversen, Palmer-Jones, and Sen (2013) argue that Banerjee and Iyer's coding grouped most Central Provinces districts with the more severe zamindari settlements of Bengal and Bihar, and so treated them as landlord land. Malguzari settlement, in place from the 1860s, involved cadastral surveys and statutory protection for tenants (occupancy rights, absolute-occupancy rights, and malik makbuza rights), which makes it more complex than a simple landlord system. Iversen and co-authors recoded the Central Provinces using archival data on the share of protected-tenant land and report that the original result weakens substantially (TODO(verify): the earlier draft said "six of eight coefficients lose significance"; confirm this against the paper's table before quoting a count). I follow the corrected reading and treat Malguzari as a category of its own, not as generic landlord tenure. My design differs from both papers: it is a continuous distance-to-boundary test at taluka resolution within one region, not a cross-section of districts across provinces.
+**Colonial land tenure and persistence.** Banerjee and Iyer (2005) found that Indian districts settled under landlord-based revenue systems had lower agricultural investment and productivity after Independence than districts settled with cultivators. Iversen, Palmer-Jones and Sen (2013) showed that Banerjee and Iyer coded most Central Provinces districts as landlord districts, although Malguzari settlement included cadastral surveys and statutory tenant protection. After recoding the Central Provinces, they find no evidence that landlord tenure lowered post-Independence agricultural performance. I follow the corrected reading and treat Malguzari as a category of its own. Iyer (2010) compares directly and indirectly ruled areas of British India, and Dell and Olken (2020) study long-run effects around colonial sugar factories in Java.
 
-Two further strands are relevant. Dell and Olken (2020) study the long-run effects of the Dutch Cultivation System in Java by comparing present-day outcomes across the boundaries of areas organised around colonial sugar processing (TODO(verify): confirm the design description against the article). Iyer (2010) compares directly and indirectly ruled parts of British India and finds worse long-run development outcomes in the directly ruled areas. In both, a colonial administrative choice is linked to outcomes measured a century or more later.
+**Boundaries as discontinuities.** Dell (2010) estimates the effect of Peru's colonial mining *mita* with distance to its boundary as the running variable. Keele and Titiunik (2015) set out when a geographic boundary can be treated as a regression discontinuity. They also warn that natural geography often changes at the same line, which is the central problem here. Kelly (2019) shows that persistence regressions on spatial data often overstate precision because of spatial autocorrelation; spatial-HAC errors (Conley, 1999) are the standard remedy. Lee and Lemieux (2010) recommend local estimates and bandwidth checks.
 
-### 2.2 Geographic Regression Discontinuity and Persistent Colonial-Era Effects
+**Seeing cropping from orbit.** NDVI (Tucker, 1979) contrasts red light, which chlorophyll absorbs, with near-infrared light, which leaf structure scatters. The fall in NDVI from early November to early March measures how much green cover is lost between the end of the monsoon season and late winter. Under a single long-duration crop that is picked and then left fallow, the fall is large. Where a second (rabi) crop, irrigation or perennial cover follows, it is small.
 
-The main methodological model is Dell (2010), who uses a spatial regression-discontinuity design on the boundary of Peru's colonial mining mita, with distance to the boundary as the running variable, to show discontinuities in household consumption and child stunting. Keele and Titiunik (2015) set out the conditions a geographic boundary must satisfy to be treated as a regression discontinuity. They also flag a problem that is central here: a boundary crossing varied terrain can mix an institutional effect with natural geography that also changes across the line. Rainfall and elevation are therefore included as controls. Michalopoulos and Papaioannou (2016) apply a related border-based logic to colonial-era borders across Africa.
+This is a **cropping-intensity index, not a cotton detector**: soybean is harvested before November and rice in the east may still stand. Section 4.5 checks the index against official cotton statistics.
 
-Two inferential issues from this literature are handled only partly in this paper and are discussed in Section 6. The first is spatial autocorrelation: with taluka-level observations, conventional standard errors overstate precision, and Kelly (2019, 2025) shows how badly persistence regressions can be affected; spatial-HAC estimators (Conley, 1999) are the standard remedy. The second is functional form and bandwidth: Lee and Lemieux (2010) recommend checking sensitivity to bandwidth and to the polynomial in the running variable, which Section 4.4 does in a limited way.
+LST from Landsat's thermal band is physically linked to NDVI, because bare soil heats faster than transpiring canopy. In the pre-monsoon season, however, it mostly measures soil and surface type.
 
-### 2.3 Remote-Sensing Detection of Cropping Pattern
+## 3. Data and methods
 
-NDVI (Tucker, 1979) contrasts red reflectance, which healthy chlorophyll absorbs, with near-infrared reflectance, which leaf cell structure scatters. Dense green canopy therefore has high NDVI. Comparing a post-monsoon (kharif-season) scene with a late-winter (rabi/pre-harvest) scene gives a decline that reflects how much green cover is lost between the two dates. A large decline is consistent with a single-season system in which land is harvested or senesced and not replanted; a small decline is consistent with a second crop or with perennial or irrigated cover.
+### 3.1 Units, boundary and samples
 
-This measure is best understood as a cropping-intensity index and not as a direct cotton detector. Cotton is a long-duration crop that is still being picked in November, soybean is already harvested by then, and rice in the east is still standing, so the same NDVI decline can arise from different crop calendars. I therefore call it the "cotton signature" only as shorthand for this index, and the interpretation is treated as an assumption to be checked with field data. The second channel, LST from the Landsat thermal band, is physically related to NDVI (sparse or bare surfaces heat faster than transpiring canopy) but measures a different quantity, and here it is a single pre-monsoon June date.
+The unit is the taluka (sub-district): 120 talukas in Vidarbha's 11 districts, from the Census 2011 / Local Government Directory sub-district layer.
 
-## 3. Data and Methodology
+**Building the line.** Talukas are dissolved into Amravati Division (Berar; 56 talukas) and Nagpur Division (Central Provinces; 64 talukas), and the shared edge is merged into a single line of 384.7 km.
 
-### 3.1 Study Design
+**Distances.** Distances are measured from each taluka centroid to the line in UTM zone 44N. `signed_dist_km` is positive on the Berar side.
 
-The unit of analysis is the taluka: 120 present-day talukas in Vidarbha's 11 districts. Talukas are dissolved into the two historical divisions, the shared edge is extracted as a single line, and the line is checked against district lineage from 1903 to 1956. The immediate-boundary sample contains 32 talukas (15 in Berar, 17 in the Central Provinces) intersecting a 25 km buffer of the line. The larger sample contains 68 talukas covered by the Landsat footprint. Each outcome is analysed at both scales to separate an under-powered corridor result from a true null.
+The line is a proxy. District lineage from 1903 to 1956 maps the historical Berar districts onto today's Amravati Division and the Central Provinces districts onto today's Nagpur Division. This is district-level evidence, not a geometric match with a period map. Some Central Provinces-side talukas came from other jurisdictions; Rajura, for example, came from Hyderabad State. Section 4.6 shows that excluding Rajura, Korpana and Jiwati does not change the results.
 
-Two design notes. First, the "corridor" is defined by taluka intersection with the buffer, not by taluka centroid: 12 of the 32 corridor talukas have centroids more than 25 km from the line (maximum 41.6 km). Distances in the regressions are centroid distances. Second, the regression tests for a level jump at the boundary and for a change in slope across it, with distance, rainfall and elevation held constant, in order to avoid attributing Vidarbha's west-dry, east-wet gradient to an institutional effect.
+**Three samples** (Figure 1):
 
-### 3.2 Data Sources
-
-| Variable | Source | Coverage |
+| Sample | Rule | Talukas |
 |---|---|---|
-| Administrative boundaries (taluka-level) | IIT Bombay POCRA Maharashtra Census shapefile portal; cross-checked against `datta07/INDIAN-SHAPEFILES` (Census 2011/LGD-linked) for 17 talukas missing from the original source | 120 talukas, 11 districts |
-| Vegetation (NDVI), Climate (LST) | Landsat 8/9 Collection 2 Level-2 Science Products (U.S. Geological Survey), surface reflectance (SR_B4, SR_B5) and thermal (ST_B10) bands, WRS-2 path 144, rows 045/046 | 66–68 talukas |
-| Hydrology (rainfall) | WorldClim 2.1 monthly precipitation climatology, ~18.5 km (10 arc-minute) grid (Fick & Hijmans, 2017) | 120 talukas (long-term normals, not a specific-year series) |
-| Terrain (elevation) | SRTM 1 arc-second digital elevation model (Farr et al., 2007) | 32 corridor talukas (68 in the full-footprint extension) |
-| Population, agrarian labour, land use | Census village-level shapefiles (2011 Census attributes; 600+ attributes per village), aggregated to taluka | 8 of 11 districts (Amravati, Yavatmal, Wardha, Chandrapur, Nagpur, Bhandara, Gondia, Gadchiroli); Akola, Buldhana and Washim have no census/land-use data here |
-| Agriculture (cotton share, holding size) | Maharashtra Area-Production-Yield 2024-25 workbook; Maharashtra Economic Survey 2025-26, Chapter 7 and District Indicators annexure | 11 districts, at district level only |
-| Economics (FRA compilation) | Maharashtra Tribal Development Department Administrative Report (2020-21); 2024 fact-finding committee report; EPW/Scroll.in secondary reporting on Vidarbha community forest rights | Contextual/narrative, not a regression variable (Section 3.6) |
+| Corridor | taluka polygon intersects a 25 km buffer of the line | 32 (15 Berar, 17 Central Provinces) |
+| Landsat sample | at least 50 % of the taluka's cropland observed on both seasonal dates (NDVI); at least 50 % of the taluka observed (LST) | 98 for NDVI in each year (56 Berar, 42 Central Provinces); 56 for LST (13 Berar) |
+| Census sample | every taluka with Census 2011 villages | 119 (56 Berar, 63 Central Provinces; Nagpur Urban has no villages) |
 
-Two timing caveats apply. Census attributes date from 2011, while the satellite scenes are from 2024–26. Cotton share and holding size are district-level values that are repeated across every taluka in the district, so they carry no taluka-level variation and are not used as regressors.
+These rules were set before the results were examined.
 
-### 3.3 Boundary Construction and Historical Verification
+**Landsat coverage.** NDVI uses nine Landsat scenes per date: WRS-2 paths 144, 145 and 146, rows 045 to 047. They touch 103 talukas; 5 have less than half of their cropland observed on both dates and are excluded (Sawali is below 1 %). The NDVI sample therefore contains every Berar taluka (56, reaching 228 km from the line) and 42 Central Provinces talukas (reaching 156 km). Gadchiroli and most of Gondiya lie on path 143, which is not used. LST comes from a single June scene on path 144 and keeps the smaller 56-taluka sample.
 
-The boundary is built by a line-merge of the shared edges between Amravati Division and Nagpur Division talukas. Because adjacent polygons do not share vertices exactly along the edge, the first merge pass produced 256 disconnected line fragments; an exact-match pass produced a single line of 384.7 km running from the Akola/Amravati/Wardha corner in the north to the Yavatmal/Chandrapur corner in the south. Splitting a 25 km buffer by division gives the discontinuity corridor: 7,387 km² on the Berar side and 7,987 km² on the Central Provinces side (32 of Vidarbha's 120 talukas).
+![Figure 1](07_Outputs/v2_fig1_study_design_map.png)
 
-The line is an administrative proxy and needs verification against the historical boundary. No digitised period map was found (the Imperial Gazetteer district maps and the 1901–1931 Central Provinces and Berar maps were not available in accessible form), so verification uses documented district lineage for 1903–1956. The historical Berar districts (Amraoti, Akola, Ellichpur, Buldhana, Basim and Wun) map onto the modern Amravati Division: Ellichpur became a taluka of Amravati district, Wun was renamed Yavatmal, and Basim became Washim (folded into Akola district for a time and recreated as a district on 1 July 1998). The Central Provinces divisions (Nagpur, Bhandara, Chanda, Wardha, and later the divisions that became Gondia and Gadchiroli) map onto the present Nagpur Division. Balaghat went to Madhya Pradesh in 1956 but was never in the 11-district sample. The Central Provinces side of this study is slightly smaller than the old division because of the 1956 state reorganisation.
+**Figure 1.** Study design: the boundary proxy, the 32-taluka corridor (hatched) and the 98 talukas in the NDVI sample (green outline). Census outcomes use all 119 talukas with villages.
 
-This is lineage evidence at district level. It is not a taluka-by-taluka or geometric verification, and there is a known exception. Official district histories record that some talukas on the Central Provinces side were transferred from other jurisdictions: for example, Rajura tehsil in Chandrapur district came from the Nizam's Hyderabad State, and Chandrapur district also acquired tehsils from Madras in 1874 and includes zamindari estates. Rajura, Korpana and Jiwati fall in the Central Provinces-side corridor (Korpana and Jiwati are probably carved out of Rajura; TODO(verify)). The Central Provinces side is therefore not a uniform Malguzari block, and Section 4.4 does not yet test exclusion of these talukas. TODO: run the analysis with Rajura, Korpana and Jiwati excluded.
+### 3.2 Data
 
-![Figure 1](03_Data_Processed/Administrative/boundary_verification_map.png)
+| Variable | Source | Notes |
+|---|---|---|
+| Taluka boundaries | Census 2011 / LGD sub-districts (datta07/INDIAN-SHAPEFILES); IIT Bombay POCRA district shapefiles | 120 talukas |
+| NDVI | Landsat 8/9 Collection 2 Level-2 surface reflectance (USGS; via Microsoft Planetary Computer), SR_B4, SR_B5 and QA_PIXEL | Paths 144–146, rows 045–047, one date per path and season. Year 1: 8–15 Nov 2025 → 6–8 Mar 2026. Year 2: 27 Oct–5 Nov 2024 → 11–13 Mar 2025 |
+| Cropland mask | ESA WorldCover 2021, 10 m (Zanaga et al., 2022) | Class 40 (cropland) |
+| LST | Landsat 8 Collection 2 Level-2 ST_B10 | 20 June 2026, pre-monsoon, single date |
+| Labour structure, land use | Census 2011 village attributes (POCRA village shapefiles), aggregated to taluka | All 11 districts; rural villages only |
+| Rainfall | WorldClim 2.1 monthly normals, 10 arc-minute grid (Fick & Hijmans, 2017) | Long-term climatology at taluka centroids |
+| Elevation | SRTM 1 arc-second (Farr et al., 2007) | At taluka centroids |
+| District context | Maharashtra APY 2024-25; Economic Survey of Maharashtra 2025-26 | District level, descriptive only |
 
-**Figure 1.** The two dissolved divisions, the 25 km discontinuity corridor over the taluka grid, and the 384.7 km boundary line. (TODO: the AKOLA label sits outside its polygon and the map has no scale bar or north arrow; fix in the source map.)
+### 3.3 Satellite processing
 
-### 3.4 Outcome Variables
+Landsat Level-2 products use digital number 0 as fill for off-swath pixels. An early version of the pipeline scaled these fill pixels instead of masking them, producing a floor of −124.15 °C in the LST mosaic and fake "valid" reflectance in a third of each scene. All rasters were rebuilt with DN = 0 masked before scaling.
 
-Four outcomes are analysed.
+**NDVI (30 m, `03b_build_eo_30m_masked.py`).** Each pixel is masked if it is fill (DN = 0), if QA_PIXEL flags dilated cloud, cirrus, cloud, cloud shadow or water, or if ESA WorldCover 2021 does not class it as cropland. Four rules then apply per taluka:
+1. **The decline uses common pixels only,** meaning cropland pixels valid on both dates, so the November and March means describe the same fields.
+2. **Coverage is counted against the taluka's cropland.** An earlier version divided by the taluka's bounding box, which made fully observed talukas look half-empty (Karanja in Wardha was reported at 45.8 % but is 100 % covered).
+3. **Talukas with less than half of their cropland observed are excluded.**
+4. **Rows of one path are merged on a shared grid.** Where two paths see the same taluka, the better-covered path is used and the other is kept as a consistency check: across 30 taluka-years seen twice, the two paths differ by 0.036 on average (maximum 0.07), against a regional range of 0.11 to 0.30.
 
-- **Kharif-to-rabi NDVI decline.** For each taluka, the fall in mean NDVI from a post-monsoon scene (early to mid November) to a pre-harvest scene (early March), computed from Landsat 8/9 Level-2 surface reflectance (SR_B4 red, SR_B5 near-infrared). Year one uses scenes from 8 November 2025 and 8 March 2026; year two, used as a replication, uses scenes from 13 November 2024 (row 045) and 5 November 2024 (row 046), and 5 March 2025. Each window uses the single lowest-cloud scene (scene cloud cover below 60%).
-- **Land surface temperature (LST).** Mean June 2026 surface temperature from the Landsat thermal band (ST_B10), single date.
-- **Agrarian labour ratio.** Agricultural labourers (main and marginal) divided by cultivators, from Census village data aggregated to the taluka.
-- **Net cultivated area (%).** Net sown area share of reported village area, from the same source. Land-use categories (forest, non-agricultural use, barren, permanent pasture, miscellaneous tree crops, cultivable waste, current and other fallow, net sown) were checked for internal consistency before use.
+**LST** is summarised from the 300 m block average of the corrected 30 m June scene, with the same polygon-based coverage rule.
 
-A pipeline bug was found and fixed before any results were relied on. Landsat Collection 2 Level-2 products use digital number (DN) = 0 as a fill value for off-swath pixels, about one-third of each scene. An earlier processing step applied the scale and offset directly to raw DN without masking DN = 0. The broken thermal output showed exactly 149 K (−124.15 °C) wherever DN = 0, and the same bug affected the reflectance pipeline, where the merged raster reported 100% valid pixels while the source fill rate was about 33%. All rasters were reprocessed after setting DN = 0 to no-data before scaling.
+### 3.4 Model and inference
 
-DN = 0 marks off-swath fill, not clouds. No cloud or cloud-shadow mask based on the QA_PIXEL band has been applied, and the scene selection relies on low scene-level cloud cover only. This is a limitation (Section 6.8).
+For each outcome *y* and sample:
 
-### 3.5 Spatial-Discontinuity Regression
+y = β0 + β1·side + β2·signed_dist_km + β3·(side × signed_dist_km) + γ1·rainfall + γ2·elevation + ε
 
-Each outcome is estimated by ordinary least squares:
+β1 tests H1 (step) and β3 tests H2 (slope change).
 
-outcome ~ side + signed_dist_km + side×signed_dist_km + annual_total_mm + elevation_m
+**Primary p-value.** Taluka observations are spatially correlated: residual Moran's I is 0.29–0.50 for NDVI, LST and the census outcomes in the larger samples (Table S3). Conley spatial-HAC errors correct for this, but with 25–120 units they can understate uncertainty when residuals are not correlated. The primary p-value is therefore the largest of three: HC3, Conley with a 50 km cutoff, and Conley with a 100 km cutoff. OLS and district-clustered p-values are reported for reference. Clustering is unreliable with 5–11 districts.
 
-Two coefficients carry the questions. `side` is an indicator for Berar (Ryotwari) and tests for a level difference at the boundary. `side×signed_dist_km` tests whether the outcome changes differently with distance on the two sides. `signed_dist_km` is the taluka-centroid distance to the dissolved boundary, measured in UTM zone 44N, positive on the Berar side. Rainfall and elevation are controls. Each outcome was estimated on the 32-taluka corridor and on the 66–68-taluka full footprint (the count depends on which variables the footprint supports).
+**Multiple testing.** There are 20 tests: two coefficients for each of five outcome series (NDVI year 1, NDVI year 2, LST, labour, net sown area) at two scales. Holm and Benjamini–Hochberg corrections are applied to the primary p-values.
 
-Elevation is from SRTM 1 arc-second tiles sampled at taluka centroids (194–497 m in the corridor). Rainfall is WorldClim 2.1 annual precipitation sampled at centroids. Both are long-term normals, and the ~18.5 km rainfall grid is coarser than most talukas.
-
-### 3.6 Robustness Checks and Scope Decisions
-
-A leave-one-out jackknife (32 refits, one corridor taluka dropped each time) was applied to the significant corridor interaction. The full-footprint extension is a second scale check. Section 4.4 adds heteroskedasticity-robust (HC3) and district-clustered standard errors, multiple-testing correction, symmetric distance windows, placebo cutoffs, influence diagnostics, and a valid-pixel coverage test, all reproducible with `05_Python/robustness_checks.py`.
-
-Two variables were left out of the regression. The Census irrigation field (area_irri over net_area) reports 58–92% irrigated in sampled villages, far above the roughly 15–20% documented for the Vidarbha cotton belt. Its units are unclear, so it is not used, and it is not reported as a number. (TODO: the column `irrigation_pct` is still present in `taluka_population_agri_stats.csv`; drop it or mark it as unreliable in the file.) Forest Rights Act (FRA) claims and titles have no consistent public taluka-level series for Vidarbha. Figures from the state administrative report, the 2024 fact-finding committee, one Gadchiroli taluka, the Vidarbha regional total, and village case studies are compiled as a sourced table, with scope, value, unit, as-of date and source for each figure, and used only as context in the institutional-history discussion.
+**Robustness checks.** In addition to the main model:
+- local-linear regression discontinuity with a triangular kernel at 40, 60 and 80 km bandwidths;
+- symmetric distance windows (40, 60, 80 and 105 km);
+- placebo cutoffs inside each side;
+- dropping the most influential taluka (largest Cook's distance);
+- excluding Rajura, Korpana and Jiwati;
+- coverage thresholds from any-pixel to 90 %;
+- the minimum detectable step at 80 % power (MDE = 2.8 × the conservative standard error).
 
 ## 4. Results
 
-### 4.1 Cotton-Signature NDVI: A Regional Gradient, Nearly Absent in the Corridor
+### 4.1 The regional picture
 
-On the full footprint (68 talukas) the mean NDVI decline is 0.325 on the Berar side and 0.255 on the Central Provinces side, a raw difference of 0.070 (about 1.08 standard deviations; Welch t = 5.4). The spread differs too: the Central Provinces side has the larger standard deviation (0.062 vs 0.041), which is consistent with a mix of single- and double-crop areas there. Post-monsoon NDVI is almost identical on both sides (Berar 0.66, Central Provinces 0.64), so the difference is in what happens after November, not in monsoon greenness.
+Figure 2 maps the four outcomes.
+- **NDVI decline** is largest in the Yavatmal–Wardha cotton belt and smallest in the paddy and forest districts of Bhandara and Gondiya.
+- **LST** is highest along the Wardha valley and lower in the forested east.
+- **The labour ratio** is highest in Amravati district.
+- **Net sown area** falls steadily from west to east.
 
-In year two (64 of 68 talukas with valid data in both years), the gap is 0.316 (Berar) against 0.241 (Central Provinces), a difference of 0.075. Because both years use the same footprint, method and seasonal windows, the second year replicates a regional gradient under different weather. It is not an independent test of a boundary effect.
+![Figure 2](07_Outputs/v2_fig2_outcome_maps.png)
 
-![Figure 2](07_Outputs/seasonal_ndvi_signature.png)
+**Figure 2.** The four outcomes by taluka. Black line: boundary proxy. Blank: outside that outcome's sample.
 
-**Figure 2.** Seasonal NDVI trajectory (post-monsoon to pre-harvest) and the kharif-to-rabi reduction, by division, year one.
+**A ridge, not a step.** The NDVI decline is highest close to the line on both sides and falls away in both directions (Figures 3 and 4):
 
-![Figure 3](07_Outputs/year2_ndvi_comparison.png)
+| Distance from the line | Central Provinces side | Berar side |
+|---|---|---|
+| 0–50 km | 0.292 (18 talukas) | 0.293 (17) |
+| 50–100 km | 0.260 (15) | 0.270 (13) |
+| 100–150 km | 0.132 (9; all CP talukas beyond 100 km) | 0.238 (13) |
+| 150–228 km | — | 0.206 (13) |
 
-**Figure 3.** The kharif-to-rabi NDVI reduction in the second annual cycle, by division.
+Values are year 1. The fall is steep into the paddy and forest belt of Bhandara and Gondiya, and gentler towards Buldhana in the west.
 
-In the 25 km corridor the gap almost disappears: 0.310 (Berar) against 0.299 (Central Provinces) across 29 talukas. The Central Provinces corridor talukas (Wardha, Nagpur, Chandrapur) are also major cotton producers, so near the line the two sides look alike. The regional NDVI difference is therefore not concentrated at the boundary. Section 4.3 shows that, once distance is in the model, the `side` coefficient is close to zero.
+**Side averages.** Because the ridge straddles the line, the averages by side are close:
 
-![Figure 4](07_Outputs/lst_ndvi_corridor_comparison.png)
+| | Berar (56) | Central Provinces (42) | Gap |
+|---|---|---|---|
+| Year 1 NDVI decline | 0.255 | 0.246 | 0.009 |
+| Year 2 NDVI decline | 0.319 | 0.262 | 0.057 |
 
-**Figure 4.** NDVI and land-surface-temperature maps and division boxplots, June 2026 single-date snapshot, corridor.
+**Second year.** The two years' taluka values correlate at r = 0.84. Both years use the same scenes and method, so year 2 replicates the regional pattern; it is not an independent test of the boundary. The side gap moves between years while the ridge stays, so the ridge, not the gap, is the stable feature.
 
-### 4.2 Agrarian Labour Structure, Land Use, and Cotton Dependency
+**Near the line.** In the corridor the sides are almost identical (year 1: 0.294 against 0.290). Once distance to the line is modelled, the Berar–Central Provinces difference at the line is −0.027 (p = 0.09).
 
-The agricultural-labourer-to-cultivator ratio is 2.90 in Berar and 1.96 on the Central Provinces side across the 32 corridor talukas (15 Berar, 17 Central Provinces). Section 4.4 shows that the corridor interaction for this outcome depends on one urban taluka.
+**Census outcomes:**
 
-Net cultivated area is higher on the Berar side (68.9% vs 61.5%). Forest cover is almost the same on both sides (12.5% vs 12.6%), because the corridor runs through a shared farming area and the Central Provinces' larger forests lie further east in Gadchiroli, outside it. Fallow land is 5.8% on the Central Provinces side against 3.3% in Berar. Fallow can reflect ordinary crop rotation and is not read here as economic distress.
+| | Berar | Central Provinces |
+|---|---|---|
+| Labour ratio, corridor | 2.90 | 1.96 |
+| Labour ratio, 119 talukas | 2.46 | 1.89 |
+| Net sown area, corridor | 68.9 % | 61.5 % |
+| Net sown area, 119 talukas | 72.5 % | 52.6 % |
 
-District-level cotton shares do not split along the old line. Yavatmal (Berar; 51% of farmland under cotton) and Wardha (Central Provinces; 49%) are nearly tied, followed by Chandrapur (38%) and Nagpur (38%). Bhandara (0.15%) and Gondia (0%) are far lower, but that reflects rice cultivation. Cotton did not stay within the old line, and Wardha has a long cotton history of its own.
+![Figure 3](07_Outputs/v2_fig3_seasonal_ndvi.png)
 
-The spread of net sown area is wider across the six Nagpur Division districts (standard deviation 15.4) than across the five Amravati Division districts (60–75%, standard deviation 6.8). This is a comparison of 6 and 5 district values with no formal test, and it is descriptive only. It is compatible with a Central Provinces that combines heavily cultivated and heavily forested districts, but it is not evidence of a tenure effect.
+**Figure 3.** (a) Mean NDVI in early November and early March by side and year, on common cropland pixels, for the 98 talukas valid in both years. (b) Distribution of the decline.
 
-Mean holding size shows no meaningful corridor difference: 1.81 ha in Berar and 1.90 ha in the Central Provinces. This is a district-level value repeated across talukas.
+### 4.2 H1: no step at the line
 
-![Figure 5](07_Outputs/population_agrarian_comparison.png)
+Table 1 reports all 20 tests and Figure 5a shows the step estimates.
 
-**Figure 5.** Agricultural-laborer-to-cultivator ratio and literacy, by division, corridor talukas.
+**Table 1.** Step (H1) and slope-change (H2) tests. Primary p = largest of HC3, Conley 50 km and Conley 100 km. Holm correction over the 20 primary p-values.
 
-![Figure 6](07_Outputs/landuse_corridor_comparison.png)
+| Outcome | Sample | n (Berar) | Step | p (primary) | Slope change per km | p (OLS) | p (primary) | Holm p (slope) |
+|---|---|---|---|---|---|---|---|---|
+| NDVI decline, year 1 | Corridor | 32 (15) | −0.015 | 0.50 | −0.0010 | 0.27 | 0.30 | 1.00 |
+| NDVI decline, year 1 | Landsat | 98 (56) | −0.030 | 0.18 | −0.0019 | <0.001 | **<0.001** | **<0.001** |
+| NDVI decline, year 2 | Corridor | 32 (15) | 0.007 | 0.74 | −0.0013 | 0.096 | 0.21 | 1.00 |
+| NDVI decline, year 2 | Landsat | 98 (56) | −0.018 | 0.26 | −0.0023 | <0.001 | **<0.001** | **<0.001** |
+| LST, °C | Corridor | 26 (10) | 0.83 | 0.69 | 0.008 | 0.96 | 0.95 | 1.00 |
+| LST, °C | Landsat | 56 (13) | 1.77 | 0.31 | −0.077 | 0.025 | **0.005** | 0.083 |
+| Labour ratio | Corridor | 32 (15) | 0.02 | 0.97 | 0.037 | 0.036 | 0.063 | 1.00 |
+| Labour ratio | Census, 119 | 119 (56) | **0.96** | **0.002** (Holm 0.029) | −0.008 | <0.001 | **0.006** | 0.10 |
+| Net sown area, % | Corridor | 32 (15) | 4.83 | 0.56 | −0.17 | 0.65 | 0.66 | 1.00 |
+| Net sown area, % | Census, 119 | 119 (56) | 2.72 | 0.53 | −0.006 | 0.88 | 0.92 | 1.00 |
 
-**Figure 6.** Net cultivated area, fallow land, and forest cover, by division, corridor talukas.
+**In the corridor and the Landsat sample, no outcome steps at the line.** Local-linear estimates at 40, 60 and 80 km show no jump for any outcome (all p ≥ 0.16; for NDVI, p ≥ 0.28; Table S4).
 
-![Figure 7](07_Outputs/agrarian_indicators_comparison.png)
+**The labour ratio is the exception, and it is not local.** In the 119-taluka model it is higher on the Berar side by 0.96 labourers per cultivator (primary p = 0.002; Holm p = 0.029). That step is:
+- zero in the corridor (0.02, p = 0.97);
+- not significant within 40 or 60 km of the line;
+- significant only once windows reach 80 km;
+- absent in local-linear estimates (p = 0.16–0.71).
 
-**Figure 7.** Cotton share, net sown area, per-capita foodgrain production, and average holding size, by district (11 districts).
+The labour gap is therefore a regional difference concentrated in Amravati district, where ratios reach 3–5. It is not a break at the line.
 
-![Figure 8](07_Outputs/precipitation_corridor_comparison.png)
+**What the design can detect.** The minimum detectable step at 80 % power is 1.6–2.1 standard deviations in the corridor, so the corridor null rules out only very large steps. In the larger samples it is about one standard deviation (NDVI year 1, labour) and 0.6–0.7 standard deviations for NDVI year 2 and net sown area.
 
-**Figure 8.** Annual precipitation total and monsoon-season share, by division, district-wide and corridor.
+### 4.3 H2: slopes differ, but so do fake boundaries
 
-### 4.3 Spatial-Discontinuity Regression: Level Jump and Slope Difference
+**Where the gradient changes.** Three outcomes change gradient across the line in the larger samples (Figure 4):
+- **NDVI decline, both years:** primary p < 0.001, Holm p < 0.001.
+- **LST:** primary p = 0.005, Holm p = 0.083.
+- **Labour ratio:** primary p = 0.006, Holm p = 0.10.
 
-Controls behave as expected. In the NDVI-decline model rainfall has p = 0.015 and elevation p = 0.002. In the labour-ratio model rainfall has p < 0.001 and elevation p = 0.291. In the net-area model rainfall has p = 0.046 and elevation p = 0.020. Vidarbha's dry-west, wet-east geography moves these outcomes, and the controls pick it up.
+**The shapes.**
+- *NDVI decline* rises towards the line on the Central Provinces side (+0.0013 per km in year 1) and falls away from it on the Berar side (−0.0007 per km): a ridge whose crest lies near the line.
+- *LST* has the same ridge shape (+0.042 °C per km on the Central Provinces side, −0.035 °C per km on the Berar side).
+- *The labour ratio* falls away from the line on the Berar side.
 
-**Corridor scale (32 talukas).** None of the four outcomes shows a significant `side` term: NDVI decline p = 0.458, labour ratio p = 0.960, net cultivated area p = 0.577, LST p = 0.792.
+![Figure 4](07_Outputs/v2_fig4_outcome_vs_distance.png)
 
-![Figure 9](07_Outputs/phase4_discontinuity_plots.png)
+**Figure 4.** Outcomes against signed distance, per-side linear fits shown for display. Titles give the model p-values (primary).
 
-**Figure 9.** Each outcome against distance to the boundary with per-side fitted lines, corridor scale, four headline outcomes. (The plotted lines are per-side fits without the rainfall and elevation controls, so they are illustrative and differ from the controlled model.)
+**The placebo test.** If the old line were special, fake lines inside one side should not produce the same pattern. They do for NDVI and labour:
+- *NDVI, Central Provinces side:* slope changes at −80 and −60 km in year 1 (p = 0.04, < 0.001) and at −80, −60 and −40 km in year 2 (p ≤ 0.044), and a placebo step at −40 km in year 1 (p = 0.01).
+- *NDVI, Berar side:* slope changes at +80 and +100 km in year 2 (p = 0.016, 0.017); none in year 1.
+- *Labour, Berar side:* slope changes at every cutoff from +40 to +100 km (p ≤ 0.011).
+- *Labour, Central Provinces side:* slope changes at −100 and −80 km (p = 0.02, 0.03).
 
-One corridor result stands out: the `side×signed_dist_km` interaction for the labour ratio is 0.0374 (p = 0.0361). Under the leave-one-out jackknife the coefficient keeps its direction and rough size, but the p-value moves between 0.015 and 0.138 depending on which taluka is dropped (for example Amravati taluka, Seloo, Samudrapur, Narkhed, Korpana, Yavatmal taluka), and stays below 0.05 in 26 of 32 runs. Section 4.4 shows that dropping Amravati (an urban taluka with a labour ratio of about 5) alone raises the p-value to 0.138, and that HC3 standard errors give p = 0.063.
+The NDVI ridge bends sharply into the paddy and forest belt of Bhandara and Gondiya, and the labour gradient peaks in Amravati district. Both are curved regional patterns that a straight line in distance on each side does not describe, so any cutoff placed on the curve finds a "slope change".
 
-**Full-footprint scale (66–68 talukas).** For NDVI decline and LST, the `side` term is again not significant (NDVI p = 0.821, LST p = 0.512). In these models the side-by-distance interaction is significant: NDVI decline p = 0.0348 and LST p = 0.0105. In both models the main `signed_dist_km` term is also highly significant (p < 0.001). The two sides thus follow different trends away from the boundary, without a step at it.
+**LST is the only outcome that passes the placebo test** (no placebo p below 0.10). The LST ridge, however, is one pre-monsoon date over mostly bare soil. Its most likely explanation is the black-soil (vertisol) belt and river valley along the line, which absorbs and holds heat. The soil explanation cannot be tested with the data here.
 
-![Figure 10](07_Outputs/phase4_fullfootprint_plots.png)
+![Figure 5](07_Outputs/v2_fig5_test_summary.png)
 
-**Figure 10.** NDVI decline and LST against distance to the boundary, full footprint. (Per-side fits without rainfall and elevation controls; illustrative.)
+**Figure 5.** (a) Step estimates in standard-deviation units with 95 % intervals (conservative standard errors). (b) Slope-change p-values against the 0.05 and Bonferroni lines.
 
-The two channels do not show the same shape. For NDVI decline the slope against signed distance is positive on both sides (about 0.0010 per km on the Central Provinces side and 0.0002 per km on the Berar side), which is a west-to-east decline that flattens on the Berar side. For LST the slopes have opposite signs (+0.046 °C per km on the Central Provinces side and −0.026 °C per km on the Berar side, in signed distance), so LST is lower with distance from the boundary on both sides and peaks near the line. The earlier draft described the two channels as showing the same trend; that is not correct.
+### 4.4 Robustness
 
-**Labour ratio at full-footprint scale.** For the labour ratio the level-jump term is significant at the full footprint (`side` coefficient 0.622, p = 0.014), while the interaction is not (p = 0.579). At the corridor scale the pattern is the reverse: `side` p = 0.960 and interaction p = 0.036. So the labour ratio is significant on different terms at different scales, and its level difference across the boundary is scale-dependent.
+- **Coverage.** The NDVI slope results hold at any-pixel, 25 %, 50 % and 90 % cropland coverage (p < 0.001 throughout), and the LST result at all thresholds (Conley p ≤ 0.008; Table S6). The September draft's statement that nothing survives a 50 % threshold came from the bounding-box coverage error.
+- **Influence.** Dropping the most influential taluka (Sakoli in year 1, Buldana in year 2; Jiwati for LST) leaves every slope result at p < 0.001.
+- **Windows.** The NDVI and LST slope changes appear only in windows of 80–105 km, not within 40–60 km (NDVI year 1 only at 105 km). They are features of the wider pattern, not of the line.
+- **Exclusions.** Excluding Rajura, Korpana and Jiwati changes no conclusion.
+- **The corridor labour slope** (OLS p = 0.036) falls to 0.063 with robust errors. In the leave-one-out jackknife it stays below 0.05 in 26 of 32 runs (p from 0.015 to 0.138). It is suggestive at most.
+- **Collinearity.** In the NDVI sample, signed distance correlates with rainfall at −0.78, and rainfall plus elevation explain 67 % of its variance. Distance and climate are therefore only partly separable.
 
-The earlier draft explained this as an artefact of a lopsided footprint, but I did not test that explanation. Section 4.4 now does, using symmetric windows in which the Berar and Central Provinces sides span comparable distances. The level term stays significant (p = 0.004 within 105 km, p = 0.008 within 80 km, p = 0.041 within 60 km), so a lopsided footprint does not by itself explain the result. The finding is therefore the most persistent boundary-type result in the paper, with two limits: it is absent in the corridor, and it does not hold under district-clustered errors (p = 0.11), although clustering is unreliable here because the Berar side contains only two districts (Amravati and Yavatmal) in the census-based sample. "Berar" in this outcome is effectively those two districts. Net cultivated area shows no significant `side` or interaction term at either scale (corridor `side` p = 0.577, full footprint p = 0.121).
+### 4.5 What the NDVI index measures
 
-![Figure 11](07_Outputs/phase4_fullfootprint_all4_plots.png)
+At district level the mean NDVI decline tracks the official share of cotton in APY-listed crop area: r = 0.86 across the ten districts in the NDVI sample, and r = 0.77 without the two paddy districts (Figure 6). The main outlier is Washim, a soybean district with a large decline but little cotton: soybean is also a single kharif crop followed by bare land, so the index measures single-season cropping rather than cotton itself. With ten points this is a sanity check, not a calibration.
 
-**Figure 11.** All four full-footprint outcomes (NDVI decline, LST, labour ratio, net cultivated area) against distance to the boundary, per-side fits. (The title in the image lists Gadchiroli among the districts added; it contributes no talukas to the census-based samples. Regenerate the figure with a corrected title.)
+![Figure 6](07_Outputs/v2_fig6_validation_cotton_share.png)
 
-### 4.4 Robustness and Multiple Testing
+**Figure 6.** District mean NDVI decline against district cotton share. Point size is the number of talukas.
 
-All results in this section come from `05_Python/robustness_checks.py`, which writes CSVs to `03_Data_Processed/Phase4/robustness/`.
+### 4.6 District context
 
-**Multiple testing.** Sixteen coefficients were tested (the `side` and interaction terms for four outcomes at two scales). Four have raw p < 0.05 where chance alone would give about 0.8. After Holm correction none survives, and the smallest Benjamini–Hochberg q-value is 0.115 (shared by the LST interaction and the full-footprint labour-ratio level term). The four raw-significant results should be read as exploratory.
+Cotton share does not split along the old line. Yavatmal (Berar; 51 % of APY-listed crop area) and Wardha (Central Provinces; 49 %) are nearly tied, followed by Chandrapur and Nagpur (38 %). Bhandara and Gondiya grow rice. Average holding size is similar near the line (1.81 ha against 1.90 ha in corridor talukas, district values). These are district values, shown for context and not tested (Figure 7).
 
-| Test | Scale | Raw p | HC3 p | Holm p | BH q |
-|---|---|---|---|---|---|
-| NDVI decline, side×distance | Full | 0.0348 | 0.0799 | 0.487 | 0.144 |
-| LST, side×distance | Full | 0.0105 | 0.0030 | 0.168 | 0.115 |
-| Labour ratio, side×distance | Corridor | 0.0361 | 0.0628 | 0.487 | 0.144 |
-| Labour ratio, side (level) | Full | 0.0144 | 0.0321 | 0.215 | 0.115 |
+![Figure 7](07_Outputs/v2_fig7_district_context.png)
 
-The full set of 16 tests, with district-clustered p-values, is in `main_models_with_corrections.csv`. District clustering is shown there but not relied on: it has 5 (corridor) or 7 (full footprint) clusters, and the corridor labour interaction gives an implausible clustered p of 0.00004.
+**Figure 7.** District indicators, 11 districts.
 
-**NDVI interaction.** It is fragile. HC3 p = 0.080, district-clustered p = 0.073, and dropping the most influential taluka (Mahagaon, Cook's D 0.21) raises p to 0.27. In symmetric windows it is p = 0.037 (120 km), 0.060 (105 km), 0.438 (80 km) and 0.071 (60 km).
+### 4.7 Field check on seven farm fields
 
-**LST interaction.** It is the most robust result: HC3 p = 0.003, district-clustered p = 0.003, and it holds in symmetric windows (p = 0.036 at 120 km, 0.037 at 105 km, 0.012 at 80 km, 0.082 at 60 km) and after dropping the most influential taluka (p = 0.005). It is still a single June date whose shape is a ridge at the boundary, not a step.
+The companion field study *Roots & Reflectance* maps seven fields near Karanja, on the Central Provinces side 15.6–24.3 km from the line: five in Sawardoh village and two in Karanja Ghadge. I computed the same November-to-March decline on each field, from Landsat (pixel centres inside the field) and Sentinel-2, for both years, and compared it with what the farmers recall growing in winter (Figure 8):
+- **No rabi crop (six fields: all five in Sawardoh and Karanja field 1).** The Landsat decline is 0.31–0.48 in 11 of 12 field-years, at or above the Karanja taluka mean (0.31–0.32).
+- **Rabi chickpea (Karanja field 2).** The decline is the smallest of all fields in both years (0.27 and 0.25; Sentinel-2: 0.22 and 0.19).
+- **The exception.** Sawardoh field 3 in year 2 has a small decline (0.19) because it was still green in March 2025 (NDVI 0.51). Asked again, the farmer confirmed nothing was grown that winter, and pigeon pea on these fields is harvested around January. The cause is unexplained.
 
-**Placebo cutoffs.** Within the Central Provinces side alone, where there is no historical boundary, placing a fake cutoff at −100 km or −80 km produces "jumps" in NDVI decline (p < 0.001 and p = 0.001). The data are shaped by a non-linear agro-ecological gradient in the east (irrigated, paddy-growing Bhandara and Gondia), and a linear-in-distance model is a poor description of it. This weakens any reading of the NDVI interaction as a boundary effect.
+So 13 of the 14 field-years match what the index assumes. Two field-years were checked a second time with the farmers, without telling them what the satellite showed: Karanja field 1, first reported as possibly under chickpea, was confirmed fallow, which agrees with the index; Sawardoh field 3 stayed unexplained. The chickpea field also shows *how* the index sees a second crop: not as greenness in March, since chickpea is harvested or drying by early March, but as a low November value, because the soybean has been harvested and the chickpea just sown. Seven fields on one side of the line, with crops from recall, make this a check of what the index means, not a validation of the boundary result.
 
-**Collinearity.** Signed distance correlates at −0.74 with rainfall and 0.74 with the side indicator; rainfall and elevation explain 57% of the variance in signed distance. The distance and rainfall coefficients are therefore not well separated.
+![Figure 8](07_Outputs/v2_fig8_field_bridge.png)
 
-**Valid-pixel coverage.** In the full footprint, 63% of talukas have less than 50% valid Landsat pixels, some far less (Digras 0.03%, Goregaon 0.1%, Darwha 0.7%). Restricting to at least 25% valid coverage (n = 55) leaves the NDVI (p = 0.031) and LST (p = 0.022) interactions significant. Restricting to at least 50% (n = 23, 6 Berar) leaves nothing significant, though power is very low.
-
-**Corridor labour ratio.** Dropping the urban Amravati taluka raises the interaction p-value from 0.036 to 0.138.
+**Figure 8.** (a) Landsat NDVI decline per field and year, coloured by the reported winter crop; whiskers run to the Sentinel-2 value. Dashed and dotted lines: Karanja taluka means. (b) November against March NDVI for the same fields.
 
 ## 5. Discussion
 
-The main result is that no outcome shows a boundary-specific step in the primary NDVI, LST or net-area specifications, at the corridor or the full-footprint scale. The one exception, the labour-ratio level difference at the full footprint, is scale-dependent and rests on two Berar districts. A null at the exact line is a substantive result, and reporting a jump where the data do not show one would be worse.
+The old Berar/Central Provinces boundary does not register as a step in present-day crop phenology, surface temperature, labour structure or land use. Three checks agree: the corridor, the larger samples, and local estimates at the line. The design has enough power to rule out steps of about one standard deviation in the larger samples, so this is an informative null rather than an empty one.
 
-The data do show a regional gradient. The kharif-to-rabi NDVI decline is larger on the Berar side in both years (0.070 and 0.075), and near the boundary the two sides are much closer (0.310 vs 0.299). The side×distance interaction is significant on the full footprint for LST and for NDVI decline, but the two do not show the same shape (Section 4.3), only LST is robust to alternative standard errors and windows, and neither survives correction for the number of tests. The raw Berar–Central Provinces NDVI gap is regional: once distance is controlled the `side` coefficient is close to zero, and placebo cutoffs on the Central Provinces side alone produce comparable "jumps".
+**What the data show instead.** The cotton core of Vidarbha straddles the old line:
+- single-season, cotton-dominated land in Yavatmal, Wardha, Amravati, Nagpur and Chandrapur, on both sides of the line;
+- less single-season land towards Buldhana in the west and much less in the paddy and forest districts of the east;
+- larger shares of agricultural labourers in Amravati district;
+- more cultivated land in the west.
 
-What this does not show is that the Ryotwari/Malguzari distinction caused any of these patterns. The boundary coincides with at least four other differences: the pre-1853 frontier between the Nizam's Berar and the Bhonsle territory, the Wardha River, a rainfall and soil gradient (black cotton soils in Berar, mixed soils and paddy in the east), and different irrigation and forest cover. Iversen et al.'s (2013) recoding of Malguzari as a system with real tenant protection is consistent with a graded, non-sharp legacy, but a graded pattern also fits ordinary regional agro-ecology, and the present design cannot separate the two.
+The first version of this study observed only one Landsat path, which captured the eastern fall-off but not the western one. It therefore saw a west-to-east gradient. With the whole of Berar observed, the pattern is a ridge whose crest lies near the line. Slopes differ on the two sides because the line sits on the crest, and the same kind of slope change appears at made-up lines inside each side.
 
-In the corridor, the labour-ratio interaction (p = 0.036) is not robust to HC3 errors (p = 0.063) or to dropping Amravati taluka (p = 0.138). At the full footprint the labour-ratio level difference (p = 0.014) is more persistent but is not replicated in the corridor. I therefore do not rank one scale above the other, as the earlier draft did.
+**Why tenure cannot be isolated.** The line coincides with at least four other differences: the pre-colonial frontier between Berar and the Bhonsle kingdom, the Wardha river, a soil and rainfall transition, and differences in irrigation and forest cover. The Iversen et al. (2013) reading of Malguzari as a system with real tenant protection fits a graded rather than a sharp legacy. So, equally, does ordinary agro-ecology, and the design cannot tell them apart.
 
-Given these limits, the fair summary is that the analysis finds a regional gradient in cropping-intensity and surface temperature that partly coincides with the old boundary, and a level difference in labour structure at one scale, with no clean evidence of a discontinuity at the line. Whether that pattern reflects tenure history, earlier political geography, or physical geography remains open.
+**Geospatial lessons.** Two measurement errors in the earlier version — the scaled fill pixels and the bounding-box coverage — each changed what the data appeared to say. The first produced impossible temperatures. The second made a complete taluka look half-observed and undermined a robustness test. Recording each satellite value against the area it actually represents was as important here as the regression design.
 
 ## 6. Limitations
 
-### 6.1 Sample Size and Power at the Corridor Scale
+1. **The eastern edge is not observed.** NDVI covers paths 144–146, which include all of Berar but leave out Gadchiroli and most of Gondiya (path 143). LST uses a single path-144 scene and covers only 13 Berar talukas.
+2. **Masking and dates.** The cropland mask is the 2021 WorldCover map, applied to 2024–26 scenes. Paths are observed on dates up to nine days apart; where two paths overlap they differ by 0.036 on average, small next to the regional range but not zero.
+3. **Single dates.** Each season contributes one scene and LST is one pre-monsoon date. A time series would measure phenology more directly.
+4. **Data vintage.** Census attributes date from 2011; the satellite data are from 2024–26.
+5. **Controls are climatologies.** WorldClim rainfall is a long-term average on an 18.5 km grid. Soil type and irrigation are not controlled. The census irrigation field is not credible here (58–92 % irrigated) and is not used.
+6. **Historical boundary.** The proxy rests on district lineage; no digitised period map was available.
+7. **Ecological inference.** Taluka averages describe places, not farms or farmers.
 
-The 32-taluka corridor can detect only a large, sharp jump. Under the leave-one-out jackknife the directions of the estimates are stable but the p-values move widely, which is what a sample this size predicts.
+The field-scale companion study, *Roots & Reflectance*, shows that none of its seven fields had a usable Sentinel-2 view for 65–75 days of the 2026 monsoon. This is the reason this paper measures cropping from November and March scenes rather than from the monsoon season. The field check in Section 4.7 covers one side of the line and rests on farmers' recall; it does not validate the boundary comparison.
 
-### 6.2 Rainfall as a Long-Term Climatology
+## 7. Conclusion
 
-WorldClim rainfall is a multi-decade average on a grid of roughly 18.5 km, coarser than most talukas. It is a first-order control for regional rainfall and does not capture interannual variation or within-taluka differences.
+District lineage indicates that the present Amravati/Nagpur Division line follows the old Berar/Central Provinces boundary. Measured from Landsat and the 2011 Census and tested with spatially robust inference, the line is not visible as a step in cropping intensity, surface temperature, labour structure or land use. The cotton core of the region straddles it, fake boundaries reproduce the slope differences found at the real one, and the satellite index behind the pattern tracks official cotton statistics. The honest summary is a well-measured regional pattern and no evidence of a boundary effect. The reasons for the pattern — soils, rainfall, earlier political history or tenure — remain open.
 
-### 6.3 Full-Footprint Sample Asymmetry
+## Data and code availability
 
-The Landsat path and row (WRS-2 path 144, rows 045/046) fix which talukas are included regardless of where the historical provinces ended. The Berar side reaches about 104 km from the boundary, the Central Provinces side about 180 km. Only Amravati and parts of Yavatmal supply Berar-side census data, so Akola, Buldhana and Washim are never part of the census-based analysis. Symmetric-window checks (Section 4.4) reduce but do not remove this problem.
+All processed data, the full pipeline (`05_Python/run_all.py`) and the results tables (`03_Data_Processed/Phase4/results/`) are in the repository. Raw Landsat, SRTM and Census files are public and are listed in Section 3.2; download scripts are included.
 
-### 6.4 Spatial Autocorrelation and Standard Errors
+## Supplementary tables (in `03_Data_Processed/Phase4/results/`)
 
-Neighbouring talukas are spatially correlated, so conventional standard errors overstate precision (Kelly, 2019, 2025). The paper reports HC3 and district-clustered errors, but district clustering is unreliable with only five (corridor) or seven (full footprint) clusters in total, and it does not model spatial dependence. Conley spatial-HAC errors or a spatial-block bootstrap are the appropriate next step (TODO).
-
-### 6.5 Confounders Not Controlled
-
-Soil type, irrigation, forest cover, urbanisation and crop mix are not in the model. Two villages 9 km apart in the ground-truth check (Sawardoh and Karanja) differ in soil (reddish soil vs black cotton soil). Irrigation was dropped because the Census field is unreliable (Section 3.6). The Berar-side census sample is effectively two districts, and the labour ratio is sensitive to one urban taluka.
-
-### 6.6 Ground-Truth Check: Illustrative Only, Central Provinces Side
-
-The ground-truth check uses seven field boundaries in Karanja Ghadge and Sawardoh villages of Wardha district, 15.6–24.3 km from the boundary on the Central Provinces side. Data are from a separate family field-monitoring project ("Roots & Reflectance") that already tracked these fields with GPS coordinates and dated photos. It is not a validation of the main results, for four reasons.
-
-1. It measures a different quantity in a different season. The field data are Sentinel-2 NDVI and NDRE at 10 m for 21 June 2026 (just before sowing, which took place on 22–27 June) and 14 July 2026 (about three weeks after sowing). The main analysis uses the Landsat 30 m NDVI decline from November to March. NDVI of 0.28–0.36 on 14 July reflects a young canopy and should not be read as closed-canopy cover, which would be much higher.
-2. It covers one side of the boundary only, so it cannot validate a Berar–Central Provinces difference.
-3. The timing is loose. Ground photos are dated 23 August and the NDVI observations 14 July; the 21 June Sentinel-2 value is missing for the Karanja fields (cloud), and the taluka-level Landsat NDVI/LST in this area has only 45.8% valid pixels because Karanja Ghadge sits at the edge of the scene footprint.
-4. No quantitative comparison between the two products is reported.
-
-The check shows that the field sites, crops and satellite-derived greenness are plausible and mutually consistent for a young kharif canopy on the Central Provinces side. It should be described as an illustrative field check. All seven fields are included in the dataset (`karanja_sawardoh_field_ground_truth.csv`); the dashboard page previously featured only four. A validation of the main NDVI decline would need fields on both sides of the boundary, observed in the same seasons as the Landsat scenes.
-
-### 6.7 A Historical-Lineage Verification, Not a Literal Map Overlay
-
-No digitisable period map was found (the best available is from about 1903), so the historical accuracy of the boundary rests on documented district lineage for 1903–1956. This does not rule out taluka-level transfers, and Section 3.3 notes that some Central Provinces-side talukas came from other jurisdictions. A digitised historical map would strengthen the verification.
-
-### 6.8 Cloud Masking, Single-Date Scenes, and Coverage
-
-Scenes are selected by low scene-level cloud cover, and no QA_PIXEL cloud or shadow mask is applied. NDVI rasters contain negative values down to −0.986, which suggests water, shadow or cloud contamination. Each seasonal window contributes one scene, and LST is a single pre-monsoon June date. Partial-coverage talukas enter the regressions with full weight. Section 4.4 shows that the NDVI and LST interactions survive a 25% coverage threshold but not a 50% threshold.
-
-### 6.9 Data Vintage and Level Mismatch
-
-Census attributes date from 2011 and are compared with 2024–26 satellite data. Cotton share and holding size are district-level values, so they reflect district differences and not taluka variation.
-
-### 6.10 FRA Data as Narrative, Not Quantitative Evidence
-
-There is no consistent public taluka-level series on Forest Rights Act claims and titles for Vidarbha. The figures in Section 3.6 come from incompatible scales and dates, are excluded from the statistical tests, and serve as institutional-history context.
-
-## 7. Future Work
-
-1. **Symmetric geometry.** Use additional Landsat scenes so that all 11 districts are covered, giving comparable distance ranges on both sides of the boundary.
-2. **Full census coverage.** Extend the population and land-use data from 8 to all 11 districts (Akola, Buldhana and Washim are missing); this would allow the labour-ratio and land-use tests to be run region-wide.
-3. **Spatial inference.** Report Conley spatial-HAC or block-bootstrap standard errors, and test flexible functional forms in distance (quadratic or spline) and rainfall.
-4. **Cloud masking and multiple dates.** Apply QA_PIXEL masking and use several scenes per season or a Sentinel-2 time series.
-5. **Boundary history.** Digitise a period map from the Imperial Gazetteer or the Central Provinces and Berar atlas, and test the exclusion of Hyderabad- and Madras-origin talukas (Rajura, Korpana, Jiwati and others).
-6. **Two-sided field validation.** Collect field observations on both sides of the boundary in the same season as the satellite scenes.
-
-## 8. Conclusion
-
-Berar was assigned to the East India Company in 1853 and merged with the Central Provinces in 1903, and district lineage from 1903 to 1956 indicates that the present Amravati/Nagpur Division line matches the old Berar/Central Provinces line at district level. Across a 32-taluka corridor and a 68-taluka Landsat footprint, and after controlling for distance, rainfall and elevation, I find no boundary-specific step in kharif-to-rabi NDVI decline, LST or net cultivated area. The labour-ratio level difference on the full footprint is the one exception, and it is present at one scale and absent at the other.
-
-The data do show a regional gradient in cropping-intensity and surface temperature. On the full footprint, the side-by-distance interaction is significant for NDVI decline and for LST. Only the LST interaction is robust to alternative standard errors and windows, none of the 16 tests survives Holm correction, and placebo cutoffs on the Central Provinces side alone produce comparable patterns. The NDVI gap between Berar and the Central Provinces is regional, not boundary-specific.
-
-The honest conclusion is that a regional agrarian gradient coincides with the old Berar/Central Provinces line, but this analysis cannot attribute it to Ryotwari or Malguzari tenure. The boundary is also an older political frontier, a river line and an agro-ecological transition, and the design has limited power to separate those explanations. The paper's value lies in a reproducible boundary construction, a documented data pipeline including the DN = 0 fix, and a transparent account of what the tests do and do not support. The field check at Karanja Ghadge and Sawardoh is illustrative only and does not validate the main result.
+- S1 `main_models.csv`: all 20 tests with OLS, HC3, cluster and Conley p-values and MDE.
+- S2 `descriptives_by_side.csv`.
+- S3 `morans_i_residuals.csv`.
+- S4 `local_linear_rd.csv`.
+- S5 `symmetric_windows.csv`, `placebo_cutoffs.csv`.
+- S6 `coverage_sensitivity.csv`, `influence_and_exclusions.csv`.
+- S7 `validation_district_cotton_share.csv`, `collinearity_footprint.csv`.
+- S8 `Ground_Truth/field_decline_summary.csv`, `field_crop_history.csv`.
 
 ## References
 
-Baden-Powell, B. H. (1892). *The Land-Systems of British India: Being a Manual of the Land-Tenures and of the Systems of Land-Revenue Administration Prevalent in the Several Provinces* (3 vols.). Oxford: Clarendon Press.
+Baden-Powell, B. H. (1892). *The Land-Systems of British India* (3 vols.). Oxford: Clarendon Press.
 
-Banerjee, A. V., & Iyer, L. (2005). [History, institutions, and economic performance: The legacy of colonial land tenure systems in India](https://www.aeaweb.org/articles?id=10.1257/0002828054825574). *American Economic Review*, 95(4), 1190–1213.
+Banerjee, A., & Iyer, L. (2005). History, institutions, and economic performance: The legacy of colonial land tenure systems in India. *American Economic Review*, 95(4), 1190–1213. https://doi.org/10.1257/0002828054825574
 
-Beckert, S. (2014). *[Empire of Cotton: A Global History](https://www.penguinrandomhouse.com/books/10461/empire-of-cotton-by-sven-beckert/)*. Knopf.
+Beckert, S. (2014). *Empire of Cotton: A Global History*. New York: Knopf.
 
-Conley, T. G. (1999). GMM estimation with cross sectional dependence. *Journal of Econometrics*, 92(1), 1–45. (TODO(verify): add DOI.)
+Conley, T. G. (1999). GMM estimation with cross sectional dependence. *Journal of Econometrics*, 92(1), 1–45. https://doi.org/10.1016/S0304-4076(98)00084-0
 
-Dell, M. (2010). [The persistent effects of Peru's mining mita](https://onlinelibrary.wiley.com/doi/10.3982/ECTA8121). *Econometrica*, 78(6), 1863–1903.
+Dell, M. (2010). The persistent effects of Peru's mining mita. *Econometrica*, 78(6), 1863–1903. https://doi.org/10.3982/ECTA8121
 
-Dell, M., & Olken, B. A. (2020). [The development effects of the extractive colonial economy: The Dutch cultivation system in Java](https://academic.oup.com/restud/article/87/1/164/5490392). *Review of Economic Studies*, 87(1), 164–203.
+Dell, M., & Olken, B. A. (2020). The development effects of the extractive colonial economy: The Dutch cultivation system in Java. *Review of Economic Studies*, 87(1), 164–203.
 
-Farr, T. G., Rosen, P. A., Caro, E., Crippen, R., Duren, R., Hensley, S., Kobrick, M., Paller, M., Rodriguez, E., Roth, L., Seal, D., Shaffer, S., Shimada, J., Umland, J., Werner, M., Oskin, M., Burbank, D., & Alsdorf, D. (2007). [The Shuttle Radar Topography Mission](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005rg000183). *Reviews of Geophysics*, 45(2), RG2004.
+Farr, T. G., et al. (2007). The Shuttle Radar Topography Mission. *Reviews of Geophysics*, 45(2), RG2004. https://doi.org/10.1029/2005RG000183
 
-Fick, S. E., & Hijmans, R. J. (2017). [WorldClim 2: New 1-km spatial resolution climate surfaces for global land areas](https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.5086). *International Journal of Climatology*, 37(12), 4302–4315.
+Fick, S. E., & Hijmans, R. J. (2017). WorldClim 2: New 1-km spatial resolution climate surfaces for global land areas. *International Journal of Climatology*, 37(12), 4302–4315. https://doi.org/10.1002/joc.5086
 
-Iversen, V., Palmer-Jones, R., & Sen, K. (2013). [On the colonial origins of agricultural development in India: A re-examination of Banerjee and Iyer, "History, institutions and economic performance"](https://www.tandfonline.com/doi/abs/10.1080/00220388.2013.807502). *Journal of Development Studies*, 49(12), 1631–1646.
+Iversen, V., Palmer-Jones, R., & Sen, K. (2013). On the colonial origins of agricultural development in India: A re-examination of Banerjee and Iyer, "History, institutions and economic performance". *Journal of Development Studies*, 49(12), 1631–1646. https://doi.org/10.1080/00220388.2013.807502
 
-Iyer, L. (2010). [Direct versus indirect colonial rule in India: Long-term consequences](https://direct.mit.edu/rest/article/92/4/693/57986). *Review of Economics and Statistics*, 92(4), 693–713.
+Iyer, L. (2010). Direct versus indirect colonial rule in India: Long-term consequences. *Review of Economics and Statistics*, 92(4), 693–713.
 
-Keele, L. J., & Titiunik, R. (2015). [Geographic boundaries as regression discontinuities](https://www.cambridge.org/core/journals/political-analysis/article/geographic-boundaries-as-regression-discontinuities/2A59F3077F49AD2B908B531F6E458430). *Political Analysis*, 23(1), 127–155.
+Keele, L. J., & Titiunik, R. (2015). Geographic boundaries as regression discontinuities. *Political Analysis*, 23(1), 127–155.
 
-Kelly, M. (2019, 2025). The standard errors of persistence. Working paper (2019); published in *Journal of International Economics*, 153 (2025). (TODO(verify): confirm the final publication details.)
+Kelly, M. (2019). *The Standard Errors of Persistence*. CEPR Discussion Paper 13783. (A later version appears as Conley, T. G., & Kelly, M. (2025), *Journal of International Economics*, 153.)
 
-Lee, D. S., & Lemieux, T. (2010). Regression discontinuity designs in economics. *Journal of Economic Literature*, 48(2), 281–355. (TODO(verify): add DOI.)
+Lee, D. S., & Lemieux, T. (2010). Regression discontinuity designs in economics. *Journal of Economic Literature*, 48(2), 281–355. https://doi.org/10.1257/jel.48.2.281
 
-Maharashtra State Tribal Development Department. (2021). *[Administrative Report 2020-21](https://tribal.maharashtra.gov.in/Site/Upload/GR/Administrative%20Report%2020-21%20Final%2017092024.pdf)*. Government of Maharashtra. [Forest Rights Act compilation, Section 3.6]
+Satya, L. D. (1997). *Cotton and Famine in Berar, 1850–1900*. New Delhi: Manohar.
 
-Michalopoulos, S., & Papaioannou, E. (2016). [The long-run effects of the scramble for Africa](https://www.aeaweb.org/articles?id=10.1257/aer.20131311). *American Economic Review*, 106(7), 1802–1848.
+Tucker, C. J. (1979). Red and photographic infrared linear combinations for monitoring vegetation. *Remote Sensing of Environment*, 8(2), 127–150.
 
-Mishra, S. (2006). [Farmers' suicides in Maharashtra](https://www.epw.in/journal/2006/16/special-articles/farmers-suicides-maharashtra.html). *Economic and Political Weekly*, 41(16), 1538–1545.
+U.S. Geological Survey. Landsat 8–9 OLI/TIRS Collection 2 Level-2 Science Products. EROS Center.
 
-Mohanty, B. B. (2005). ['We are like the living dead': Farmer suicides in Maharashtra, western India](https://www.tandfonline.com/doi/abs/10.1080/0306615042000322935). *The Journal of Peasant Studies*, 32(2), 243–276.
+Zanaga, D., et al. (2022). *ESA WorldCover 10 m 2021 v200*. Zenodo. https://doi.org/10.5281/zenodo.7254221
 
-Roy, T. (2011). *The Economic History of India, 1857–1947* (3rd ed.). New Delhi: Oxford University Press.
-
-Satya, L. D. (1997). Cotton and famine in Berar, 1850–1900. *Indian Economic and Social History Review*, 34(1). (TODO(verify): confirm volume, pages and DOI before citing in the text.)
-
-Tucker, C. J. (1979). [Red and photographic infrared linear combinations for monitoring vegetation](https://www.sciencedirect.com/science/article/abs/pii/0034425779900130). *Remote Sensing of Environment*, 8(2), 127–150.
-
-U.S. Geological Survey. *[Landsat 8-9 OLI/TIRS Collection 2 Level-2 Science Products](https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2)*. Earth Resources Observation and Science (EROS) Center.
-
-Government of Maharashtra. (2026). *[Economic Survey of Maharashtra 2025-26](https://mahades.maharashtra.gov.in/home.do?lang=en)*, Chapter 7 (Agriculture). Commissionerate of Agriculture.
-
-Government of Maharashtra. (1994, April 30). *[The Development Boards for Vidarbha, Marathwada and the Rest of Maharashtra Order, 1994](https://indiankanoon.org/doc/11824594/)*, Notification No. GS/G/94/DB/432, issued under Article 371(2) of the Constitution of India.
+Government of Maharashtra (2026). *Economic Survey of Maharashtra 2025-26*. Directorate of Economics and Statistics.

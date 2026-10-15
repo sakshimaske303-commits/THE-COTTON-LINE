@@ -1,7 +1,4 @@
-"""Fixes the impossible ~88.57 deg mean slope (was computed in EPSG:4326
-degree-pixels); reprojects to UTM 44N first. Fixed mean=3.65 deg.
-Requires rasterio, numpy, scipy.
-"""
+"""Legacy (v1). Slope computed in UTM 44N instead of degrees. Needs rasterio, scipy."""
 import os
 import gc
 import numpy as np

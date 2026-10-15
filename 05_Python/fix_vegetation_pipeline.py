@@ -1,7 +1,4 @@
-"""Same DN=0-as-real-data bug as the LST fix, here in SR_B4/SR_B5
-reflectance. Reprocesses all 12 scenes with proper masking.
-Requires rasterio, numpy.
-"""
+"""Legacy (v1). Masks DN=0 before scaling SR_B4/SR_B5. Needs rasterio."""
 import glob
 import os
 import numpy as np

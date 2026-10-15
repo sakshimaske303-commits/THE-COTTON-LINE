@@ -5,17 +5,16 @@ from utils.data import PROJECT_ROOT
 
 st.set_page_config(
     page_title="THE COTTON LINE",
-    page_icon="🧵",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 inject_theme()
 
-st.markdown("<h1>🧵 THE COTTON LINE</h1>", unsafe_allow_html=True)
+st.markdown("<h1>THE COTTON LINE</h1>", unsafe_allow_html=True)
 st.markdown(
     "<h3 style='text-align: center; font-weight: 700; margin-top: -10px;'>"
-    "Does a 150-Year-Old Colonial Land-Tenure Boundary Still Register as a Measurable "
-    "Spatial Signature in Present-Day Vidarbha?</h3>",
+    "Is an Erased Colonial Land-Revenue Boundary Still Visible in Vidarbha's "
+    "Satellite and Census Record?</h3>",
     unsafe_allow_html=True,
 )
 
@@ -76,13 +75,13 @@ st.markdown("---")
 
 col1, col2, col3, col4 = st.columns(4)
 with col1:
-    st.metric("Districts Covered", "11", "8 with census data")
+    st.metric("Census Talukas", "119", "all 11 districts")
 with col2:
     st.metric("Boundary Line", "384.7 km", "Amravati / Nagpur Division")
 with col3:
     st.metric("Corridor Talukas", "32", "intersect the 25 km buffer")
 with col4:
-    st.metric("Full-Footprint Talukas", "68", "2 independent NDVI years")
+    st.metric("Landsat Talukas", "56", ">= 50 % observed; 2 NDVI years")
 
 st.markdown("---")
 
@@ -94,13 +93,11 @@ st.markdown(
         <p style="color:{PALETTE['accent2']}; text-transform:uppercase; letter-spacing:1.5px;
                   font-weight:800; font-size:0.85rem; margin-bottom:8px;">Why This Matters</p>
         <p style="color:{PALETTE['text_primary']}; font-size:1rem; line-height:1.6; margin:0;">
-            People always blame Vidarbha's farming trouble on bad rain, prices, or crop choices. But I
-            wanted to test a much older historical possibility (dating back to 1853, when Berar came under
-            British administration and later became a major cotton region for Lancashire mills). Did
-            this colonial setup leave a lasting footprint on the land? The old
-            line was officially wiped out in 1956. I chose to use actual satellite maps and village
-            census numbers to check if this border still shows up today, rather than just guessing from
-            old history textbooks.
+            Vidarbha's farm distress is usually explained by rain, prices and crop choice. I wanted to
+            test an older possibility: that the nineteenth-century line between Berar (Ryotwari) and the
+            Central Provinces (Malguzari), abolished in 1956, still marks a break in the land. I used
+            Landsat imagery and village census data to check, with tests designed to tell a real
+            boundary from a regional gradient that merely crosses it.
         </p>
     </div>
     """,
@@ -134,32 +131,32 @@ with col_right:
     st.markdown(f"""
     <div class="recon-card">
         <p style="color:{PALETTE['accent']}; text-transform:uppercase; font-size:0.78rem;
-                  letter-spacing:1.5px; font-weight:800; margin-bottom:12px;">Core Finding, So Far</p>
+                  letter-spacing:1.5px; font-weight:800; margin-bottom:12px;">Core Finding</p>
         <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.7; margin:0; font-weight:500;">
-            There is no boundary-specific jump in NDVI decline, land surface temperature or net
-            cultivated area. There is a regional west-to-east gradient that partly coincides with the
-            old line (NDVI decline 0.325 vs 0.255 across sides; year two 0.316 vs 0.241), and the
-            side-by-distance interaction is significant for NDVI decline and temperature on the full
-            footprint. Only the temperature result is robust to alternative standard errors, none of
-            the 16 tests survives multiple-testing correction, and the labour ratio behaves
-            differently at different scales. These are exploratory results and do not identify a
-            tenure effect. See Spatial Discontinuity Regression for the full breakdown.
+            No outcome steps at the old line -- not in the 32-taluka corridor, not in the Landsat
+            sample, not in local estimates at the line. Vidarbha's cotton core straddles the line: the
+            satellite cropping index is highest within 50 km of it on both sides (0.29) and falls away
+            in both directions, and it tracks district cotton share (r = 0.86). Slopes differ across
+            the line because it sits on that crest, and fake boundaries inside each side reproduce the
+            NDVI and labour patterns. The result is a regional pattern, not a boundary effect, and it
+            cannot be attributed to tenure. 20 tests; 3 survive Holm correction.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-st.markdown("### Research Questions")
+st.markdown("### Research Question")
 st.markdown("""
-1. **Does cotton-signature NDVI** -- the size of a taluka's kharif-to-rabi vegetation decline, a
-   monoculture-vs-mixed-cropping signature -- **jump at the historical Berar/Central Provinces
-   line**, once distance-to-boundary, rainfall, and elevation are controlled for?
-2. **Does agrarian labor structure** -- the ratio of agricultural laborers to cultivators, a
-   standard landlessness indicator -- **show a similar pattern**, and does it hold at both the
-   immediate boundary corridor and the full regional footprint?
-3. **Is the modern administrative boundary actually the same line** as the historical
-   Berar/Central Provinces one, verified by documented district lineage rather than assumed?
+**After controlling for rainfall, elevation and distance, is the former Berar/Central Provinces
+boundary detectable as a spatial discontinuity in present-day satellite and census indicators of
+agriculture?**
+
+- **H1 -- step:** the outcome jumps at the line.
+- **H2 -- slope:** the outcome changes with distance differently on the two sides.
+
+Outcomes: Landsat NDVI decline (November to March, two years, a cropping-intensity index), June
+land surface temperature, and Census 2011 labour structure and net sown area.
 """)
 
 st.markdown("---")
@@ -169,13 +166,13 @@ st.markdown("### Explore the Evidence")
 nav_items = [
     ("Study Design", "The boundary, the corridor, and the spatial-discontinuity model"),
     ("Theoretical Foundations", "Institutional persistence theory and the remote-sensing physics behind the data"),
-    ("Cotton Signature (NDVI)", "The kharif-to-rabi decline test, replicated in a second year with the same footprint"),
+    ("Cotton Signature (NDVI)", "The November-to-March decline, two years, and its check against cotton statistics"),
     ("Agrarian & Land Structure", "Cotton share, ag-laborer ratio, land use, holding size"),
     ("Spatial Discontinuity Regression", "The actual Phase 4 test, climate controls, robustness, and the honest findings"),
     ("Historical & Institutional Context", "District-lineage boundary verification and the FRA compilation"),
     ("Interactive Maps", "The boundary, corridor, and taluka data, explorable directly"),
     ("Methodology & Data", "Sources, the DN=0 fix, and scene-footprint scope"),
-    ("Ground Truth", "Karanja Ghadge / Sawardoh illustrative field check -- 7 fields, Central Provinces side"),
+    ("Ground Truth", "Link to Roots & Reflectance: seven fields on the Central Provinces side (illustrative)"),
 ]
 
 cols = st.columns(3)
@@ -196,8 +193,7 @@ st.markdown("---")
 st.markdown("### Full Project Documentation")
 st.markdown(
     f"<p style='color:{PALETTE['text_secondary']}; font-weight:600;'>"
-    "All three documents are current. The ground-truth check closed out first -- see the Ground "
-    "Truth page -- which is what let the Executive Summary get written.</p>",
+    "Version 2.1 (October 2026). The PDFs are exported from the Markdown files in the repository.</p>",
     unsafe_allow_html=True,
 )
 

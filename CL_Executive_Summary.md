@@ -1,38 +1,52 @@
 # The Cotton Line — Executive Summary
 
 **Sakshi D. Maske**
-Independent Geospatial Researcher
+Independent Geospatial Researcher · Version 2.1, October 2026
 
 ---
 
-## Overview
+## The question
 
-Explanations of farm distress in Vidarbha usually focus on rainfall and crop prices. I wanted to test a different possibility: that part of the regional pattern reflects an older administrative divide. In the nineteenth century, Berar (five districts in the west: Amravati, Akola, Buldhana, Washim, Yavatmal) was administered under the Ryotwari land-revenue system, in which each cultivator dealt directly with the state. The districts of the Nagpur region to the east (Nagpur, Wardha, Chandrapur, Bhandara, Gondia, Gadchiroli) were settled under Malguzari, in which an intermediary landholder answered for the whole estate. That provincial boundary was abolished in 1956, but it corresponds at district level to today's line between Amravati Division and Nagpur Division. This project uses satellite and census data to ask whether the old line is still detectable.
+In the nineteenth century, western Vidarbha (Berar: Amravati, Akola, Buldhana, Washim, Yavatmal) was settled under the Ryotwari land-revenue system, and the Nagpur region to the east under Malguzari. The provincial line was abolished in 1956. On district lineage it matches today's boundary between Amravati and Nagpur Divisions.
 
-## The Question
+**Is that line still visible as a break in present-day agriculture, measured from satellites and the census, once rainfall, elevation and distance are accounted for?**
 
-After controlling for distance to the line, rainfall and elevation, is there a measurable break at the old Berar/Central Provinces boundary in crop greenness change, land surface temperature, agrarian labour structure, or land use?
+Two hypotheses: the outcomes **step** at the line (H1), or their **slope** with distance changes at the line (H2).
 
-## Approach
+## Data and method
 
-I built the boundary as a 384.7 km line by dissolving 120 taluka polygons into the two historical divisions and extracting their shared edge. I checked it against district lineage from 1903 to 1956 (no digitised period map was available), so the verification is at district level and not a geometric overlay. I then ran a spatial-discontinuity regression (ordinary least squares with a side indicator, signed distance, their interaction, rainfall and elevation) on two samples: a 32-taluka corridor around the line and a 68-taluka Landsat footprint. Crop greenness change is measured as the fall in NDVI from a November scene to a March scene, in two separate years. I added robust standard errors, multiple-testing correction, symmetric distance windows, placebo cutoffs and coverage tests, all reproducible with `05_Python/robustness_checks.py`.
+- **Boundary.** A 384.7 km line rebuilt from 120 talukas. Distances from each taluka centroid in UTM 44N.
+- **Outcomes.**
+  - Landsat 8/9 NDVI decline from early November to early March, in two years: a cropping-intensity index, computed at 30 m on cropland only, with cloud and shadow masked.
+  - Landsat land surface temperature on 20 June 2026.
+  - The 2011 Census ratio of agricultural labourers to cultivators.
+  - The 2011 Census net sown area.
+- **Samples.** 32 talukas within 25 km of the line; 98 talukas with at least half their cropland observed by Landsat (all 56 Berar talukas and 42 on the Central Provinces side; 56 for LST); all 119 census talukas.
+- **Model.** Spatial-discontinuity regression with rainfall and elevation controls.
+- **Inference.** The most conservative of HC3 and Conley spatial standard errors; Holm correction over 20 tests.
+- **Robustness.** Local-linear estimates at the line, symmetric windows, placebo lines, influence, coverage thresholds and statistical power.
 
-## Key Findings
+## Findings
 
-There is no boundary-specific step in NDVI change, land surface temperature or net cultivated area, at either scale. Reporting that null result is part of the finding.
+1. **No step at the line.** No outcome jumps at the boundary in the corridor, in the Landsat sample, or in local estimates at the line. The larger samples could detect a step of about one standard deviation.
+2. **The NDVI pattern is a ridge across the line.** The decline is highest within 50 km of the line on both sides (0.29) and falls towards Buldhana in the west (0.21) and the paddy districts in the east (0.13). The side averages are close: 0.255 against 0.246 in year 1, 0.319 against 0.262 in year 2.
+3. **Labour structure differs regionally, not at the line.** Across all 119 talukas Berar has 0.96 more labourers per cultivator at the line (Holm p = 0.029). The difference is absent in the corridor and in local estimates. It is concentrated in Amravati district.
+4. **Slopes differ, but fake lines do the same.** The gradient changes across the line for NDVI in both years (Holm p < 0.001), because the line sits on the crest of the ridge, and, before correction, for LST and labour. Placebo lines inside each side reproduce this for NDVI and labour. Only the LST pattern passes the placebo test, and it is one pre-monsoon date that most likely reflects soil.
+5. **The satellite index measures something real.** District NDVI decline tracks official cotton share (r = 0.86 for 10 districts; 0.77 without the paddy districts). Washim, a soybean district, is the outlier: the index measures single-season cropping, not cotton alone. On seven farm fields from the companion study, 13 of 14 field-years match the farmers' winter-crop record: the chickpea field has the smallest decline, the fallow-winter fields large ones.
 
-The raw NDVI decline is larger on the Berar side: 0.325 against 0.255 in year one (68 talukas) and 0.316 against 0.241 in year two. Near the line the gap almost disappears (0.310 against 0.299 in the corridor), and once distance is in the model the boundary term is close to zero. This is a regional gradient, not a boundary effect. Both years use the same footprint and method, so year two replicates the gradient and does not independently test a boundary effect.
+## What it means
 
-On the full footprint the side-by-distance interaction is significant for NDVI decline (p = 0.035) and for land surface temperature (p = 0.011). The two do not share a shape: NDVI decline falls from west to east with a flatter Berar side, while temperature is highest near the line and falls with distance on both sides. The temperature interaction is robust to robust standard errors and symmetric windows; the NDVI interaction is not (p = 0.080 with HC3 errors, p = 0.27 without the most influential taluka).
+Vidarbha's cotton core straddles the old Berar/Central Provinces line, and the line itself leaves no measurable break. With only one Landsat path, an earlier version saw a west-to-east gradient; observing all of Berar showed that the pattern falls away on both sides. The boundary also coincides with an older political frontier, the Wardha river and a soil and rainfall transition, so nothing here can be attributed to land tenure.
 
-The agricultural-labourer-to-cultivator ratio behaves differently by scale. In the corridor there is a slope difference (p = 0.036) that depends on one urban taluka (p = 0.138 without Amravati). On the full footprint there is a level difference (Berar higher by 0.62, p = 0.014) that holds in symmetric distance windows (p = 0.004 to 0.041) but not under district-clustered errors, and it rests on two Berar districts only.
+## Limitations
 
-Sixteen coefficients were tested. Four are significant at 5%, where chance alone would give about one, and none survives a Holm correction. The results are therefore exploratory.
+- Gadchiroli and most of Gondiya (Landsat path 143) are not observed; LST uses one scene.
+- The cropland mask is from 2021; neighbouring paths are observed up to nine days apart.
+- Single-date scenes per season.
+- 2011 census data against 2024–26 imagery.
+- Rainfall is a long-term climatology, and soil and irrigation are not controlled.
+- The historical line is verified at district level only.
 
-## Ground-Truth Check
+A companion field study (*Roots & Reflectance*, seven fields on the Central Provinces side) explains why the satellite measurement uses November and March scenes: no field was observable for 65–75 days of the monsoon.
 
-I compared the satellite signal with seven field boundaries in Karanja Ghadge and Sawardoh (Wardha district, Central Provinces side, 16 to 24 km from the line), using data from a separate family field-monitoring project. This is an illustrative check only. It uses Sentinel-2 data from June and July 2026 for young crops, not the November-to-March decline analysed in the paper, and it covers one side of the boundary, so it cannot validate the Berar versus Central Provinces difference.
-
-## What This Means
-
-A regional gradient in cropping intensity and surface temperature coincides with the old boundary, but the analysis cannot attribute it to Ryotwari or Malguzari tenure. The line is also an older political frontier between the Nizam's Berar and the Bhonsle territory, a river line, and an agro-ecological transition. The main limitations are spatial autocorrelation that is not fully modelled, single-date scenes without cloud-shadow masking, 2011 census data compared with 2024–26 satellite data, and a Berar-side census sample of only two districts. The full analysis, all figures and every regression are in the research paper and the dashboard.
+Full paper: `CL_Research_Paper.md`. Every number is reproduced by `python 05_Python/run_all.py`.

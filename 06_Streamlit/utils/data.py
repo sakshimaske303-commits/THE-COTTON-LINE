@@ -1,6 +1,4 @@
-"""Path resolution + data loaders for the dashboard; BASE_DIR/ROOT_DIR
-pattern matches the rest of the portfolio.
-"""
+"""Paths and data loaders for the dashboard."""
 import os
 import pandas as pd
 
@@ -29,9 +27,7 @@ def safe_read_csv(*parts):
 
 
 def show_image_or_placeholder(path, caption=None, ai_generated=False):
-    """Shows an image if it exists at `path`; otherwise shows a plain
-    "not added yet" note instead of erroring. Used for the theory
-    diagram slot on Theoretical Foundations and every output chart."""
+    """Show the image if it exists, else a short "not added yet" note."""
     import streamlit as st
     if os.path.exists(path):
         st.image(path, use_container_width=True)
@@ -42,3 +38,32 @@ def show_image_or_placeholder(path, caption=None, ai_generated=False):
             )
     else:
         st.info("Not added yet -- this slot is reserved and will fill in once the image is ready.")
+
+
+# ---------------------------------------------------------------- v2.0 loaders
+def load_analysis():
+    """One row per taluka (120) with every variable and sample flag (built by 05_Python/run_all.py)."""
+    return safe_read_csv("Phase4", "analysis_taluka_dataset.csv")
+
+
+def load_result(name):
+    return safe_read_csv("Phase4", "results", name)
+
+
+def key_numbers():
+    import json
+    p = data_path("Phase4", "results", "key_numbers.json")
+    if os.path.exists(p):
+        with open(p, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+OUTCOME_LABELS = {
+    "ndvi_decline_y1": "NDVI decline, year 1",
+    "ndvi_decline_y2": "NDVI decline, year 2",
+    "lst_june_c": "LST, 20 June 2026",
+    "ag_laborer_to_cultivator": "Labourers per cultivator",
+    "net_area_pct": "Net sown area (%)",
+}
+SCALE_LABELS = {"corridor": "Corridor (32)", "footprint": "Landsat sample", "census_wide": "Census, 119 talukas"}

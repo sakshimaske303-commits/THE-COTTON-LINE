@@ -1,0 +1,37 @@
+outcome,side_tested,placebo_cut_km,n,p_jump_conley50,p_slope_conley50
+ndvi_decline_y1,Central Provinces,-100,42,0.08692,0.31607
+ndvi_decline_y1,Central Provinces,-80,42,0.12546,0.04229
+ndvi_decline_y1,Central Provinces,-60,42,0.76943,0.00065
+ndvi_decline_y1,Central Provinces,-40,42,0.00963,0.38376
+ndvi_decline_y1,Berar,40,56,0.3934,0.17782
+ndvi_decline_y1,Berar,60,56,0.05955,0.17795
+ndvi_decline_y1,Berar,80,56,0.66717,0.74688
+ndvi_decline_y1,Berar,100,56,0.9111,0.92007
+ndvi_decline_y2,Central Provinces,-100,42,0.10235,0.20242
+ndvi_decline_y2,Central Provinces,-80,42,0.59547,0.00073
+ndvi_decline_y2,Central Provinces,-60,42,0.9306,0.0
+ndvi_decline_y2,Central Provinces,-40,42,0.07097,0.04381
+ndvi_decline_y2,Berar,40,56,0.2491,0.69522
+ndvi_decline_y2,Berar,60,56,0.84949,0.13308
+ndvi_decline_y2,Berar,80,56,0.3244,0.01553
+ndvi_decline_y2,Berar,100,56,0.62567,0.01699
+lst_june_c,Central Provinces,-100,43,0.34366,0.40516
+lst_june_c,Central Provinces,-80,43,0.4584,0.67413
+lst_june_c,Central Provinces,-60,43,0.6067,0.73262
+lst_june_c,Central Provinces,-40,43,0.11158,0.1921
+ag_laborer_to_cultivator,Central Provinces,-100,63,0.66299,0.02156
+ag_laborer_to_cultivator,Central Provinces,-80,63,0.4953,0.03092
+ag_laborer_to_cultivator,Central Provinces,-60,63,0.02148,0.43398
+ag_laborer_to_cultivator,Central Provinces,-40,63,0.07954,0.6966
+ag_laborer_to_cultivator,Berar,40,56,0.26332,1e-05
+ag_laborer_to_cultivator,Berar,60,56,0.98621,0.01012
+ag_laborer_to_cultivator,Berar,80,56,0.4623,0.00282
+ag_laborer_to_cultivator,Berar,100,56,0.54095,0.00106
+net_area_pct,Central Provinces,-100,63,0.85578,0.81357
+net_area_pct,Central Provinces,-80,63,0.95434,0.83148
+net_area_pct,Central Provinces,-60,63,0.64789,0.94649
+net_area_pct,Central Provinces,-40,63,0.21426,0.2753
+net_area_pct,Berar,40,56,0.12141,0.23251
+net_area_pct,Berar,60,56,0.80107,0.84022
+net_area_pct,Berar,80,56,0.37256,0.81048
+net_area_pct,Berar,100,56,0.8293,0.84824

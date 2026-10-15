@@ -1,0 +1,11 @@
+outcome,scale,n,morans_I,p_perm
+ndvi_decline_y1,corridor,32,-0.0185,0.44
+ndvi_decline_y1,footprint,98,0.3239,0.001
+ndvi_decline_y2,corridor,32,-0.023,0.412
+ndvi_decline_y2,footprint,98,0.2903,0.001
+lst_june_c,corridor,26,0.4108,0.001
+lst_june_c,footprint,56,0.3425,0.001
+ag_laborer_to_cultivator,corridor,32,0.1032,0.112
+ag_laborer_to_cultivator,census_wide,119,0.4972,0.001
+net_area_pct,corridor,32,0.4116,0.002
+net_area_pct,census_wide,119,0.3557,0.001

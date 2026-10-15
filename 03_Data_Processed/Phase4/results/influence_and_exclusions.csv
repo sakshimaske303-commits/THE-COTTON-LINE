@@ -1,0 +1,11 @@
+outcome,scale,most_influential,cooks_d,p_side_drop_top,p_int_drop_top,p_side_excl_rajura_korpana_jiwati,p_int_excl_rajura_korpana_jiwati
+ndvi_decline_y1,corridor,Ballarpur,0.18925,0.46855,0.39893,0.8332,0.36137
+ndvi_decline_y1,footprint,Sakoli,0.1422,0.20708,0.0,0.20637,0.0
+ndvi_decline_y2,corridor,Jiwati,0.38877,0.64138,0.08655,0.43614,0.08876
+ndvi_decline_y2,footprint,Buldana,0.14102,0.20357,0.0,0.39061,0.0
+lst_june_c,corridor,Jiwati,0.37378,0.44437,0.73559,0.44736,0.91348
+lst_june_c,footprint,Jiwati,0.2655,0.24057,6e-05,0.3029,7e-05
+ag_laborer_to_cultivator,corridor,Amravati,0.24814,0.67023,0.06432,0.64818,0.01999
+ag_laborer_to_cultivator,census_wide,Chikhaldara,0.30527,0.00046,0.00891,0.00244,0.00118
+net_area_pct,corridor,Jiwati,0.46018,0.3832,0.52111,0.60333,0.62401
+net_area_pct,census_wide,Jiwati,0.12195,0.75868,0.64195,0.91932,0.5876

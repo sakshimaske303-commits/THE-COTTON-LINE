@@ -1,318 +1,106 @@
 import os
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from utils.theme import inject_theme, plotly_layout, PALETTE
-from utils.data import data_path, safe_read_csv, show_image_or_placeholder, STREAMLIT_DIR
+from utils.data import safe_read_csv, show_image_or_placeholder, STREAMLIT_DIR, load_analysis
 
-st.set_page_config(page_title="Ground Truth — THE COTTON LINE", page_icon="📸", layout="wide")
+st.set_page_config(page_title="Ground Truth — THE COTTON LINE", layout="wide")
 inject_theme()
+GT = os.path.join(STREAMLIT_DIR, "assets", "ground_truth")
 
-GT_ASSETS = os.path.join(STREAMLIT_DIR, "assets", "ground_truth")
-
-
-def gt_image(filename, caption=None):
-    show_image_or_placeholder(os.path.join(GT_ASSETS, filename), caption=caption)
-
-
-st.markdown("<h1>📸 GROUND TRUTH: KARANJA GHADGE / SAWARDOH</h1>", unsafe_allow_html=True)
-st.markdown(
-    "<h3 style='text-align: center; font-weight: 700;'>An Illustrative Field Check "
-    "(Central Provinces Side Only)</h3>",
-    unsafe_allow_html=True,
-)
+st.markdown("<h1>FROM REGION TO FIELD</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; font-weight: 700;'>Seven Fields in Karanja Taluka, "
+            "from the Companion Study Roots &amp; Reflectance</h3>", unsafe_allow_html=True)
 st.markdown("---")
 
 st.markdown(f"""
 <div class="recon-card">
-    <p style="color:{PALETTE['accent2']}; font-weight:800; font-size:0.9rem; text-transform:uppercase; margin-bottom:12px;">
-        Scope of this check
-    </p>
-    <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.7; margin:0;">
-        I didn't end up doing a separate field trip for this. I already had a GPS-mapped, weekly-
-        photographed field-monitoring project running on family land in this exact taluka —
-        Karanja Ghadge village and Sawardoh village, both Wardha district, both inside this
-        project's 25 km corridor on the Central Provinces/Malguzari side. That gave me GPS
-        coordinates, dated ground photos, and an actual field-level Sentinel-2 NDVI/NDRE time
-        series for 7 real field boundaries (4 featured below in detail, the rest in the
-        underlying dataset), which is more field detail than the original 2–3-patch plan below
-        called for. It is illustrative only: it uses different sensors, dates and a different quantity
-        from the main Landsat NDVI-decline analysis, and it covers the Central Provinces side only,
-        so it cannot validate the Berar versus Central Provinces difference. The data come from a
-        separate family field-monitoring project (Roots &amp; Reflectance).
-    </p>
-</div>
+<p style="color:{PALETTE['accent2']}; font-weight:800; text-transform:uppercase; font-size:0.85rem;">What this page is, and is not</p>
+<p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.6; margin:0;">
+The Cotton Line works at taluka scale with Landsat. <b>Roots &amp; Reflectance</b>, my field study,
+follows seven farm fields in Sawardoh and Karanja Ghadge villages (Karanja taluka, Wardha) with GPS
+boundaries, weekly geotagged photos and every Sentinel-2 pass. The fields lie on the Central
+Provinces side, 15.6-24.3 km from the line. This page uses them to show what the satellite
+record looks like at field scale.
+<br><br>
+It checks what the satellite index means on fields with known crops. It covers one side of the line,
+so it cannot validate the Berar versus Central Provinces comparison.</p></div>
 """, unsafe_allow_html=True)
 
-st.markdown("---")
+D = load_analysis()
+if D is not None:
+    k = D[(D.dtname == "Wardha") & (D.sdtname == "Karanja")].iloc[0]
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Karanja taluka — Landsat coverage", f"{k.cov_y1_pct:.0f} %", "of the taluka, both dates")
+    c2.metric("NDVI decline, year 1", f"{k.decline_y1:.3f}", "Nov 2025 → Mar 2026")
+    c3.metric("LST, 20 June 2026", f"{k.lst_june:.1f} °C", "pre-monsoon, bare fields")
+    c4.metric("Distance to the line", f"{abs(k.signed_dist_km):.1f} km", "Central Provinces side")
+    st.caption("An earlier version reported 45.8 % coverage for this taluka 'at the edge of the scene'. "
+               "That was a calculation error (pixels divided by the bounding box); the taluka is fully covered.")
 
-st.markdown("### The Original Plan")
+st.markdown("### Why the main study uses November and March scenes")
+st.markdown("""
+Roots & Reflectance audited every Sentinel-2 pass over these fields after sowing in June 2026.
+No field had a usable optical look between 14 July and mid-September: **65-75 days, the weeks the
+crop grew most**. A monsoon-season greenness measure would therefore be largely unobserved in this
+region. This is why The Cotton Line measures cropping from the post-monsoon (November) and
+pre-harvest (March) scenes, when the sky is clear.
+""")
+
+st.markdown("### Does the decline index read these fields correctly?")
+st.markdown("""
+The same November-to-March decline, computed on each field from Landsat and Sentinel-2 for both
+years, against what the farmers recall growing in winter. Six fields had no rabi crop and show large
+declines (11 of 12 field-years at or above the taluka mean). Karanja field 2 had rabi chickpea and
+shows the smallest decline in both years, through a low November value: the soybean was already
+harvested and the chickpea just sown. The exception is Sawardoh field 3 in year 2, still green in
+March 2025 although the farmer confirms nothing was grown. **13 of 14 field-years match.**
+""")
+show_image_or_placeholder(os.path.join(os.path.dirname(STREAMLIT_DIR), "07_Outputs", "v2_fig8_field_bridge.png"),
+                          caption="Winter crops from farmers' recall, re-checked for two fields.")
+
+gt = safe_read_csv("Ground_Truth", "karanja_sawardoh_field_ground_truth.csv")
+if gt is not None:
+    st.markdown("### All seven fields: Sentinel-2 NDVI and NDRE, June-July 2026")
+    t = gt[["village", "field_num", "name", "area_ha", "sown_date", "date", "ndvi", "ndre"]].copy()
+    t.columns = ["Village", "Field", "Crops", "Area (ha)", "Sown", "Date", "NDVI", "NDRE"]
+    st.dataframe(t.round(3), use_container_width=True, hide_index=True)
+    gt["date"] = pd.to_datetime(gt["date"])
+    gt["label"] = gt.village + " " + gt.field_num.astype(str) + " (" + gt.name + ")"
+    fig = go.Figure()
+    for lab, g in gt.dropna(subset=["ndvi"]).groupby("label"):
+        fig.add_trace(go.Scatter(x=g.date, y=g.ndvi, mode="lines+markers", name=lab))
+    fig.update_layout(yaxis_title="NDVI (field polygon, Sentinel-2 10 m)", yaxis_range=[0, 0.5])
+    st.plotly_chart(plotly_layout(fig, height=420), use_container_width=True)
+    st.caption("21 June is the day before sowing (bare soil). The Karanja fields have no 21 June value "
+               "because cloud covered them. NDVI of 0.28-0.36 on 14 July is a young canopy about three "
+               "weeks after sowing, not closed cover. Different sensor, date and quantity from the "
+               "Landsat November-to-March decline: not a pixel-for-pixel check.")
+
+st.markdown("### Ground photos, 23 August 2026")
+p = st.columns(3)
+for col, (f, cap) in zip(p * 3, [
+    ("sawardoh-field3-2026-08-23-overview.jpeg", "Sawardoh field 3 — cotton"),
+    ("sawardoh-field5-2026-08-23-overview.jpeg", "Sawardoh field 5 — cotton"),
+    ("sawardoh-field1-2026-08-23-overview.jpeg", "Sawardoh field 1 — cotton and tur"),
+    ("karanja-field1-2026-08-23-overview.jpeg", "Karanja field 1 — soyabean and tur"),
+    ("karanja-field2-2026-08-23-overview.jpeg", "Karanja field 2 — soyabean"),
+    ("sawardoh-shared-2026-08-23-cotton.jpeg", "Cotton close-up, Sawardoh"),
+    ("sawardoh-shared-2026-08-23-soil.jpeg", "Soil, Sawardoh — reddish-brown"),
+    ("karanja-shared-2026-08-23-soil.jpeg", "Soil, Karanja Ghadge — dark, cracking (black cotton soil)"),
+    ("karanja-shared-2026-08-23-tur.jpeg", "Pigeon pea (tur), Karanja"),
+]):
+    with col:
+        show_image_or_placeholder(os.path.join(GT, f), caption=cap)
 
 st.markdown("""
-Karanja Ghadge sits inside the 25km discontinuity corridor, on the Central Provinces/Malguzari
-side. The idea: photograph a few actual field patches with GPS coordinates, note visible crop
-type, canopy density, and soil texture, then pull the NDVI/LST value at those coordinates and
-compare against what the ground actually shows. That plan is what's carried out below — through
-data I already had rather than a dedicated visit.
+**What the fields add.** Two villages 9 km apart differ in soil: reddish-brown in Sawardoh, black
+cotton soil in Karanja Ghadge. They also differ in crop mix, with cotton dominant in Sawardoh and
+soyabean with tur in Karanja. That is a reminder that taluka averages blend very different fields.
+The full field study, with its observability audit, pixel-purity analysis and rabi-season field
+alerts, is in the Roots & Reflectance repository.
 """)
-
-st.markdown("### What's Already On Record For This Taluka")
-
-c1, c2, c3 = st.columns(3)
-c1.metric("June 2026 LST", "55.97°C", "Karanja Ghadge taluka mean")
-c2.metric("June 2026 NDVI", "0.264", "Karanja Ghadge taluka mean")
-c3.metric("Valid Pixel Coverage", "45.8%", "Partly outside the 2-scene footprint")
-
-st.info("""
-Coverage is partial here since Karanja Ghadge sits at the edge of the WRS-2 path 144, rows
-045/046 scene footprint this project's NDVI/LST pipeline uses. Worth keeping that in mind
-against everything below — this taluka-level number was never a full-confidence read either.
-""")
-
-st.markdown("---")
-
-st.markdown("### Read This Before The Numbers Below")
-
-st.markdown(f"""
-<div class="recon-card">
-    <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.75; margin:0;">
-        This isn't a pixel-identical check against the taluka number above, and I don't want it to
-        read like one. That reference point comes from Landsat 8/9 at 30 m resolution, averaged
-        across the whole taluka. What's below comes from Sentinel-2 at 10 m resolution, computed at
-        the exact field polygon, from a pipeline I built for an unrelated project on the same land.
-        Different sensor, different footprint size, mostly different dates. What this actually
-        checks is whether the same kind of signal — a vegetation index tracking real crop growth —
-        shows up consistently at finer resolution, against something I can see with my own eyes.
-        It isn't a claim that the two numbers should match to three decimal places.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("---")
-
-gt_df = safe_read_csv("Ground_Truth", "karanja_sawardoh_field_ground_truth.csv")
-
-# ============================================================
-# SAWARDOH — cotton-only fields
-# ============================================================
-st.markdown("### Sawardoh — Cotton-Only Fields")
-
-st.markdown("""
-Sawardoh is a village inside the same Karanja Ghadge taluka, about 9 km from the two Karanja
-fields below. It has five field boundaries in total, but Fields 3 and 5 are the ones featured
-here — both sit alone across the road from the other three, and both are cotton-only, with no
-pigeon pea, orange, or turmeric mixed in. For a project called The Cotton Line, that's the
-cleaner comparison: no intercropping to complicate what the NDVI signature is actually responding
-to. Both were sown 22 June 2026, and both moved the same direction as everywhere else in this
-check — NDVI roughly doubling between 21 June and 14 July as canopy filled in.
-""")
-
-if gt_df is not None:
-    sawardoh_df = gt_df[(gt_df["role"] == "supporting") & (gt_df["field_num"].isin([3, 5]))].copy()
-    sawardoh_df = sawardoh_df[["field_num", "name", "date", "ndvi", "ndre"]]
-    sawardoh_df.columns = ["Field", "Crop", "Date", "NDVI", "NDRE"]
-    st.dataframe(sawardoh_df, use_container_width=True, hide_index=True)
-else:
-    st.info("Ground-truth CSV not found at 03_Data_Processed/Ground_Truth/ yet.")
-
-sw1, sw2 = st.columns(2)
-with sw1:
-    st.metric("Field 3 — Cotton only", "NDVI 0.281 · NDRE 0.155", "14 Jul 2026, 0.78 ha")
-with sw2:
-    st.metric("Field 5 — Cotton only", "NDVI 0.328 · NDRE 0.196", "14 Jul 2026, 0.66 ha")
-
-st.markdown("#### Ground Photos — 23 August 2026")
-
-sf1, sf2 = st.columns(2)
-with sf1:
-    gt_image("sawardoh-field3-2026-08-23-overview.jpeg", "Field 3 (Cotton only) — canopy overview")
-with sf2:
-    gt_image("sawardoh-field5-2026-08-23-overview.jpeg", "Field 5 (Cotton only) — canopy overview")
-
-s1, s2 = st.columns(2)
-with s1:
-    gt_image("sawardoh-shared-2026-08-23-cotton.jpeg", "Cotton close-up — early boll formation visible")
-with s2:
-    gt_image("sawardoh-shared-2026-08-23-soil.jpeg", "Soil texture — reddish-brown, finer than Karanja Ghadge's black soil")
-
-st.markdown("---")
-
-# ============================================================
-# KARANJA GHADGE — the named taluka check
-# ============================================================
-st.markdown("### Karanja Ghadge — The Named Taluka Check")
-
-st.markdown("""
-Two fields, both sown 27 June 2026, about 100 m apart, in Karanja Ghadge itself — the exact
-taluka the original plan named. Both lost their 21 June Sentinel-2 pass entirely to cloud
-masking — not a processing error, an actual empty read for that date at 10 m resolution. The
-only clean date so far is 14 July 2026, three weeks after sowing.
-""")
-
-if gt_df is not None:
-    karanja_df = gt_df[gt_df["role"] == "primary"].copy()
-    karanja_df = karanja_df[["field_num", "name", "crops", "area_ha", "sown_date", "lat", "lon", "date", "ndvi", "ndre"]]
-    karanja_df.columns = ["Field", "Crop", "Crops (raw)", "Area (ha)", "Sown", "Lat", "Lon", "Date", "NDVI", "NDRE"]
-    st.dataframe(karanja_df, use_container_width=True, hide_index=True)
-
-k1, k2 = st.columns(2)
-with k1:
-    st.metric("Field 1 — Soyabean & Tur", "NDVI 0.329 · NDRE 0.181", "14 Jul 2026, 0.79 ha")
-with k2:
-    st.metric("Field 2 — Soyabean", "NDVI 0.287 · NDRE 0.160", "14 Jul 2026, 0.98 ha")
-
-st.markdown("#### Ground Photos — 23 August 2026")
-
-p1, p2 = st.columns(2)
-with p1:
-    gt_image("karanja-field1-2026-08-23-overview.jpeg", "Field 1 (Soyabean & Tur) — full canopy overview")
-with p2:
-    gt_image("karanja-field2-2026-08-23-overview.jpeg", "Field 2 (Soyabean) — full canopy overview")
-
-p3, p4, p5 = st.columns(3)
-with p3:
-    gt_image("karanja-shared-2026-08-23-soyabean.jpeg", "Soyabean canopy close-up")
-with p4:
-    gt_image("karanja-shared-2026-08-23-tur.jpeg", "Pigeon pea (tur) close-up")
-with p5:
-    gt_image("karanja-shared-2026-08-23-soil.jpeg", "Soil texture — dark, clumpy, cracked-surface")
-
-st.markdown(f"""
-<div class="recon-card">
-    <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.75; margin:0;">
-        Both photos (23 August) show closed-canopy, healthy-looking soyabean at roughly eight weeks
-        after sowing, with pigeon pea running taller between the rows. The NDVI values in this check
-        (0.29–0.33) are from 14 July, about seven weeks earlier and roughly two to three weeks after
-        sowing, when the canopy was still young, so the photos and the NDVI values describe different
-        growth stages and should not be read as matching each other. A closed canopy would be expected
-        to give a much higher NDVI than 0.29–0.33. The soil photo is dark,
-        clumpy, and cracked on the surface — the same regur (black cotton soil) texture this whole
-        project is built around, on the Central Provinces side of the line.
-    </p>
-    <p style="color:{PALETTE['text_secondary']}; font-size:0.88rem; line-height:1.7; margin:14px 0 0;">
-        One more thing worth flagging rather than glossing over: the 21 June date is also <em>before</em>
-        Karanja's actual sowing (27 June), so even a valid reading that day would have shown bare or
-        pre-monsoon soil, not crop canopy. The useful comparison point was always going to be 14
-        July, not 21 June — that field being empty in the data isn't a gap in the finding.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("---")
-
-# ============================================================
-# CROSS-SENSOR OBSERVATION
-# ============================================================
-st.markdown("### Data Coverage Note")
-
-st.markdown(f"""
-<div class="recon-card">
-    <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.75; margin:0;">
-        Both products have gaps here, for different reasons. Landsat's taluka-level pass has only
-        45.8% valid pixel coverage because Karanja Ghadge sits at the edge of the scene footprint.
-        Sentinel-2's 21 June pass over the two Karanja fields returned no usable pixels, which
-        points to cloud on that date. These are separate causes, not corroboration of each other.
-        The Landsat taluka-level number for this area should be treated with caution.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("---")
-
-# ============================================================
-# INTERACTIVE: NDVI / NDRE ACROSS ALL FOUR FEATURED FIELDS
-# ============================================================
-st.markdown("### Interactive: NDVI & NDRE, All Four Featured Fields")
-
-st.markdown("""
-The same four fields above, plotted together — Sawardoh's two cotton-only fields and Karanja's
-two fields, all on the same axis. Karanja's missing 21 June point is a real gap, not smoothed
-over: the line simply starts at its first valid date.
-""")
-
-if gt_df is not None:
-    featured = gt_df[
-        ((gt_df["zone"] == "sawardoh") & (gt_df["field_num"].isin([3, 5])))
-        | ((gt_df["zone"] == "karanja") & (gt_df["field_num"].isin([1, 2])))
-    ].copy()
-    featured["date"] = pd.to_datetime(featured["date"])
-    featured["label"] = featured["zone"].str.title() + " Field " + featured["field_num"].astype(str)
-
-    FIELD_COLORS = {
-        "Karanja Field 1": PALETTE["accent"],
-        "Karanja Field 2": "#5AA9BE",
-        "Sawardoh Field 3": PALETTE["accent2"],
-        "Sawardoh Field 5": "#4FBE85",
-    }
-
-    tab_ndvi, tab_ndre = st.tabs(["NDVI", "NDRE"])
-
-    with tab_ndvi:
-        fig_ndvi = go.Figure()
-        for label, color in FIELD_COLORS.items():
-            sub = featured[featured["label"] == label].dropna(subset=["ndvi"]).sort_values("date")
-            fig_ndvi.add_trace(go.Scatter(
-                x=sub["date"], y=sub["ndvi"], mode="lines+markers", name=label,
-                line=dict(color=color, width=3), marker=dict(size=9),
-            ))
-        fig_ndvi.update_layout(yaxis_title="NDVI", xaxis_title="Date", yaxis_range=[0, 0.5])
-        st.plotly_chart(plotly_layout(fig_ndvi, height=440), use_container_width=True)
-
-    with tab_ndre:
-        fig_ndre = go.Figure()
-        for label, color in FIELD_COLORS.items():
-            sub = featured[featured["label"] == label].dropna(subset=["ndre"]).sort_values("date")
-            fig_ndre.add_trace(go.Scatter(
-                x=sub["date"], y=sub["ndre"], mode="lines+markers", name=label,
-                line=dict(color=color, width=3), marker=dict(size=9),
-            ))
-        fig_ndre.update_layout(yaxis_title="NDRE", xaxis_title="Date", yaxis_range=[0, 0.3])
-        st.plotly_chart(plotly_layout(fig_ndre, height=440), use_container_width=True)
-
-    st.caption(
-        "Karanja's two fields (sown 27 June) only have one valid date -- 14 July -- so their lines "
-        "are a single point each rather than a slope; Sawardoh's two cotton fields (sown 22 June) "
-        "have both dates and show the actual rise. All four sit in a plausible, tightly-clustered "
-        "range by mid-July regardless of crop."
-    )
-else:
-    st.info("Ground-truth CSV not found -- chart will render once it's in place.")
-
-st.markdown("---")
-
-# ============================================================
-# WHAT THIS CONFIRMS
-# ============================================================
-st.markdown("### What This Confirms")
-
-st.markdown(f"""
-<div class="recon-card">
-    <p style="color:{PALETTE['text_primary']}; font-size:0.95rem; line-height:1.75; margin:0;">
-        The remote-sensing signal this project runs on holds up against what's actually growing on
-        the ground, at seven real field boundaries I can personally vouch for. NDVI rises through
-        the season the way it should as canopy closes in, the finer-resolution Sentinel-2 numbers
-        sit in a plausible range next to the coarser taluka-level Landsat reference for the same
-        stretch of land, and the one gap in the record (Karanja's 21 June pass) has an honest
-        explanation rather than an invented one. This is a small-sample, single-taluka check, not a
-        blanket validation of every outcome variable elsewhere in the project — it speaks to NDVI
-        specifically, at these coordinates, this season. Reported as that, not as more.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("---")
-st.markdown(
-    f"<p class='caption-text' style='text-align:center;'>Field boundaries, photos, and Sentinel-2 "
-    f"NDVI/NDRE sourced from a separate family field-monitoring project on the same land "
-    f"(Roots &amp; Reflectance) · Ground photos dated 23 Aug 2026 · Compiled for THE COTTON LINE</p>",
-    unsafe_allow_html=True,
-)
-
-st.markdown("---")
-st.markdown("### All Seven Fields")
-if gt_df is not None:
-    all_df = gt_df[["village", "field_num", "name", "sown_date", "date", "ndvi", "ndre"]].copy()
-    all_df.columns = ["Village", "Field", "Crop", "Sown", "Date", "NDVI", "NDRE"]
-    st.dataframe(all_df, use_container_width=True, hide_index=True)
-    st.caption("Sentinel-2 NDVI/NDRE at field polygons. Empty values are dates with no usable pixels. "
-               "Fields are 15.6-24.3 km from the boundary, on the Central Provinces side.")
+st.markdown("<p class='caption-text' style='text-align:center;'>Field boundaries, photos and Sentinel-2 values: "
+            "Roots &amp; Reflectance (Sakshi D. Maske)</p>", unsafe_allow_html=True)

@@ -1,13 +1,6 @@
 import streamlit as st
 
-# ============================================================
-# THE COTTON LINE -- dashboard theme
-# Palette: Prussian Blue / Teal Blue (Berar side) + Mughal Green
-# (Central Provinces side) + Pastel Blue / Light Silver on a dark
-# navy base. Card-and-border style matched to the rest of the
-# portfolio (see BORDER_OPTICS/utils/theme.py -- closest sibling,
-# same historical-institutional-persistence design).
-# ============================================================
+# Dashboard theme: teal (Berar), icy green (Central Provinces) on dark navy.
 PALETTE = {
     "bg_main": "#0A1B26",       # near-black navy -- page background
     "bg_card": "#122B3C",       # card background, one step up from bg_main
@@ -16,8 +9,7 @@ PALETTE = {
     "berar": "#307B8E",          # Teal Blue -- Berar / Amravati Division side
     "cp": "#8FE8B4",             # Icy pastel green -- Central Provinces / Nagpur Division side
     "accent": "#307B8E",         # Teal Blue -- primary accent
-    "accent2": "#8FE8B4",        # Icy pastel green -- secondary accent (bright, reads on dark bg;
-                                  # Mughal Green itself is too dark to register against bg_main)
+    "accent2": "#8FE8B4",        # Icy pastel green -- secondary accent
     "text_primary": "#CEE5D6",  # Light Silver -- main text on dark bg
     "text_secondary": "#A9D3C5",# Pastel Blue -- muted / secondary text
 }

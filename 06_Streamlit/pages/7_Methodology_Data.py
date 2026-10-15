@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 from utils.theme import inject_theme, PALETTE
 
-st.set_page_config(page_title="Data & Methodology — THE COTTON LINE", page_icon="🛰️", layout="wide")
+st.set_page_config(page_title="Data & Methodology — THE COTTON LINE", layout="wide")
 inject_theme()
 
-st.markdown("<h1>🛰️ DATA &amp; METHODOLOGY</h1>", unsafe_allow_html=True)
+st.markdown("<h1>DATA &amp; METHODOLOGY</h1>", unsafe_allow_html=True)
 st.markdown(
     "<h3 style='text-align: center; font-weight: 700;'>Sources, a Real Processing Bug and Its Fix, "
     "and the Scope Decisions Behind Every Number on This Dashboard</h3>",
@@ -22,9 +22,9 @@ sources = pd.DataFrame({
                "Landsat 8/9 Collection 2 Level-2, thermal Band 10", "WorldClim 2.1 monthly precipitation climatology",
                "SRTM 1 arc-second (~30m) digital elevation tiles", "IIT Bombay POCRA village-level Census shapefiles",
                "APY 2024-25 workbook, Maharashtra Economic Survey 2025-26", "State Tribal Development Dept + fact-finding reports (contextual only)"],
-    "Coverage": ["120 talukas, 11 districts (17 talukas patched from a second source)", "WRS-2 path 144, rows 045/046 (68-taluka footprint)",
-                 "Same 2-scene footprint as NDVI", "All 120 talukas", "9-11 SRTM tiles, corridor + full footprint",
-                 "8 of 11 districts (Akola, Buldhana, Washim missing); 2011 Census attributes", "11 districts, district-level values only", "State/regional + 1 district anchor (Gadchiroli)"],
+    "Coverage": ["120 talukas, 11 districts (Census 2011 / LGD sub-districts)", "WRS-2 paths 144-146, rows 045-047; 98 talukas >= 50 % of cropland observed",
+                 "One June scene, path 144; 56 talukas", "All 120 talukas", "All 120 talukas (centroid)",
+                 "All 11 districts, 119 talukas; 2011 Census attributes, rural villages", "11 districts, district-level values only", "State/regional + 1 district anchor (Gadchiroli)"],
 })
 st.dataframe(sources, use_container_width=True, hide_index=True)
 
@@ -54,19 +54,35 @@ st.markdown(f"""
 
 st.markdown("---")
 
+st.markdown("### Masks, Coverage and Common Pixels")
+st.markdown("""
+- **NDVI is computed at 30 m** from nine Landsat scenes per date (paths 144-146, rows 045-047).
+  Fill, cloud, cirrus, shadow and water are masked with the QA_PIXEL band, and only ESA WorldCover
+  2021 cropland is kept.
+- **The decline uses only pixels valid on both dates,** so November and March describe the same fields.
+- **Coverage is counted against the taluka's cropland** (LST: against the polygon). The first
+  version divided by the taluka's bounding box, which made complete talukas look half-empty;
+  Karanja in Wardha was shown at 45.8 % but is 100 % covered.
+- **Talukas with less than half their cropland observed are excluded:** 5 of the 103 the scenes touch.
+- **Paths agree.** Where two paths see the same taluka, their values differ by 0.036 on average.
+""")
+st.markdown("---")
+st.markdown("### Reproducibility")
+st.markdown("""
+`python 05_Python/run_all.py` rebuilds every table, result and figure from the data in the
+repository, using numpy, pandas, scipy, matplotlib and tifffile. `--full` also rebuilds the 30 m
+NDVI table from the raw scenes downloaded by `00_download_inputs.py`. Order: geometry → census → NDVI/LST
+and rainfall → elevation → analysis dataset → regressions and robustness → figures.
+""")
+st.markdown("---")
 st.markdown("### Scope Decisions, Stated Plainly")
 
 st.markdown("""
-- **Corridor vs. full footprint.** LST/NDVI processing initially covered only the 2-scene,
-  68-taluka footprint that overlaps the corridor most efficiently -- not a full 11-district, 12-scene
-  mosaic. That footprint happens to be lopsided (49 Central Provinces talukas to 19 Berar talukas, with the
-  Berar side reaching about 104 km from the line and the CP side about 180 km). This matters for how
-  the ag-laborer ratio should be read -- see Spatial Discontinuity Regression, which adds symmetric
-  distance windows.
-- **Population/land-use census coverage.** Started at 5 of 11 districts (the corridor-relevant
-  ones), extended to 8 of 11 by Entry 11 once the Bhandara/Gondiya/Gadchiroli shapefiles -- already
-  downloaded, never processed -- were run through the same pipeline. Gadchiroli's processed data has
-  no corresponding NDVI/LST scene coverage, so it's saved but unused in the current regression.
+- **Satellite footprint.** NDVI covers paths 144-146: all of Berar (to 228 km) and the Central
+  Provinces side to 156 km. Gadchiroli and most of Gondiya (path 143) are not covered. LST is a
+  single path-144 scene.
+- **Census coverage.** All 11 districts are now processed (119 talukas). Census outcomes are tested
+  on every taluka, not only those inside the Landsat footprint.
 - **Irrigation coverage, dropped.** The census `area_irri` field produced 58-92% irrigation rates
   across Yavatmal villages, which flatly contradicts the well-documented fact that this cotton belt
   is overwhelmingly rainfed (real regional coverage is closer to 15-20%). Left out rather than

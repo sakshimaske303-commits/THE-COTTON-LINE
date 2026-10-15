@@ -2,10 +2,10 @@ import streamlit as st
 from utils.theme import inject_theme, PALETTE
 from utils.data import safe_read_csv
 
-st.set_page_config(page_title="Historical & Institutional Context — THE COTTON LINE", page_icon="🏛️", layout="wide")
+st.set_page_config(page_title="Historical & Institutional Context — THE COTTON LINE", layout="wide")
 inject_theme()
 
-st.markdown("<h1>🏛️ HISTORICAL &amp; INSTITUTIONAL CONTEXT</h1>", unsafe_allow_html=True)
+st.markdown("<h1>HISTORICAL &amp; INSTITUTIONAL CONTEXT</h1>", unsafe_allow_html=True)
 st.markdown(
     "<h3 style='text-align: center; font-weight: 700;'>Verifying the Modern Boundary Against "
     "Documented District Lineage, and the Forest Rights Act Compilation</h3>",
@@ -65,7 +65,7 @@ with h2:
 
 st.success("""
 **Bottom line:** as far as documented district lineage can show, the modern Amravati-Nagpur
-Division boundary is the same line as the historical Berar-Central Provinces boundary. I
+Division boundary matches the historical Berar-Central Provinces boundary at district level. I
 checked this against the administrative lineage of each district rather than a period map, so
 it is district-level evidence and not a taluka-by-taluka verification. Some talukas on the
 Central Provinces side (for example Rajura, from Hyderabad State) came from other jurisdictions,

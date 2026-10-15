@@ -1,10 +1,11 @@
-streamlit
-pandas
-numpy
-plotly
-statsmodels
-geopandas
-shapely
-rasterio
-scipy
-requests
+# analysis pipeline (05_Python/run_all.py)
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+matplotlib>=3.8
+tifffile>=2024.1
+# optional: 00_download_inputs.py
+requests>=2.31
+# dashboard (06_Streamlit)
+streamlit>=1.36
+plotly>=5.22

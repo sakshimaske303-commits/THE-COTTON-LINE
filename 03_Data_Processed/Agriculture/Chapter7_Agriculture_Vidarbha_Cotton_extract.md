@@ -1,9 +1,8 @@
 # Economic Survey of Maharashtra 2025-26, Chapter 7 (Agriculture) — Vidarbha & Cotton extract
 
-*(Extracted from the 43-page PDF the user downloaded. This chapter is state-level throughout —
-it does not break most tables down by district, so this extract pulls out the state-wide cotton
-series plus the handful of places Vidarbha is named specifically. District-level indicators are
-in the companion `vidarbha_economic_survey_2025-26_official.csv`.)*
+*(My extract from the 43-page chapter. The chapter is state-level, so I kept the state cotton
+series and the places where Vidarbha is named. District indicators are in
+`vidarbha_economic_survey_2025-26_official.csv`.)*
 
 ## 1. Cotton — current season (state-wide)
 
@@ -15,9 +14,8 @@ in the companion `vidarbha_economic_survey_2025-26_official.csv`.)*
 
 *Production of cotton in '000 bales of 170 kg each.
 
-Cotton area is contracting statewide even as production/yield is projected up — worth flagging
-this as the "area shrinking, yield-dependent recovery" pattern in the Cotton Trap chapter,
-since a good monsoon year can mask the underlying acreage decline.
+Cotton area is contracting statewide while production is projected up: a good monsoon year can
+mask the acreage decline.
 
 ## 2. Cotton — long-run state trend (1960-61 to 2024-25)
 
@@ -36,10 +34,8 @@ kg-lint-per-ha):
 | 2023-24 | 4,287 | 8,918 | 354 |
 | 2024-25 | 4,123 | 7,385 | 304 |
 
-This is a genuinely useful long-run series for the Cotton Trap chapter's historical framing: yield
-per hectare roughly tripled from 1960s to the 2010-11 Bt-cotton-era peak (~378 kg/ha in 2020-21),
-but has since *fallen back* to 304 kg/ha by 2024-25 — a decline worth investigating alongside your
-debt/distress data, since falling yields on largely-unchanged area directly squeeze farm income.
+Yield roughly tripled from the 1960s to the Bt-cotton era (378 kg/ha in 2020-21) and has since
+fallen to 304 kg/ha (2024-25). Falling yields on largely unchanged area squeeze farm income.
 
 Also from Annexure 7.4 (cropwise production index, base 1979-82=100): the Cotton/Fibres index hit
 693.1 in 2020-21 but has been declining since — 589.0 (2022-23), 611.4 (2023-24), **506.3
@@ -57,10 +53,8 @@ GoI-declared MSP, ₹ per quintal:
 MSP procurement in the state is undertaken by the Maharashtra State Co-operative Tribal
 Development Corporation, NAFED, and the **Maharashtra State Co-operative Cotton Growers
 Federation**. Cross-reference against the `cci_cotton_msp_procurement_state.csv` file (Cotton
-Corporation of India procurement volumes by state) — note that CCI's actual procurement volumes
-for Maharashtra (2.44 lakh bales in 2023-24, 29.31 lakh bales in 2024-25) are a small fraction of
-total production, useful for making the "MSP exists on paper but doesn't reach most growers"
-argument.
+Corporation of India procurement volumes by state). CCI procurement in Maharashtra (2.44 lakh
+bales in 2023-24, 29.31 lakh bales in 2024-25) is a small fraction of total production.
 
 ## 4. Vidarbha-specific schemes named in this chapter
 
@@ -71,9 +65,7 @@ argument.
 | Vidarbha Panlot Vikas Mission | 1,032 | 1,032 | 365.36 |
 | Vidarbha Intensive Irrigation Development Programme | 588 | 588 | 318.36 |
 
-Both are 100% "completed" by count of watersheds, which is worth scrutinizing in the Irrigation
-Gap chapter — completed watershed *count* doesn't necessarily mean the irrigation gap itself
-closed; cross-check this against your actual irrigated-area coverage numbers.
+Both are 100% "completed" by watershed count, which says nothing about irrigated area.
 
 **Dairy/livestock:** "Special Project to Increase Milk Production in Vidarbha & Marathwada" —
 covers 19 districts, distributing dairy cattle/calves/feed supplements/electric chaff cutter
@@ -96,8 +88,5 @@ proportionate, not a clear deficit on this specific metric.
 ## Source
 
 Economic Survey of Maharashtra 2025-26, Chapter 7 (Agriculture), Commissionerate of Agriculture
-GoM / Office of the Commissioner of Animal Husbandry GoM. Full 43-page PDF is in your
-`02_Data_Raw/Agriculture` folder as `EconomicSurvey_2025-26_Chapter7_Agriculture.pdf` — this
-extract only pulls the parts relevant to your 11 Vidarbha districts and cotton; the rest of the
-chapter covers horticulture, sericulture, fisheries, animal husbandry schemes, etc. state-wide if
-you need to dig further for any other chapter.
+GoM / Office of the Commissioner of Animal Husbandry GoM. Full PDF:
+`02_Data_Raw/Agriculture/EconomicSurvey_2025-26_Chapter7_Agriculture.pdf`.

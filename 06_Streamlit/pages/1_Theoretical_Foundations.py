@@ -3,28 +3,15 @@ import os
 from utils.theme import inject_theme, PALETTE
 from utils.data import output_path, show_image_or_placeholder
 
-st.set_page_config(page_title="Theoretical Foundations — THE COTTON LINE", page_icon="📚", layout="wide")
+st.set_page_config(page_title="Theoretical Foundations — THE COTTON LINE", layout="wide")
 inject_theme()
 
-st.markdown("<h1>📚 THEORETICAL FOUNDATIONS</h1>", unsafe_allow_html=True)
+st.markdown("<h1>THEORETICAL FOUNDATIONS</h1>", unsafe_allow_html=True)
 st.markdown(
     "<h3 style='text-align: center; font-weight: 700;'>Institutional Persistence, Two Land-Tenure Systems, "
     "and the Physics Behind the Data</h3>",
     unsafe_allow_html=True,
 )
-st.markdown("---")
-
-# ============================================================
-# DIAGRAM — left blank until an illustrative image is added
-# ============================================================
-col_a, col_b, col_c = st.columns([0.2, 5.9, 0.2])
-with col_b:
-    show_image_or_placeholder(
-        output_path("Figures", "imgg1.png"),
-        caption="Two Land Tenures, One Satellite Signature (schematic of the hypothesised mechanism)",
-    )
-    st.caption("This illustration is a schematic, not real data. It shows the hypothesis, including a sharp break at the boundary. The measured results on the other pages show no sharp break, and the NDVI curves drawn here are not the observed values.")
-
 st.markdown("---")
 
 # ============================================================
@@ -82,13 +69,11 @@ with t2:
     """, unsafe_allow_html=True)
 
 st.markdown("""
-My project isn't testing whether one system was better or worse than the other. My test is much
-narrower and simpler: I want to see if Ryotwari's individual-plot cotton farming left behind a
-different **vegetation phenology signature** (meaning a sharper kharif-to-rabi decline, since a
-single-cropped field goes fallow once cotton is picked) and a different **agrarian labor
-structure** (more landless laborers relative to cultivators, the standard indicator for a
-cash-crop-dependent smallholding economy) than Malguzari's mixed, estate-managed land. If these
-differences are real, my data should still show them today.
+My project does not test whether one system was better than the other, and it cannot attribute
+anything to tenure: the same line is also an older political frontier, the Wardha river and a
+soil and rainfall transition. It asks a narrower, prior question: does the old line still mark a
+**break** in how the land is farmed today -- in the seasonal greenness of fields, in surface
+temperature, in labour structure or in land use -- or does a regional gradient simply run across it?
 """)
 
 st.markdown("---")
@@ -103,14 +88,13 @@ st.latex(r"NDVI = \frac{NIR - RED}{NIR + RED}")
 st.markdown("""
 NDVI is built from real physics and leaf optics. Chlorophyll absorbs red light to drive
 photosynthesis, while the inside cell structure of a leaf bounces back near-infrared light
-heavily. Because of this, healthy green plants show low red reflection and high near-infrared
-reflection -- a big positive NDVI number. I rely on a very simple fact here: **single-cropped
-fields go back to bare, dry dirt after one harvest, but mixed-crop fields get planted again and
-stay green.** I measured NDVI at the kharif peak, just after the monsoons when leaves are
-fullest, and then checked it again just before the rabi harvest to capture this exact gap. A
-**huge drop in greenness is my project's signature for single-crop cotton farming, while a small
-drop means farmers are mixing up their crops.** This is the outcome variable behind the Cotton
-Signature (NDVI) page.
+heavily, so green canopy gives a high NDVI. I measure NDVI in early November, after the monsoon,
+and again in early March. Land under a single long-season crop that is picked and left fallow
+loses most of its greenness between the two dates; land with a second (rabi) crop, irrigation or
+perennial cover loses less. The fall is therefore a **cropping-intensity index, not a cotton
+detector**: soybean is already harvested by November and rice in the east may still stand.
+At district level the index tracks official cotton share (r = 0.86 for 10 districts; see Cotton
+Signature).
 """)
 
 st.markdown("---")
@@ -118,18 +102,16 @@ st.markdown("---")
 # ============================================================
 # SECTION 4 — LST AS A SECOND PHYSICAL CHANNEL
 # ============================================================
-st.markdown("### Land Surface Temperature: A Second, Independent Physical Channel")
+st.markdown("### Land Surface Temperature: A Second Physical Channel")
 
 st.markdown("""
 Land Surface Temperature (LST) comes from Landsat's thermal band and tracks the actual heat of
 the ground instead of just the air temperature. Bare dirt or sparsely-vegetated fields heat up
 faster and hold less moisture than a denser, actively-transpiring canopy. This is why LST and
-NDVI are physically linked but not redundant: NDVI shows me what is actually growing, while LST
-tells me how that translates into surface heat and, indirectly, moisture stress. I chose to test
-both channels independently -- rather than leaning on NDVI alone -- and that's what let this
-project confirm, in the full-footprint Phase 4 regression, that the same side-of-boundary
-distance gradient shows up across two physically distinct measurements, not just one (see Spatial
-Discontinuity Regression).
+NDVI are physically linked but not redundant. Here LST is a single pre-monsoon date (20 June 2026),
+when most fields are bare, so it mainly reflects soil and surface type -- dark black-cotton soils
+heat strongly. The two channels do not show the same shape: NDVI decline falls steadily eastwards,
+while LST forms a ridge at the line (see Spatial Discontinuity Regression).
 """)
 
 st.markdown("---")

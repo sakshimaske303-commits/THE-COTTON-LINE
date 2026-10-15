@@ -1,7 +1,4 @@
-"""Fixes the DN=0-as-real-data bug in the LST pipeline (Landsat ST_B10 uses
-DN=0 for masked pixels; the old code scaled it before masking, giving a
-fake -124.15C). Fixed mean=51.45C. Requires rasterio, numpy.
-"""
+"""Legacy (v1). Masks DN=0 before scaling Landsat ST_B10. Needs rasterio."""
 import glob
 import os
 import numpy as np
@@ -72,5 +69,5 @@ valid = mosaic[mosaic != -9999]
 print(f"\nFinal merged LST (fixed): min={valid.min():.2f}C max={valid.max():.2f}C mean={valid.mean():.2f}C")
 print(f"Saved to: {out_path}")
 print("\nNOTE: this replaces BOTH vidarbha_lst_merge.tif and vidarbha_mergedLST.tif.")
-print("Once you've checked the new file, you can delete the two old buggy merges")
+print("Check the new file, then delete the two old merges")
 print("and the stray 8-byte A1_LST_Celcius.tif (leftover broken test file).")

@@ -6,6 +6,10 @@
 # comes from the CSVs derived from these, not the rasters themselves
 03_Data_Processed/**/*.tif
 03_Data_Processed/**/*.tif.aux.xml
+# ...except the small 300 m NDVI/LST rasters the pipeline needs (2-3 MB each)
+!03_Data_Processed/Vegetation/ndvi_*_300m*.tif
+!03_Data_Processed/Vegetation/ndvi_fixed_300m_June2026.tif
+!03_Data_Processed/Climate/lst_fixed_300m_June2026.tif
 
 # large geometry layers not used by the dashboard (Infrastructure was
 # dropped from scope -- see 07_Methodology_Data.py)
@@ -24,3 +28,12 @@ __pycache__/
 venv/
 .streamlit/secrets.toml
 .ipynb_checkpoints/
+
+_to_delete/
+
+# working files, not part of the study
+CL_FINAL_FIXES_AND_COMPLETION_PLAN.md
+cleanup_v2.ps1
+05_Python/legacy/
+03_Data_Processed/Ground_Truth/field_crop_history_TEMPLATE.csv
+*._print.html

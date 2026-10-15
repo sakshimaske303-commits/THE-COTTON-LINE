@@ -8,9 +8,7 @@
 **Published/commenced:** 30 April 1994
 **Issuing authority:** P. C. Alexander, Governor of Maharashtra
 
-*(Extracted from the PDF the user downloaded — originally sourced via Indian Kanoon,
-http://indiankanoon.org/doc/26475892/. This was one of the items previously blocked from direct
-fetch; now transcribed in full below for citation in the Polity chapter.)*
+*(Transcribed from the Indian Kanoon copy, http://indiankanoon.org/doc/26475892/.)*
 
 ---
 

@@ -1,109 +1,113 @@
-# THE COTTON LINE — Does a Nineteenth-Century Colonial Land-Tenure Boundary Still Register in Present-Day Vidarbha?
+# THE COTTON LINE — Is an Erased Colonial Land-Revenue Boundary Still Visible in Vidarbha?
 
 [![EarthArXiv](https://img.shields.io/badge/EarthArXiv-Preprint-B7410E.svg)](https://eartharxiv.org/repository/view/14802/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22111298.svg)](https://doi.org/10.5281/zenodo.22111298)
 
-This project tests whether the boundary between Berar (Ryotwari land-revenue settlement) and the Central Provinces (Malguzari settlement), abolished as a provincial border in 1956, is still detectable in cotton-related crop phenology, agrarian labour structure, and land surface temperature. It finds no boundary-specific step in most outcomes. It finds a regional gradient that partly coincides with the old line, but the evidence is exploratory and does not identify a tenure effect.
+Version 2.1 (October 2026). Berar in western Vidarbha was settled under Ryotwari land revenue, and the Central Provinces to the east under Malguzari. The provincial line was abolished in 1956, but on district lineage it matches today's Amravati/Nagpur Division boundary.
 
-## What This Project Is
+This project asks whether that line is still visible as a break in present-day agriculture, using Landsat satellite indices and the 2011 Census, with spatially robust tests.
 
-Most of my other projects estimate the effect of a specific policy or event using difference-in-differences or event-study designs. This one is different. It asks whether an old administrative border is still visible in the landscape, which makes it a boundary-persistence and spatial-discontinuity problem, closer to historical GIS and spatial pattern analysis than to treatment-effect estimation.
+**Answer: no step at the line.** Vidarbha's cotton core straddles the old line: the satellite cropping index peaks near it on both sides and falls away in both directions. The index tracks official cotton statistics, and fake boundaries reproduce the slope differences found at the real one.
 
-Historical background: Berar (today's Amravati, Akola, Buldhana, Washim and Yavatmal districts) was assigned to the East India Company by a treaty with the Nizam of Hyderabad in 1853, was administered under the Ryotwari system, and was merged with the Central Provinces in 1903. The districts to the east (Nagpur, Wardha, Chandrapur, Bhandara, Gondia, Gadchiroli) were settled under Malguzari. Nagpur itself was annexed by the Company in 1853 under the doctrine of lapse, so 1853 is not a Berar-only date. The provincial boundary was abolished in 1956; at district level it corresponds to the present Amravati Division / Nagpur Division line.
+## Research question and hypotheses
 
-## Core Question
+After controlling for rainfall, elevation and distance, is the former Berar/Central Provinces boundary detectable as a spatial discontinuity in present-day satellite and census indicators of agriculture?
 
-After controlling for distance to the boundary, rainfall and elevation, is the Berar/Central Provinces boundary still detectable as a spatial discontinuity in kharif-to-rabi NDVI decline (a cropping-intensity index), agrarian labour structure (agricultural labourers relative to cultivators), land use, and land surface temperature?
+- **H1:** a level step at the line.
+- **H2:** a change of slope with distance at the line.
 
-## Findings So Far
+## Findings
 
-- No boundary-specific level jump is found for NDVI decline, land surface temperature or net cultivated area, at either scale.
-- The raw NDVI decline is larger on the Berar side (0.325 vs 0.255 in year one; 0.316 vs 0.241 in year two), but the gap is close to zero near the line and the boundary term is about zero once distance is controlled. This is a regional gradient.
-- On the full footprint the side-by-distance interaction is significant for NDVI decline (p = 0.035) and land surface temperature (p = 0.011). Only the temperature result is robust to alternative standard errors and symmetric distance windows.
-- The labour ratio shows a corridor slope difference (p = 0.036) that depends on one urban taluka, and a full-footprint level difference (p = 0.014) that is absent in the corridor.
-- Sixteen coefficients were tested, four are significant at 5%, and none survives a Holm correction. Treat all results as exploratory.
-
-The full account, including robustness checks and limitations, is in `CL_Research_Paper.md` (Sections 4.4 and 6).
-
-## Study Design
-
-The modern boundary is built by dissolving 120 taluka polygons into their two historical divisions and extracting the shared edge (384.7 km). I checked it against district administrative lineage from 1903 to 1956; this is district-level evidence, not a geometric overlay of a period map.
-
-Two samples are used. The 32-taluka corridor contains the talukas intersecting a 25 km buffer of the line (12 of them have centroids more than 25 km away). The 68-taluka footprint is the set covered by Landsat WRS-2 path 144, rows 045/046. Both use the same OLS model:
-
-`outcome ~ side + signed_dist_km + side:signed_dist_km + annual_total_mm + elevation_m`
-
-NDVI decline is measured from a November scene to a March scene, in two separate years using the same footprint and method. A leave-one-out jackknife over the 32 corridor talukas and the additional checks in `05_Python/robustness_checks.py` (HC3 and clustered errors, multiple-testing correction, symmetric windows, placebo cutoffs, influence, coverage) test stability. Census labour and land-use data cover 8 of 11 districts; Akola, Buldhana and Washim are not in those analyses.
-
-Methodology, data sources, the Landsat DN = 0 fix and the scope decisions are documented on the Methodology & Data page of the dashboard and in `CL_Development_Log.md`.
-
-## Repository Structure
-
-```text
-THE_COTTON_LINE/
-├── 03_Data_Processed/              # Cleaned per-taluka CSVs by theme, boundary/corridor geometry,
-│                                   #   Phase 4 regression datasets, robustness outputs
-│                                   #   (raw satellite/DEM sources excluded, see .gitignore)
-├── 05_Python/                      # LST/slope/vegetation processing (the DN=0 fix) and
-│   └── robustness_checks.py        #   robustness_checks.py, which reproduces the regressions
-├── 06_Streamlit/                   # Dashboard: app.py (Home) + 9 pages
-│   ├── app.py
-│   ├── pages/                      # Study Design, Theoretical Foundations, Cotton Signature (NDVI),
-│   │                               #   Agrarian & Land Structure, Spatial Discontinuity Regression,
-│   │                               #   Historical & Institutional Context, Interactive Maps,
-│   │                               #   Methodology & Data, Ground Truth
-│   ├── utils/
-│   └── requirements.txt
-├── 07_Outputs/                     # Static figures and maps
-├── CL_Research_Paper.md            # Main paper
-├── CL_Executive_Summary.md         # Two-page summary
-├── CL_Development_Log.md           # Running development log: decisions, bugs, pivots
-├── download_seasonal_scenes.py     # Landsat scene acquisition (year 1 and year 2)
-└── requirements.txt
-```
-
-The scripts that assemble the Phase 4 datasets (NDVI aggregation, distance calculation, dataset merge) are not yet in the repository; `05_Python/main.py` and `config.py` are placeholders that say so. The regression results can be reproduced from the shipped Phase 4 CSVs with `05_Python/robustness_checks.py`.
-
-## Tech Stack
-
-Python · Pandas · GeoPandas · Statsmodels · Rasterio · SciPy · Plotly · Streamlit
-
-## Data Sources
-
-| Dataset | Provider |
+| | Result |
 |---|---|
-| Administrative boundaries (taluka-level) | IIT Bombay POCRA Maharashtra Census shapefile portal |
-| Vegetation (NDVI) / Climate (LST) | Landsat 8/9 Collection 2 Level-2 (Microsoft Planetary Computer STAC) |
-| Population, Agriculture | Census (2011) village-level shapefiles; Maharashtra Economic Survey 2025-26 |
-| Land Use | Census village land-use attributes |
-| Hydrology (rainfall) | WorldClim 2.1 precipitation climatology (~18.5 km grid) |
-| Terrain (elevation) | SRTM 1 arc-second DEM |
-| Economics (FRA) | Compiled from state reports and secondary reporting (context only) |
+| H1, step | None in the 32-taluka corridor, the Landsat sample (98 talukas for NDVI, 56 for LST) or local-linear estimates at the line. The one exception, labour structure in the 119-taluka model (+0.96, Holm p = 0.029), is absent in the corridor and in local estimates: a regional difference concentrated in Amravati district. |
+| H2, slope | The gradient changes across the line for NDVI decline in both years (Holm p < 0.001): the line sits on the crest of a ridge. LST and labour change slope before correction. Placebo lines inside each side reproduce the NDVI and labour patterns. |
+| NDVI by side | 0.255 vs 0.246 (year 1) and 0.319 vs 0.262 (year 2); 0.29 on both sides within 50 km of the line. |
+| Validation | District NDVI decline vs cotton share: r = 0.86 (10 districts), 0.77 without paddy districts. Field check on 7 Roots & Reflectance fields: 13 of 14 field-years match the reported winter crop. |
+| Tests | 20 tests; 5 have conservative p < 0.05; 3 survive Holm. |
 
-## Running Locally
+Full write-up: [`CL_Research_Paper.md`](CL_Research_Paper.md) · two-page version: [`CL_Executive_Summary.md`](CL_Executive_Summary.md).
+
+## How it works
+
+1. **Rebuild the line.** 120 Census/LGD talukas are dissolved into the two divisions and the 384.7 km shared edge is extracted. It is checked against district lineage 1903–1956 (district level, not a period-map overlay).
+2. **Measure the land.**
+   - Landsat 8/9 NDVI for early November and early March in two years, at 30 m over paths 144–146, with cloud, shadow and water masked and only ESA WorldCover cropland kept, on pixels valid on both dates.
+   - June land surface temperature.
+   - Coverage is counted against each taluka's cropland (NDVI) or polygon (LST); talukas less than half observed are excluded.
+3. **Add the people.** Census 2011 village data, aggregated to taluka for all 11 districts.
+4. **Test.** Step and slope regression with rainfall and elevation, at three scales. Inference uses the most conservative of HC3 and Conley spatial errors, with Holm correction, local-linear RD, placebo lines, symmetric windows, influence and coverage checks, and power (MDE).
+
+## Reproduce everything
 
 ```bash
 git clone https://github.com/sakshimaske303-commits/THE-COTTON-LINE.git
 cd THE-COTTON-LINE
 pip install -r requirements.txt
-python 05_Python/robustness_checks.py     # reproduces the regressions and robustness tables
-cd 06_Streamlit
-streamlit run app.py                      # dashboard
+python 05_Python/run_all.py          # rebuilds every table, result and figure from the repository (about 1 minute)
+cd 06_Streamlit && streamlit run app.py
 ```
 
-## Limitations to Keep in Mind
+The pipeline needs only numpy, pandas, scipy, matplotlib and tifffile; no GDAL is required.
 
-The line is also an older political frontier and river line, so any gradient cannot be attributed to tenure alone. Spatial autocorrelation is not fully modelled, scenes are single-date and lack a QA_PIXEL cloud mask, census data (2011) are compared with 2024–26 imagery, and the Berar-side census sample is two districts. The Karanja Ghadge / Sawardoh field check covers the Central Provinces side only and is illustrative. See Section 6 of the paper.
+The 30 m taluka NDVI table is in the repository, so this default run reproduces every number.
 
-## Author
+**Rebuild NDVI from raw scenes (optional, about 9 GB):**
+1. `python 05_Python/00_download_inputs.py` downloads the 36 Landsat scenes (B4, B5, QA) and ESA WorldCover.
+2. `python 05_Python/run_all.py --full` rebuilds the 30 m masked NDVI table, then everything else.
 
-**Sakshi D. Maske**
+| Step | Script | Output |
+|---|---|---|
+| 1 | `01_build_taluka_geometry.py` | centroids, signed distance, corridor flag |
+| 2 | `02_build_census_stats.py` | Census 2011 taluka statistics, 11 districts |
+| 3 | `03_build_eo_climate_stats.py` | LST taluka stats (polygon coverage), WorldClim rainfall |
+| 3b | `03b_build_eo_30m_masked.py` | 30 m masked NDVI, paths 144–146 (with `--full`) |
+| 3c | `03c_sample_elevation.py` | SRTM elevation, 120 talukas |
+| 4 | `04_build_analysis_dataset.py` | `Phase4/analysis_taluka_dataset.csv` |
+| 5 | `robustness_checks.py` | `Phase4/results/*.csv`, `key_numbers.json` |
+| 6 | `05_make_figures.py` | `07_Outputs/v2_fig*.png` |
 
-Independent Geospatial Researcher
+`fix_lst_pipeline.py`, `fix_vegetation_pipeline.py` and `fix_slope_pipeline.py` are the original DN = 0 / slope fixes that produced the 300 m rasters, kept for the record.
 
-## License
+## Repository structure
 
-This project is licensed under [CC BY 4.0](./LICENSE). You are free to share and adapt this work for any purpose, including commercially, with attribution. See `CITATION.cff` for citation metadata.
+```text
+THE_COTTON_LINE/
+├── 02_Data_Raw/            raw downloads (not in git: Landsat, SRTM, WorldClim, Census zips)
+├── 03_Data_Processed/      boundary geometry, taluka tables, 300 m NDVI/LST rasters,
+│   └── Phase4/             analysis_taluka_dataset.csv and results/
+├── 05_Python/              the pipeline (run_all.py) and shared helpers (cl_lib.py)
+├── 06_Streamlit/           dashboard: app.py + 9 pages
+├── 07_Outputs/             figures (v2_fig1 … v2_fig8)
+├── outputs/                interactive maps and plots for the portfolio
+├── CL_Research_Paper.md    paper (+ PDF)
+├── CL_Executive_Summary.md summary (+ PDF)
+└── CL_Development_Log.md   development log (+ PDF)
+```
 
----
+## Data sources
 
-*The full development process, including decisions, data-pipeline bugs and design pivots, is documented in `CL_Development_Log.md`.*
+| Dataset | Provider |
+|---|---|
+| Taluka boundaries | Census 2011 / LGD sub-districts via datta07/INDIAN-SHAPEFILES; IIT Bombay POCRA district shapefiles |
+| NDVI, LST | Landsat 8/9 Collection 2 Level-2 (USGS), accessed through Microsoft Planetary Computer |
+| Labour, land use | Census of India 2011 village attributes (IIT Bombay POCRA village shapefiles) |
+| Rainfall | WorldClim 2.1 monthly normals (Fick & Hijmans, 2017) |
+| Elevation | SRTM 1 arc-second (NASA/USGS) |
+| District context | Maharashtra APY 2024-25; Economic Survey of Maharashtra 2025-26 |
+| Cropland mask | ESA WorldCover 2021 v200 (CC BY 4.0) |
+
+## Limitations
+
+- Gadchiroli and most of Gondiya (Landsat path 143) are not observed; LST uses one scene.
+- 2021 cropland mask; neighbouring paths are up to nine days apart.
+- Single-date scenes per season.
+- 2011 census against 2024–26 imagery.
+- Rainfall is a climatology; soil and irrigation are not controlled.
+- District-level boundary verification.
+- The line is also a pre-colonial frontier, a river and an agro-ecological transition, so nothing here can be attributed to tenure.
+
+The companion field study *Roots & Reflectance* (seven fields, Central Provinces side) is illustrative and does not validate the boundary comparison.
+
+## Author and licence
+
+**Sakshi D. Maske**, Independent Geospatial Researcher. Code: MIT licence. Text, figures and processed data: CC BY 4.0 (see `LICENSE`). Cite with `CITATION.cff`.

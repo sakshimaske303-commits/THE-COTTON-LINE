@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-message: "If you use this software or its findings, please cite it using the metadata below."
-title: "THE COTTON LINE: Testing the Persistence of an 1853 Colonial Land-Tenure Boundary in Present-Day Vidarbha"
-type: software
+message: "If you use this work, please cite it using the metadata below."
+title: "The Cotton Line: Is an Erased Colonial Land-Revenue Boundary Still Visible in Vidarbha's Satellite and Census Record?"
+type: dataset
 authors:
   - family-names: "Maske"
     given-names: "Sakshi D."
@@ -10,41 +10,30 @@ url: "https://github.com/sakshimaske303-commits/THE-COTTON-LINE"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.22111298"
-    description: "Zenodo archive of THE COTTON LINE v1.0.1"
+    description: "Zenodo archive (earlier release; to be updated for v2.1)"
 doi: "10.5281/zenodo.22111298"
 abstract: >-
-  A spatial-discontinuity study testing whether the historical boundary between Berar (Ryotwari
-  settlement, assigned to the East India Company in 1853) and the Central Provinces (Malguzari
-  settlement), abolished as a provincial border in 1956, is still detectable in present-day
-  Vidarbha, Maharashtra, in kharif-to-rabi NDVI change, land-surface temperature, agrarian labor
-  structure, and land use. The modern boundary was built by dissolving 120 talukas into their two
-  divisions and extracting the shared 384.7 km edge, then checked against district administrative
-  lineage from 1903-1956 (no digitized period map was available). Four outcomes were tested with an
-  OLS spatial-discontinuity model (outcome ~ side + signed_dist_km + side:signed_dist_km +
-  annual_total_mm + elevation_m) on a 32-taluka corridor and a 66-68-taluka Landsat footprint.
-  No outcome shows a boundary-specific level jump for NDVI change, land-surface temperature or net
-  cultivated area. A regional gradient is found instead: the NDVI decline is larger on the Berar
-  side (0.325 vs 0.255; 0.316 vs 0.241 in a second year), and the side x distance interaction is
-  significant on the full footprint for NDVI decline (p=0.0348) and land-surface temperature
-  (p=0.0105), though only the temperature result is robust to alternative standard errors and
-  distance windows, and none of 16 tests survives a Holm correction. The labor ratio shows a
-  scale-dependent pattern (corridor slope difference p=0.0361; full-footprint level difference
-  p=0.014). The results are exploratory and are consistent with a regional gradient that partly
-  coincides with the old boundary; they do not identify a tenure effect. A field check at seven
-  boundaries in Karanja Ghadge and Sawardoh (Central Provinces side only) is illustrative.
+  Tests whether the former boundary between Berar (Ryotwari land revenue) and the Central
+  Provinces (Malguzari), abolished in 1956 and proxied by the 384.7 km Amravati/Nagpur Division
+  line, is detectable as a spatial discontinuity in present-day Vidarbha, India. Outcomes are a
+  Landsat NDVI cropping-intensity index (November to March, two years), Landsat land surface
+  temperature, and Census 2011 labour structure and net sown area, at three scales (32-taluka
+  corridor, 98 Landsat talukas with 30 m cloud- and cropland-masked NDVI, 119 census talukas). A spatial-discontinuity regression with
+  rainfall and elevation controls, conservative HC3/Conley inference and Holm correction over 20
+  tests finds no level step at the line. The NDVI index peaks near the line on both sides and
+  falls away in both directions; slope differences at the line reflect that ridge, and placebo
+  lines reproduce them for NDVI and labour. The index tracks district cotton share (r = 0.86).
+  The cotton core straddles the old line; there is no boundary effect. Full pipeline in Python (numpy/pandas/scipy/tifffile).
 keywords:
-  - institutional persistence
   - spatial discontinuity
+  - boundary persistence
   - historical GIS
-  - land tenure
+  - Landsat
   - NDVI
   - land surface temperature
-  - agrarian labor structure
-  - remote sensing
+  - Conley standard errors
   - Vidarbha
-  - regression discontinuity
-  - colonial land revenue systems
   - India
 license: CC-BY-4.0
-version: 1.0.1
-date-released: "2026-08-26"
+version: 2.1.0
+date-released: "2026-10-15"

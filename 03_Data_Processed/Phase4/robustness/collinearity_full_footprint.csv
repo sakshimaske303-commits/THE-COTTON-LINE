@@ -1,5 +1,0 @@
-,signed_dist_km,annual_total_mm,elevation_m,side
-signed_dist_km,1.0,-0.74,0.21,0.74
-annual_total_mm,-0.74,1.0,-0.49,-0.49
-elevation_m,0.21,-0.49,1.0,0.15
-side,0.74,-0.49,0.15,1.0

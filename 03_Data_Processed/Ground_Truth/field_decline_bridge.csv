@@ -1,0 +1,57 @@
+zone,field_num,field_id,name,crops,area_ha,sensor,year,season,mean,count,n_scenes,window
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,landsat,y1,nov,0.5836112855975308,9,7,2025-10-25/2025-11-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,landsat,y1,nov,0.6041885989551158,18,7,2025-10-25/2025-11-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,landsat,y1,nov,0.7291362708003163,18,7,2025-10-25/2025-11-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,landsat,y1,nov,0.7021885584762025,19,7,2025-10-25/2025-11-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,landsat,y1,nov,0.7832735404595956,15,7,2025-10-25/2025-11-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,landsat,y1,nov,0.7369176410279185,16,7,2025-10-25/2025-11-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,landsat,y1,nov,0.5065428450960279,20,7,2025-10-25/2025-11-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,sentinel2,y1,nov,0.6137351068287843,38,14,2025-10-25/2025-11-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,sentinel2,y1,nov,0.6030610585789062,117,14,2025-10-25/2025-11-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,sentinel2,y1,nov,0.7527559686252444,110,14,2025-10-25/2025-11-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,sentinel2,y1,nov,0.73916852974738,110,14,2025-10-25/2025-11-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,sentinel2,y1,nov,0.7997935836546948,95,14,2025-10-25/2025-11-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,sentinel2,y1,nov,0.7866256284841391,105,14,2025-10-25/2025-11-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,sentinel2,y1,nov,0.4032622641166535,127,14,2025-10-25/2025-11-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,landsat,y1,mar,0.26888625448319453,9,8,2026-02-25/2026-03-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,landsat,y1,mar,0.257568804498284,18,8,2026-02-25/2026-03-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,landsat,y1,mar,0.25217177692968223,18,8,2026-02-25/2026-03-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,landsat,y1,mar,0.27285259628090364,19,8,2026-02-25/2026-03-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,landsat,y1,mar,0.31061621929133854,15,8,2026-02-25/2026-03-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,landsat,y1,mar,0.2670116725145396,16,8,2026-02-25/2026-03-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,landsat,y1,mar,0.23290787635723997,20,8,2026-02-25/2026-03-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,sentinel2,y1,mar,0.19784975707284674,38,8,2026-02-25/2026-03-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,sentinel2,y1,mar,0.22005448405254777,117,8,2026-02-25/2026-03-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,sentinel2,y1,mar,0.20718679485413277,110,8,2026-02-25/2026-03-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,sentinel2,y1,mar,0.2286873581522597,110,8,2026-02-25/2026-03-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,sentinel2,y1,mar,0.23580815733555285,95,8,2026-02-25/2026-03-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,sentinel2,y1,mar,0.22421869325904215,105,8,2026-02-25/2026-03-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,sentinel2,y1,mar,0.1803650607147609,127,8,2026-02-25/2026-03-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,landsat,y2,nov,0.6775985950854287,9,9,2024-10-25/2024-11-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,landsat,y2,nov,0.6740304897892144,18,9,2024-10-25/2024-11-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,landsat,y2,nov,0.7042689979632493,18,9,2024-10-25/2024-11-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,landsat,y2,nov,0.6730344363614476,19,9,2024-10-25/2024-11-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,landsat,y2,nov,0.74631456924869,15,9,2024-10-25/2024-11-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,landsat,y2,nov,0.7209085201067497,16,9,2024-10-25/2024-11-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,landsat,y2,nov,0.48910074530320974,20,9,2024-10-25/2024-11-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,sentinel2,y2,nov,0.7516046116667345,38,10,2024-10-25/2024-11-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,sentinel2,y2,nov,0.6557034124059388,117,10,2024-10-25/2024-11-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,sentinel2,y2,nov,0.706461084359179,110,10,2024-10-25/2024-11-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,sentinel2,y2,nov,0.6952704762599025,110,10,2024-10-25/2024-11-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,sentinel2,y2,nov,0.7651228791640861,95,10,2024-10-25/2024-11-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,sentinel2,y2,nov,0.7838106580258969,105,10,2024-10-25/2024-11-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,sentinel2,y2,nov,0.37015670292547925,127,10,2024-10-25/2024-11-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,landsat,y2,mar,0.2507360328044464,9,8,2025-02-25/2025-03-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,landsat,y2,mar,0.2872169152382882,18,8,2025-02-25/2025-03-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,landsat,y2,mar,0.5144775314438232,18,8,2025-02-25/2025-03-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,landsat,y2,mar,0.33842324652524597,19,8,2025-02-25/2025-03-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,landsat,y2,mar,0.34812262895944956,15,8,2025-02-25/2025-03-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,landsat,y2,mar,0.30496742831586043,16,8,2025-02-25/2025-03-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,landsat,y2,mar,0.24241817776052105,20,8,2025-02-25/2025-03-20
+sawardoh,1,BACD,Cotton & Pigeon Pea (Tur),"cotton,tur",0.2215,sentinel2,y2,mar,0.1941897055457447,38,8,2025-02-25/2025-03-20
+sawardoh,2,BDHG,"Orange, Cotton & Pigeon Pea (Tur)","cotton,tur,orange",0.8792,sentinel2,y2,mar,0.25882797140596786,117,8,2025-02-25/2025-03-20
+sawardoh,3,GHLJ,Cotton,cotton,0.7771,sentinel2,y2,mar,0.5052212894568808,110,8,2025-02-25/2025-03-20
+sawardoh,4,CHIFE,"Orange, Cotton, Pigeon Pea (Tur) & Turmeric","cotton,tur,orange,turmeric",0.8226,sentinel2,y2,mar,0.30423265532285126,110,8,2025-02-25/2025-03-20
+sawardoh,5,KMON,Cotton,cotton,0.6585,sentinel2,y2,mar,0.2658067189140452,95,8,2025-02-25/2025-03-20
+karanja,1,BAEF,Soyabean & Pigeon Pea (Tur),"soyabean,tur",0.786,sentinel2,y2,mar,0.2762656718346827,105,8,2025-02-25/2025-03-20
+karanja,2,EFCD,Soyabean,soyabean,0.9758,sentinel2,y2,mar,0.18338798309014823,127,8,2025-02-25/2025-03-20
